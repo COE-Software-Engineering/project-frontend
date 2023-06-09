@@ -25,6 +25,18 @@ body {
   overflow-x:hidden;
 }
 
+ion-icon {
+    --ionicon-stroke-width: 16px;
+    color: white;
+    font-size: 16px;
+  }
+
+  button{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
 
 p,button{
   font-size:12px;

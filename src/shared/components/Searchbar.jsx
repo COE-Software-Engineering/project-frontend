@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import IonIcon from "./components/Ionicon";
+import IonIcon from "./Ionicon";
 
 const Searchbar = ({ animationClass, styles }) => {
   return (
@@ -24,8 +24,11 @@ const SearchbarWrapper = styled.div`
   & input {
     width: 100%;
     padding: 0.5rem 2rem;
-    background-color: rgba(255, 255, 255, 0.1);
-    /* filter: blur(10px); */
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
     color: white;
     border: none;
     outline: none;

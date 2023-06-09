@@ -1,8 +1,7 @@
-import React from "react";
 import styled from "styled-components";
-import IonIcon from "../Ionicon";
+import IonIcon from "./Ionicon";
 import { Avatar, Button } from "antd";
-import Searchbar from "../../Searchbar";
+import Searchbar from "./Searchbar";
 
 const Navbar = () => {
   return (
@@ -28,7 +27,7 @@ const Navbar = () => {
 const NavWrapper = styled.nav`
   width: 100%;
   height: 50px;
-  padding: 0 2rem;
+  padding: 0 1rem;
   z-index: 10;
   background-color: ${({ theme }) => theme.accentColor};
   -webkit-box-shadow: 0px 20px 50px 0px rgb(0 0 0 / 5%);
@@ -48,12 +47,6 @@ const NavWrapper = styled.nav`
     align-items: center;
     justify-content: center;
     margin-right: 1rem;
-  }
-
-  ion-icon {
-    --ionicon-stroke-width: 16px;
-    color: white;
-    font-size: 16px;
   }
 
   img {

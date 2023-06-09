@@ -22,6 +22,14 @@ function App() {
             fontFamily: "Montserrat,sans-serif",
             boxShadow: "none",
           },
+          components: {
+            Calendar: {
+              colorBgContainer: "transparent",
+              fontSize: "10px",
+              fontSizeSM: "10px",
+              fontSizeLG: "10px",
+            },
+          },
 
           algorithm:
             appTheme === "light" ? theme.defaultAlgorithm : theme.darkAlgorithm,

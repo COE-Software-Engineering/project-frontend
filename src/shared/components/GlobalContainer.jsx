@@ -1,13 +1,14 @@
 import styled from "styled-components";
-import Navbar from "../Navbar/Navbar";
+import Navbar from "./Navbar";
+import Sidebar from "./Sidebar";
 
-const GlobalContainer = () => {
+const GlobalContainer = ({ routesComponent }) => {
   return (
     <MainWrapper>
       <Navbar />
       <LayoutWrapper>
-        <SidebarWrapper></SidebarWrapper>
-        <ContentWrapper></ContentWrapper>
+        <Sidebar />
+        <ContentWrapper>{routesComponent}</ContentWrapper>
       </LayoutWrapper>
     </MainWrapper>
   );
@@ -16,23 +17,21 @@ const GlobalContainer = () => {
 const MainWrapper = styled.div`
   width: 100%;
   height: 100vh;
-  /* overflow-x: hidden; */
+  overflow-y: scroll;
 `;
 
 const LayoutWrapper = styled.div`
   width: 100%;
-  height: calc(100vh - 50px);
+  min-height: calc(100vh - 50px);
+  padding: 1rem 1rem 0;
   display: flex;
   flex-direction: row;
 `;
 
-const SidebarWrapper = styled.div`
-  width: 20%;
-  height: 100%;
-`;
 const ContentWrapper = styled.div`
-  width: 80%;
+  width: 100%;
   height: 100%;
+  padding-left: 1rem;
 `;
 
 export default GlobalContainer;
