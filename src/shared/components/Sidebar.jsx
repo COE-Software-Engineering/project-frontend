@@ -2,18 +2,19 @@ import { Button } from "antd";
 import React from "react";
 import styled from "styled-components";
 import IonIcon from "./Ionicon";
+import { defaultTheme } from "../theme/theme";
 
 const Sidebar = () => {
   const sidebarLinks = [
     {
       name: "Dashboard",
       iconName: "grid-outline",
-      routeTo: "",
+      routeTo: "/",
     },
     {
       name: "Courses",
       iconName: "library-outline",
-      routeTo: "",
+      routeTo: "/courses",
     },
     {
       name: "Announcements",
@@ -39,6 +40,7 @@ const Sidebar = () => {
           key={index}
           type="ghost"
           icon={<IonIcon iconName={link.iconName} />}
+          // className="active"
         />
       ))}
     </SidebarWrapper>
@@ -55,15 +57,24 @@ const SidebarWrapper = styled.div`
   top: 61px;
 
   & button {
-    height: 60px;
+    height: 40px;
     /* width: 40px; */
     /* border: 1px solid blue; */
-    margin-bottom: 1rem;
+    margin-bottom: 2rem;
     /* font-size: 20px; */
 
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
+    justify-content: center;
+    transition: all 0.3s (0.175, 0.885, 0.32, 1.275);
+  }
+
+  & button:hover {
+    background-color: rgba(255, 255, 255, 0.04);
+  }
+
+  & .active {
+    background-color: ${({ theme }) => theme.accentColor};
   }
 `;
 

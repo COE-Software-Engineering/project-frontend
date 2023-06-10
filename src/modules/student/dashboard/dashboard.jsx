@@ -10,6 +10,7 @@ const Dashboard = () => {
     <DashboardWrapper>
       <MainAreaWrapper>
         <RecentCourses />
+        <RecentCourses />
       </MainAreaWrapper>
       <AsideAreaWrapper>
         <Timeline />

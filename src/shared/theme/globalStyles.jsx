@@ -42,6 +42,10 @@ p,button{
   font-size:12px;
 }
 
+p{
+  line-height:1.4rem;
+}
+
 small{
   font-size:10px;
 }
