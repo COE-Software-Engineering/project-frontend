@@ -7,7 +7,7 @@ const Navbar = () => {
   return (
     <NavWrapper>
       <LogoWrapper>
-        <Button type="ghost" icon={<IonIcon iconName={"menu-outline"} />} />
+        {/* <Button type="ghost" icon={<IonIcon iconName={"menu-outline"} />} /> */}
         <img src="/knust-logo.png" alt="logo" />
       </LogoWrapper>
       <Searchbar />

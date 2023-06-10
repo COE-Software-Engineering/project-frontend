@@ -5,8 +5,9 @@ import Courses from "./courses/courses";
 import Files from "./files/files";
 import Course from "./courses/course";
 import Profile from "./profile/profile";
+import Announcements from "./announcements/announcements";
 
-const StudentRoutes = () => {
+const MainRoutes = () => {
   return (
     <GlobalContainer
       routesComponent={
@@ -17,6 +18,7 @@ const StudentRoutes = () => {
             <Route path="/courses" element={<Courses />} />
             <Route path="/courses/:courseId" element={<Course />} />
             <Route path="/files" element={<Files />} />
+            <Route path="/announcements" element={<Announcements />} />
           </Routes>
         </div>
       }
@@ -24,4 +26,4 @@ const StudentRoutes = () => {
   );
 };
 
-export default StudentRoutes;
+export default MainRoutes;

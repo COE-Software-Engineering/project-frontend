@@ -3,78 +3,92 @@ import React from "react";
 import styled from "styled-components";
 import IonIcon from "./Ionicon";
 import { defaultTheme } from "../theme/theme";
+import { useNavigate } from "react-router-dom";
 
 const Sidebar = () => {
+  const navigate = useNavigate();
+
   const sidebarLinks = [
     {
       name: "Dashboard",
       iconName: "grid-outline",
-      routeTo: "/",
+      routeTo: "/main",
     },
     {
       name: "Courses",
       iconName: "library-outline",
-      routeTo: "/courses",
+      routeTo: "/main/courses",
     },
     {
       name: "Announcements",
       iconName: "megaphone-outline",
-      routeTo: "",
+      routeTo: "/main/announcements",
     },
     {
       name: "Files",
       iconName: "reader-outline",
-      routeTo: "",
+      routeTo: "/main/files",
     },
     {
       name: "Settings",
       iconName: "settings-outline",
-      routeTo: "",
+      routeTo: "/main/settings",
     },
   ];
+
+  console.log(window.location.pathname);
 
   return (
     <SidebarWrapper>
       {sidebarLinks.map((link, index) => (
-        <Button
+        <SidebarItem
           key={index}
-          type="ghost"
-          icon={<IonIcon iconName={link.iconName} />}
-          // className="active"
-        />
+          className={`${
+            link.routeTo === window.location.pathname ? "active" : ""
+          }`}
+          onClick={() => navigate(link.routeTo)}
+        >
+          <IonIcon iconName={link.iconName} />
+          <p>{link.name}</p>
+        </SidebarItem>
       ))}
     </SidebarWrapper>
   );
 };
 
 const SidebarWrapper = styled.div`
+  width: 160px;
+  padding: 1rem 0 0 0;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  height: 100%;
   position: sticky;
-  top: 61px;
-
-  & button {
-    height: 40px;
-    /* width: 40px; */
-    /* border: 1px solid blue; */
-    margin-bottom: 2rem;
-    /* font-size: 20px; */
-
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    transition: all 0.3s (0.175, 0.885, 0.32, 1.275);
-  }
-
-  & button:hover {
-    background-color: rgba(255, 255, 255, 0.04);
-  }
+  top: 60px;
+  /* box-shadow: 2px 0 4px 0px rgba(0, 0, 0, 0.1); */
 
   & .active {
-    background-color: ${({ theme }) => theme.accentColor};
+    background: rgba(255, 255, 255, 0.02);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+  }
+`;
+
+const SidebarItem = styled.div`
+  width: 100%;
+  height: 40px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  margin-bottom: 1rem;
+  cursor: pointer;
+  padding: 0 1rem;
+
+  & p {
+    margin-left: 0.5rem;
   }
 `;
 
