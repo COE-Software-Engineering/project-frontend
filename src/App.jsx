@@ -1,11 +1,10 @@
-import "./App.css";
 import { ConfigProvider, theme } from "antd";
 import { ThemeProvider } from "styled-components";
 import { GlobalStyles } from "./shared/theme/globalStyles";
 import { darkTheme, defaultTheme, lightTheme } from "./shared/theme/theme";
 import { Suspense, useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Landingpage from "./modules/landingpage";
+import Landingpage from "./modules/main/landing/landingpage";
 import MainRoutes from "./modules/main/mainRoutes";
 
 function App() {

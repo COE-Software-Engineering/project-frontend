@@ -7,7 +7,7 @@ const CommentSection = () => {
     <CommentSectionWrapper>
       <div className="attach-input-wrapper">
         <button>
-          <IonIcon iconName={"attach-outline"} />
+          <IonIcon iconName={"attach"} />
         </button>
         <input type="text" placeholder="Type or send an announcement..." />
       </div>

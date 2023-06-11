@@ -6,6 +6,7 @@ import IonIcon from "../../../shared/components/Ionicon";
 import { Button } from "antd";
 import { defaultTheme } from "../../../shared/theme/theme";
 import CourseDetails from "./CourseDetails";
+import { MEDIA_QUERIES } from "../../../shared/utils/constants";
 
 const Profile = () => {
   return (
@@ -20,7 +21,7 @@ const Profile = () => {
             <p>Student</p>
           </div>
         </div>
-        <Button type="default" icon={<IonIcon iconName={"pencil-outline"} />}>
+        <Button type="default" icon={<IonIcon iconName={"pencil"} />}>
           Edit
         </Button>
       </HeaderContentWrapper>
@@ -54,6 +55,7 @@ const HeaderContentWrapper = styled.div`
   -webkit-backdrop-filter: blur(4px);
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
 
@@ -61,6 +63,7 @@ const HeaderContentWrapper = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    flex-wrap: wrap;
     align-items: center;
   }
 
@@ -84,6 +87,18 @@ const HeaderContentWrapper = styled.div`
     background-color: transparent;
     border: 1px solid ${defaultTheme.primaryColor[400]};
   }
+
+  ${MEDIA_QUERIES.MOBILE} {
+    & {
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: flex-start;
+    }
+
+    & button {
+      margin-top: 1rem;
+    }
+  }
 `;
 
 const BodyContentWrapper = styled.div`
@@ -91,6 +106,12 @@ const BodyContentWrapper = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+
+  ${MEDIA_QUERIES.MOBILE} {
+    & {
+      flex-direction: column;
+    }
+  }
 `;
 
 const MainAreaWrapper = styled.section`
@@ -101,6 +122,12 @@ const MainAreaWrapper = styled.section`
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
+
+  ${MEDIA_QUERIES.MOBILE} {
+    & {
+      width: 100%;
+    }
+  }
 `;
 const AsideAreaWrapper = styled.aside`
   width: 30%;
@@ -110,6 +137,12 @@ const AsideAreaWrapper = styled.aside`
   justify-content: center;
   align-items: flex-start;
   /* border: 1px solid blue; */
+
+  ${MEDIA_QUERIES.MOBILE} {
+    & {
+      width: 100%;
+    }
+  }
 `;
 
 export default Profile;

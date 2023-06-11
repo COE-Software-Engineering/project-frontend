@@ -12,7 +12,7 @@ const Files = () => {
       </Headerbar>
       <ContentWrapper>
         <FileUploaderWrapper>
-          <IonIcon iconName="cloud-upload-outline" />
+          <IonIcon iconName="cloud-upload" />
           <p>Darg and drop here</p>
           <p>or</p>
           <p>

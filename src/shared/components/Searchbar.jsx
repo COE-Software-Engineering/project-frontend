@@ -7,7 +7,7 @@ const Searchbar = ({ animationClass, styles }) => {
     <SearchbarWrapper className={animationClass} style={styles}>
       <input placeholder="Search product" />
       <button>
-        <IonIcon iconName="search-outline" />
+        <IonIcon iconName="search" />
       </button>
     </SearchbarWrapper>
   );

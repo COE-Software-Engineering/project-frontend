@@ -2,39 +2,14 @@ import { Button } from "antd";
 import React from "react";
 import styled from "styled-components";
 import IonIcon from "./Ionicon";
-import { defaultTheme } from "../theme/theme";
 import { useNavigate } from "react-router-dom";
+import { MEDIA_QUERIES } from "../utils/constants";
+import { sidebarLinks } from "../utils/data";
 
 const Sidebar = () => {
   const navigate = useNavigate();
 
-  const sidebarLinks = [
-    {
-      name: "Dashboard",
-      iconName: "grid-outline",
-      routeTo: "/main",
-    },
-    {
-      name: "Courses",
-      iconName: "library-outline",
-      routeTo: "/main/courses",
-    },
-    {
-      name: "Announcements",
-      iconName: "megaphone-outline",
-      routeTo: "/main/announcements",
-    },
-    {
-      name: "Files",
-      iconName: "reader-outline",
-      routeTo: "/main/files",
-    },
-    {
-      name: "Settings",
-      iconName: "settings-outline",
-      routeTo: "/main/settings",
-    },
-  ];
+  
 
   console.log(window.location.pathname);
 
@@ -74,9 +49,15 @@ const SidebarWrapper = styled.div`
     border-top-right-radius: 10px;
     border-bottom-right-radius: 10px;
   }
+
+  ${MEDIA_QUERIES.MOBILE} {
+    & {
+      display: none;
+    }
+  }
 `;
 
-const SidebarItem = styled.div`
+export const SidebarItem = styled.div`
   width: 100%;
   height: 40px;
   display: flex;

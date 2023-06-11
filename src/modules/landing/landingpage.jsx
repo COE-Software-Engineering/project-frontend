@@ -1,7 +1,8 @@
 import { Button, Form, Input, message } from "antd";
 import styled from "styled-components";
-import { defaultTheme } from "../shared/theme/theme";
+import { defaultTheme } from "../../shared/theme/theme";
 import { useState } from "react";
+import { MEDIA_QUERIES } from "../../shared/utils/constants";
 
 const Landingpage = () => {
   const [isStudentSignin, setIsStudentSignin] = useState(false);
@@ -120,17 +121,24 @@ const Landingpage = () => {
 
 const LandingPageWrapper = styled.div`
   width: 100%;
-  min-height: 100vh;
+  height: 100vh;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
   scroll-behavior: smooth;
+
+  ${MEDIA_QUERIES.MOBILE} {
+    & {
+      flex-direction: column;
+    }
+  }
 `;
 
 const HeroWrapper = styled.div`
   width: 60%;
   height: 100%;
+  padding: 2rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -158,11 +166,18 @@ const HeroWrapper = styled.div`
   & .get-started-btn {
     display: none;
   }
+
+  ${MEDIA_QUERIES.MOBILE} {
+    & {
+      width: 100%;
+      height: 500px;
+    }
+  }
 `;
 
 const FormWrapper = styled.div`
   width: 40%;
-  height: 100vh;
+  height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -183,11 +198,23 @@ const FormWrapper = styled.div`
     border-radius: 10px;
     font-size: 12px;
   }
+
+  ${MEDIA_QUERIES.MOBILE} {
+    & {
+      width: 100%;
+      height: 500px;
+    }
+  }
 `;
 
 const Wrapper = styled.div`
   width: 100%;
-  padding: 4rem;
+  height: 100%;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 
   small {
     cursor: pointer;
@@ -201,6 +228,12 @@ const Wrapper = styled.div`
 
   form {
     width: 100%;
+  }
+
+  ${MEDIA_QUERIES.MOBILE} {
+    & {
+      padding: 1rem;
+    }
   }
 `;
 

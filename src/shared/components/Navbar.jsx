@@ -2,21 +2,28 @@ import styled from "styled-components";
 import IonIcon from "./Ionicon";
 import { Avatar, Button } from "antd";
 import Searchbar from "./Searchbar";
+import { MEDIA_QUERIES } from "../utils/constants";
+import Drawerbar from "./Drawerbar";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
+  const navigate = useNavigate();
+
   return (
     <NavWrapper>
       <LogoWrapper>
-        {/* <Button type="ghost" icon={<IonIcon iconName={"menu-outline"} />} /> */}
+        <Drawerbar />
         <img src="/knust-logo.png" alt="logo" />
       </LogoWrapper>
-      <Searchbar />
+      {/* <Searchbar /> */}
       <ToolsWrapper>
-        <Button
-          type="ghost"
-          icon={<IonIcon iconName={"notifications-outline"} />}
-        />
-        <Avatar src="" size={"small"}>
+        <Button type="ghost" icon={<IonIcon iconName={"notifications"} />} />
+        <Avatar
+          src=""
+          size={"small"}
+          style={{ cursor: "pointer" }}
+          onClick={() => navigate("/main/profile")}
+        >
           A
         </Avatar>
       </ToolsWrapper>
@@ -40,39 +47,13 @@ const NavWrapper = styled.nav`
   position: sticky;
   top: 0;
 
-  button {
+  & button {
     color: white;
     background-color: transparent;
     display: flex;
     align-items: center;
     justify-content: center;
     margin-right: 1rem;
-  }
-
-  img {
-    width: 5rem;
-    height: 5rem;
-  }
-
-  ul {
-    list-style-type: none;
-  }
-
-  li {
-    display: inline-block;
-    /* padding: 10px; */
-    margin: 0 1rem;
-    font-size: 0.85rem;
-    cursor: pointer;
-    transition: all 0.3s ease-out 0s;
-  }
-
-  li:hover {
-    color: ${({ theme }) => theme.primaryColor[400]};
-  }
-
-  .active {
-    color: ${({ theme }) => theme.primaryColor[400]};
   }
 `;
 

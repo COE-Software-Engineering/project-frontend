@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import Headerbar from "../../../shared/components/Headerbar";
+import { MEDIA_QUERIES } from "../../../shared/utils/constants";
 
 const Courses = () => {
   const courses = ["", "", "", "", "", ""];
@@ -11,8 +12,8 @@ const Courses = () => {
         <p>My Courses</p>
       </Headerbar>
       <ContentWrapper>
-        {courses.map((course) => (
-          <CourseWrapper></CourseWrapper>
+        {courses.map((course, index) => (
+          <CourseWrapper key={index}></CourseWrapper>
         ))}
       </ContentWrapper>
     </CoursesWrapper>
@@ -34,6 +35,12 @@ const ContentWrapper = styled.div`
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
+
+  ${MEDIA_QUERIES.MOBILE} {
+    & {
+      flex-direction: column;
+    }
+  }
 `;
 
 const CourseWrapper = styled.div`
@@ -46,6 +53,12 @@ const CourseWrapper = styled.div`
   backdrop-filter: blur(4px);
   -webkit-backdrop-filter: blur(4px);
   cursor: pointer;
+
+  ${MEDIA_QUERIES.MOBILE} {
+    & {
+      width: 100%;
+    }
+  }
 `;
 
 export default Courses;
