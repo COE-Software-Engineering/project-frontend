@@ -1,8 +1,9 @@
-import { Button, Form, Input, message } from "antd";
+import { Button, Checkbox, Dropdown, Form, Input, message } from "antd";
 import styled from "styled-components";
 import { defaultTheme } from "../../shared/theme/theme";
 import { useState } from "react";
 import { MEDIA_QUERIES } from "../../shared/utils/constants";
+import IonIcon from "../../shared/components/Ionicon";
 
 const Landingpage = () => {
   const [isStudentSignin, setIsStudentSignin] = useState(false);
@@ -30,10 +31,45 @@ const Landingpage = () => {
     setIsStudentSignin((prev) => !prev);
   };
 
+  const items = [
+    {
+      key: "1",
+      label: <p>As lecturer</p>,
+    },
+    {
+      key: "2",
+      label: <p>As student</p>,
+    },
+  ];
+
   return (
     <LandingPageWrapper>
+      <HeaderWrapper>
+        <img src="/knust-logo.png" alt="logo" />
+
+        <Dropdown
+          style={{ backgroundColor: "red" }}
+          menu={{
+            items,
+          }}
+          placement="bottom"
+        >
+          <Button
+            type="ghost"
+            style={{
+              backgroundColor: "transparent",
+              boxShadow: 0,
+              border: "1px solid rgba(255, 255, 255,0.1)",
+              borderRadius: "20px",
+              fontSize: "12px",
+            }}
+          >
+            Sign up
+          </Button>
+        </Dropdown>
+      </HeaderWrapper>
       <HeroWrapper>
-        <img src="/hero.png" alt="" />
+        <img src="/main-banner-img.svg" alt="" />
         <div>
           <h3>COE Virtual Classroom</h3>
           <p>
@@ -44,8 +80,7 @@ const Landingpage = () => {
       </HeroWrapper>
       <FormWrapper>
         <Wrapper>
-          <h3>Sign in</h3>
-
+          <h3>Welcome back</h3>
           <Form
             form={form}
             name="basic"
@@ -67,6 +102,7 @@ const Landingpage = () => {
                 },
               ]}
             >
+              <label className="label">Email</label>
               <Input className="input" placeholder="Email" />
             </Form.Item>
 
@@ -75,28 +111,35 @@ const Landingpage = () => {
               rules={[
                 {
                   required: true,
-                  min: 7,
                   message: "Invalid password!",
                 },
               ]}
             >
-              <Input className="input" placeholder="Password" />
+              <label className="label">Password</label>
+              <Input.Password
+                className="input"
+                placeholder="Password"
+                styles={{
+                  input: {
+                    backgroundColor: "transparent",
+                    fontSize: "12px",
+                  },
+                }}
+              />
             </Form.Item>
 
             <Form.Item>
-              <Button type="primary" block htmlType="submit">
+              <Checkbox children={<p>Remember me</p>} />
+            </Form.Item>
+
+            <Form.Item>
+              <Button type="primary" htmlType="submit">
                 Sign in
               </Button>
             </Form.Item>
           </Form>
 
-          <small
-            style={{
-              textAlign: "center",
-              display: "flex",
-              justifyContent: "center",
-            }}
-          >
+          <small className="sign-in-toggle-wrapper" onClick={toggleAuth}>
             {isStudentSignin ? (
               <span>
                 Are you a lecturer?{" "}
@@ -105,7 +148,7 @@ const Landingpage = () => {
                 </span>
               </span>
             ) : (
-              <span onClick={toggleAuth}>
+              <span>
                 Are you a student?{" "}
                 <span style={{ color: `${defaultTheme.primaryColor[400]}` }}>
                   Sign in
@@ -121,7 +164,7 @@ const Landingpage = () => {
 
 const LandingPageWrapper = styled.div`
   width: 100%;
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -135,10 +178,30 @@ const LandingPageWrapper = styled.div`
   }
 `;
 
+export const HeaderWrapper = styled.nav`
+  width: 100%;
+  height: 50px;
+  padding: 0 2rem;
+  z-index: 10;
+  background-color: transparent;
+  -webkit-transition: all 0.3s ease-out 0s;
+  transition: all 0.3s ease-out 0s;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: absolute;
+  top: 0;
+
+  & img {
+    width: 25px;
+    height: 30px;
+  }
+`;
+
 const HeroWrapper = styled.div`
   width: 60%;
-  height: 100%;
-  padding: 2rem;
+  height: 100vh;
+  padding: 0 2rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -147,14 +210,14 @@ const HeroWrapper = styled.div`
   text-align: center;
 
   img {
-    width: 40%;
-    height: 40%;
+    width: 50%;
+    height: 50%;
   }
 
   h3 {
     font-size: 2rem;
     margin: 10px 0;
-    font-family: "Lobster Two";
+    font-family: "Lobster Two", sans-serif;
   }
 
   p {
@@ -170,24 +233,29 @@ const HeroWrapper = styled.div`
   ${MEDIA_QUERIES.MOBILE} {
     & {
       width: 100%;
-      height: 500px;
+    }
+
+    & img {
+      width: 100%;
+      height: 40%;
     }
   }
 `;
 
 const FormWrapper = styled.div`
   width: 40%;
-  height: 100%;
+  height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 2rem;
   position: relative;
   background-color: ${({ theme }) => theme.accentColor};
 
   & .input {
     background-color: transparent;
-    border-radius: 10px;
+    margin-top: 0.5rem;
+    border-radius: 7px;
+    /* font-size: 12px; */
   }
 
   & .input::placeholder {
@@ -195,14 +263,16 @@ const FormWrapper = styled.div`
   }
 
   & button {
-    border-radius: 10px;
     font-size: 12px;
+    border-radius: 7px;
+    box-shadow: none;
+    width: 40%;
   }
 
   ${MEDIA_QUERIES.MOBILE} {
     & {
       width: 100%;
-      height: 500px;
+      height: 80vh;
     }
   }
 `;
@@ -213,21 +283,35 @@ const Wrapper = styled.div`
   padding: 2rem;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  /* align-items: center; */
   justify-content: center;
-
-  small {
-    cursor: pointer;
-  }
 
   h3 {
     margin-bottom: 2rem;
-    text-align: center;
-    font-size: 16px;
+    font-size: 1.5rem;
+    /* font-size: 16px; */
   }
 
   form {
     width: 100%;
+  }
+
+  & .sign-up-btn-wrapper p {
+    color: ${defaultTheme.primaryColor[400]};
+    cursor: pointer;
+  }
+
+  & .sign-in-toggle-wrapper {
+    position: absolute;
+    bottom: 10px;
+    padding: 1rem 0;
+    font-size: 11px;
+    cursor: pointer;
+  }
+
+  & .label {
+    font-size: 12px;
+    font-weight: bold;
   }
 
   ${MEDIA_QUERIES.MOBILE} {

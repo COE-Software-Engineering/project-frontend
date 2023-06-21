@@ -13,13 +13,13 @@ body {
   height: 100%;
   background-color:${({ theme }) => theme.bodyBackgroundColor};
   color:${({ theme }) => theme.textColor};
-  font-family: 'Montserrat', sans-serif;
-  font-weight:400;
+  font-family: 'Kumbh Sans', sans-serif;
+  /* font-weight:400; */
     font-size:12px;
   font-style:normal;
-    -webkit-font-smoothing: antialiased;
+    /* -webkit-font-smoothing: antialiased;
     -webkit-text-stroke-width: 0.1px;
-    -moz-osx-font-smoothing: grayscale;
+    -moz-osx-font-smoothing: grayscale; */
   transition:all 0.50s linear;
   scroll-behavior:smooth;
   overflow-x:hidden;

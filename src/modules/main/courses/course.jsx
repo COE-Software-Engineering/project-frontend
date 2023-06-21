@@ -3,14 +3,17 @@ import Headerbar from "../../../shared/components/Headerbar";
 import BreadCrumb from "../../../shared/components/BreadCrumb";
 import styled from "styled-components";
 import ComponentWrapper from "../dashboard/ComponentWrapper";
+import { useNavigate } from "react-router-dom";
 
 const Course = () => {
+  const navigate = useNavigate();
+
   return (
     <CourseWrapper>
       <Headerbar>
         <BreadCrumb
           items={[
-            { title: "Courses", onClick: () => window.history.back() },
+            { title: "Courses", onClick: () => navigate(-1) },
             { title: "Intro. to Software Eng." },
           ]}
         />

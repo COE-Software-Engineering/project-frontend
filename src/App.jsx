@@ -4,8 +4,10 @@ import { GlobalStyles } from "./shared/theme/globalStyles";
 import { darkTheme, defaultTheme, lightTheme } from "./shared/theme/theme";
 import { Suspense, useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Landingpage from "./modules/main/landing/landingpage";
 import MainRoutes from "./modules/main/mainRoutes";
+import Landingpage from "./modules/landing/landingpage";
+import LecturerSignup from "./modules/landing/LecturerSignup";
+import StudentSignup from "./modules/landing/StudentSignup";
 
 function App() {
   const [appTheme] = useState("dark");
@@ -17,7 +19,7 @@ function App() {
           token: {
             colorPrimary: `${defaultTheme.primaryColor[400]}`,
             borderRadius: 3,
-            fontFamily: "Montserrat,sans-serif",
+            fontFamily: "Kumbh Sans,sans-serif",
             boxShadow: "none",
           },
           components: {
@@ -39,6 +41,8 @@ function App() {
             <Suspense>
               <Routes>
                 <Route path="/" element={<Landingpage />} />
+                <Route path="/lecturer-signup" element={<LecturerSignup />} />
+                <Route path="/student-signup" element={<StudentSignup />} />
                 <Route path="/main/*" element={<MainRoutes />} />
               </Routes>
             </Suspense>

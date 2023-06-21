@@ -11,7 +11,7 @@ const Dashboard = () => {
     <DashboardWrapper>
       <MainAreaWrapper>
         <RecentCourses />
-        <RecentCourses />
+        {/* <RecentCourses /> */}
       </MainAreaWrapper>
       <AsideAreaWrapper>
         <Timeline />
