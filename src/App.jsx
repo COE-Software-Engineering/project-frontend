@@ -1,35 +1,56 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { ConfigProvider, theme } from "antd";
+import { ThemeProvider } from "styled-components";
+import { GlobalStyles } from "./shared/theme/globalStyles";
+import { darkTheme, defaultTheme, lightTheme } from "./shared/theme/theme";
+import { Suspense, useState } from "react";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import MainRoutes from "./modules/main/mainRoutes";
+import Landingpage from "./modules/landing/landingpage";
+import LecturerSignup from "./modules/landing/LecturerSignup";
+import StudentSignup from "./modules/landing/StudentSignup";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [appTheme] = useState("dark");
 
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <ConfigProvider
+        theme={{
+          token: {
+            colorPrimary: `${defaultTheme.primaryColor[400]}`,
+            borderRadius: 3,
+            fontFamily: "Kumbh Sans,sans-serif",
+            boxShadow: "none",
+          },
+          components: {
+            Calendar: {
+              colorBgContainer: "transparent",
+              fontSize: "10px",
+              fontSizeSM: "10px",
+              fontSizeLG: "10px",
+            },
+          },
+
+          algorithm:
+            appTheme === "light" ? theme.defaultAlgorithm : theme.darkAlgorithm,
+        }}
+      >
+        <ThemeProvider theme={appTheme === "light" ? lightTheme : darkTheme}>
+          <GlobalStyles />
+          <BrowserRouter>
+            <Suspense>
+              <Routes>
+                <Route path="/" element={<Landingpage />} />
+                <Route path="/lecturer-signup" element={<LecturerSignup />} />
+                <Route path="/student-signup" element={<StudentSignup />} />
+                <Route path="/main/*" element={<MainRoutes />} />
+              </Routes>
+            </Suspense>
+          </BrowserRouter>
+        </ThemeProvider>
+      </ConfigProvider>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
