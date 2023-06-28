@@ -19,7 +19,7 @@ function App() {
           token: {
             colorPrimary: `${defaultTheme.primaryColor[400]}`,
             borderRadius: 3,
-            fontFamily: "Kumbh Sans,sans-serif",
+            fontFamily: "Manrope,sans-serif",
             boxShadow: "none",
           },
           components: {
@@ -28,6 +28,12 @@ function App() {
               fontSize: "10px",
               fontSizeSM: "10px",
               fontSizeLG: "10px",
+            },
+            Segmented: {
+              fontSize: "12px",
+            },
+            Dropdown: {
+              colorBgElevated: "transparent",
             },
           },
 

@@ -13,9 +13,9 @@ body {
   height: 100%;
   background-color:${({ theme }) => theme.bodyBackgroundColor};
   color:${({ theme }) => theme.textColor};
-  font-family: 'Kumbh Sans', sans-serif;
-  /* font-weight:400; */
-    font-size:12px;
+  font-family: 'Manrope', sans-serif;
+  /* font-weight:300; */
+    /* font-size:12px; */
   font-style:normal;
     /* -webkit-font-smoothing: antialiased;
     -webkit-text-stroke-width: 0.1px;
@@ -27,7 +27,7 @@ body {
 
 ion-icon {
     --ionicon-stroke-width: 16px;
-    color: white;
+    color: ${({ theme }) => theme.textColor};
     font-size: 16px;
   }
 

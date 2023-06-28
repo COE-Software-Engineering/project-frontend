@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Headerbar from "../../../shared/components/Headerbar";
 import IonIcon from "../../../shared/components/Ionicon";
 import { defaultTheme } from "../../../shared/theme/theme";
+import { Input, Upload } from "antd";
 
 const Files = () => {
   return (
@@ -11,6 +12,12 @@ const Files = () => {
         <p>My Files</p>
       </Headerbar>
       <ContentWrapper>
+        <Upload
+          // type="file"
+          // hidden
+
+          style={{ width: "100%", position: "absolute", height: "100%" }}
+        />
         <FileUploaderWrapper>
           <IonIcon iconName="cloud-upload" />
           <p>Darg and drop here</p>
@@ -46,6 +53,7 @@ const FileUploaderWrapper = styled.div`
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  position: relative;
 
   ion-icon {
     font-size: 80px;

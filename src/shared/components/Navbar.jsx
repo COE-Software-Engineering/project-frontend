@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import IonIcon from "./Ionicon";
-import { Avatar, Button } from "antd";
+import { Avatar, Button, Dropdown } from "antd";
 import Searchbar from "./Searchbar";
 import { MEDIA_QUERIES } from "../utils/constants";
 import Drawerbar from "./Drawerbar";
@@ -8,6 +8,19 @@ import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const navigate = useNavigate();
+
+  const items = [
+    {
+      key: "1",
+      label: <p>Khobby</p>,
+      onClick: () => navigate("/main/profile"),
+    },
+    {
+      key: "2",
+      label: <p>Log out</p>,
+      onClick: () => navigate("/"),
+    },
+  ];
 
   return (
     <NavWrapper>
@@ -18,14 +31,22 @@ const Navbar = () => {
       {/* <Searchbar /> */}
       <ToolsWrapper>
         <Button type="ghost" icon={<IonIcon iconName={"notifications"} />} />
-        <Avatar
-          src=""
-          size={"small"}
-          style={{ cursor: "pointer" }}
-          onClick={() => navigate("/main/profile")}
+
+        <Dropdown
+          menu={{
+            items,
+          }}
+          placement="bottom"
         >
-          A
-        </Avatar>
+          <Avatar
+            src=""
+            size={"small"}
+            style={{ cursor: "pointer" }}
+            onClick={() => navigate("/main/profile")}
+          >
+            A
+          </Avatar>
+        </Dropdown>
       </ToolsWrapper>
     </NavWrapper>
   );

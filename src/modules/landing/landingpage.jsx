@@ -4,9 +4,11 @@ import { defaultTheme } from "../../shared/theme/theme";
 import { useState } from "react";
 import { MEDIA_QUERIES } from "../../shared/utils/constants";
 import IonIcon from "../../shared/components/Ionicon";
+import { useNavigate } from "react-router-dom";
 
 const Landingpage = () => {
   const [isStudentSignin, setIsStudentSignin] = useState(false);
+  const navigate = useNavigate();
   const [form] = Form.useForm();
   const onFinish = (values) => {
     console.log("Success:", values);
@@ -35,10 +37,12 @@ const Landingpage = () => {
     {
       key: "1",
       label: <p>As lecturer</p>,
+      onClick: () => navigate("/lecturer-signup"),
     },
     {
       key: "2",
       label: <p>As student</p>,
+      onClick: () => navigate("/student-signup"),
     },
   ];
 
@@ -48,7 +52,6 @@ const Landingpage = () => {
         <img src="/knust-logo.png" alt="logo" />
 
         <Dropdown
-          style={{ backgroundColor: "red" }}
           menu={{
             items,
           }}
@@ -59,8 +62,7 @@ const Landingpage = () => {
             style={{
               backgroundColor: "transparent",
               boxShadow: 0,
-              border: "1px solid rgba(255, 255, 255,0.1)",
-              borderRadius: "20px",
+              borderRadius: "7px",
               fontSize: "12px",
             }}
           >
@@ -102,7 +104,6 @@ const Landingpage = () => {
                 },
               ]}
             >
-              <label className="label">Email</label>
               <Input className="input" placeholder="Email" />
             </Form.Item>
 
@@ -115,7 +116,6 @@ const Landingpage = () => {
                 },
               ]}
             >
-              <label className="label">Password</label>
               <Input.Password
                 className="input"
                 placeholder="Password"
@@ -129,7 +129,11 @@ const Landingpage = () => {
             </Form.Item>
 
             <Form.Item>
-              <Checkbox children={<p>Remember me</p>} />
+              <Checkbox
+                style={{ backgroundColor: "transparent" }}
+                defaultChecked
+                children={<p>Remember me</p>}
+              />
             </Form.Item>
 
             <Form.Item>
@@ -196,6 +200,10 @@ export const HeaderWrapper = styled.nav`
     width: 25px;
     height: 30px;
   }
+
+  & button {
+    border: 1px solid ${({ theme }) => theme.borderColor};
+  }
 `;
 
 const HeroWrapper = styled.div`
@@ -217,7 +225,7 @@ const HeroWrapper = styled.div`
   h3 {
     font-size: 2rem;
     margin: 10px 0;
-    font-family: "Lobster Two", sans-serif;
+    font-family: "DM Serif Display", sans-serif;
   }
 
   p {
@@ -249,13 +257,14 @@ const FormWrapper = styled.div`
   align-items: center;
   justify-content: center;
   position: relative;
-  background-color: ${({ theme }) => theme.accentColor};
+  background-color: ${({ theme }) => theme.landingSecondaryColor};
 
   & .input {
     background-color: transparent;
-    margin-top: 0.5rem;
     border-radius: 7px;
+    background-color: ${({ theme }) => theme.bodyBackgroundColor};
     /* font-size: 12px; */
+    border: none;
   }
 
   & .input::placeholder {
@@ -266,7 +275,7 @@ const FormWrapper = styled.div`
     font-size: 12px;
     border-radius: 7px;
     box-shadow: none;
-    width: 40%;
+    width: 100px;
   }
 
   ${MEDIA_QUERIES.MOBILE} {
@@ -290,6 +299,7 @@ const Wrapper = styled.div`
     margin-bottom: 2rem;
     font-size: 1.5rem;
     /* font-size: 16px; */
+    font-family: "DM Serif Display", "Manrope", sans-serif;
   }
 
   form {
@@ -307,11 +317,6 @@ const Wrapper = styled.div`
     padding: 1rem 0;
     font-size: 11px;
     cursor: pointer;
-  }
-
-  & .label {
-    font-size: 12px;
-    font-weight: bold;
   }
 
   ${MEDIA_QUERIES.MOBILE} {

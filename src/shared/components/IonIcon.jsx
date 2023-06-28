@@ -1,7 +1,7 @@
 import React from "react";
 
-const IonIcon = ({ iconName }) => {
-  return <ion-icon name={iconName}></ion-icon>;
+const IonIcon = ({ iconName, color }) => {
+  return <ion-icon name={iconName} color={color}></ion-icon>;
 };
 
 export default IonIcon;

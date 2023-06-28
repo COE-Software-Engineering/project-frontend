@@ -9,8 +9,6 @@ import { sidebarLinks } from "../utils/data";
 const Sidebar = () => {
   const navigate = useNavigate();
 
-  
-
   console.log(window.location.pathname);
 
   return (
@@ -32,18 +30,17 @@ const Sidebar = () => {
 };
 
 const SidebarWrapper = styled.div`
-  width: 160px;
-  padding: 1rem 0 0 0;
+  width: 200px;
+  padding: 1rem 1rem 0 0;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  position: sticky;
-  top: 60px;
-  /* box-shadow: 2px 0 4px 0px rgba(0, 0, 0, 0.1); */
+  box-shadow: 0.5px 0 0px 0px ${({ theme }) => theme.accentColor2};
+  transition: all 0.3s ease-in-out 0s;
 
   & .active {
-    background: rgba(255, 255, 255, 0.02);
+    background: ${({ theme }) => theme.accentColor2};
     backdrop-filter: blur(4px);
     -webkit-backdrop-filter: blur(4px);
     border-top-right-radius: 10px;
@@ -65,8 +62,8 @@ export const SidebarItem = styled.div`
   align-items: center;
   justify-content: flex-start;
   margin-bottom: 1rem;
+  padding-left: 1rem;
   cursor: pointer;
-  padding: 0 1rem;
 
   & p {
     margin-left: 0.5rem;

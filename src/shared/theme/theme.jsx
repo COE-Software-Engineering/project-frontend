@@ -17,6 +17,10 @@ export const lightTheme = {
   ...defaultTheme,
   bodyBackgroundColor: "#fff",
   textColor: "#181515",
+  accentColor: "#21212b",
+  accentColor2: "#f8f8ff",
+  landingSecondaryColor: "#f8f8ff",
+  borderColor: "rgba(0,0,0,0.1)",
 };
 
 export const darkTheme = {
@@ -24,4 +28,7 @@ export const darkTheme = {
   bodyBackgroundColor: "#181820",
   textColor: "#fff",
   accentColor: "#21212b",
+  accentColor2: "rgba(255, 255, 255, 0.02)",
+  landingSecondaryColor: "#21212b",
+  borderColor: "rgba(255,255,255,0.1)",
 };
