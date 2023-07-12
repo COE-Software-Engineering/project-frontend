@@ -14,15 +14,15 @@ const Profile = () => {
       <HeaderContentWrapper>
         <div className="img-details-wrapper">
           <div className="img-wrapper">
-            <img src="/knust-logo.png" alt="user-img" />
+            {/* <img src="" alt="user-img" /> */}
           </div>
           <div className="header-details-wrapper">
             <h3>Owusu-Ansah Solomon</h3>
             <p>Student</p>
           </div>
         </div>
-        <Button type="default" icon={<IonIcon iconName={"pencil"} />}>
-          Edit
+        <Button type="primary" shape="round">
+          Update Profile
         </Button>
       </HeaderContentWrapper>
       <BodyContentWrapper>
@@ -59,6 +59,10 @@ const HeaderContentWrapper = styled.div`
   align-items: center;
   justify-content: space-between;
 
+  & h3 {
+    font-family: "DM Serif Text", "Poppins", sans-serif;
+  }
+
   & .img-details-wrapper {
     display: flex;
     flex-direction: row;
@@ -68,6 +72,7 @@ const HeaderContentWrapper = styled.div`
   }
 
   & .img-wrapper {
+    background-color: #eee;
     width: 100px;
     height: 100px;
     border-radius: 10px;
@@ -81,11 +86,6 @@ const HeaderContentWrapper = styled.div`
 
   & .header-details-wrapper h3 {
     font-size: 2rem;
-  }
-
-  & button {
-    background-color: transparent;
-    border: 1px solid ${defaultTheme.primaryColor[400]};
   }
 
   ${MEDIA_QUERIES.MOBILE} {

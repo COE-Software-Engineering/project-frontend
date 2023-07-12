@@ -10,7 +10,7 @@ const HeaderBarWrapper = styled.div`
   margin-bottom: 1rem;
 
   p {
-    font-weight: 800;
+    font-weight: 700;
   }
 `;
 

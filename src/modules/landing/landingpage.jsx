@@ -82,7 +82,7 @@ const Landingpage = () => {
       </HeroWrapper>
       <FormWrapper>
         <Wrapper>
-          <h3>Welcome back</h3>
+          <h3>Welcome back,{isStudentSignin ? " Student" : " Lecturer"}</h3>
           <Form
             form={form}
             name="basic"
@@ -147,14 +147,14 @@ const Landingpage = () => {
             {isStudentSignin ? (
               <span>
                 Are you a lecturer?{" "}
-                <span style={{ color: `${defaultTheme.primaryColor[400]}` }}>
+                <span style={{ color: `${defaultTheme.primaryColor}` }}>
                   Sign in
                 </span>
               </span>
             ) : (
               <span>
                 Are you a student?{" "}
-                <span style={{ color: `${defaultTheme.primaryColor[400]}` }}>
+                <span style={{ color: `${defaultTheme.primaryColor}` }}>
                   Sign in
                 </span>
               </span>
@@ -225,7 +225,7 @@ const HeroWrapper = styled.div`
   h3 {
     font-size: 2rem;
     margin: 10px 0;
-    font-family: "DM Serif Display", sans-serif;
+    font-family: "DM Serif Text", sans-serif;
   }
 
   p {
@@ -257,7 +257,7 @@ const FormWrapper = styled.div`
   align-items: center;
   justify-content: center;
   position: relative;
-  background-color: ${({ theme }) => theme.landingSecondaryColor};
+  background-color: ${({ theme }) => theme.accentColor2};
 
   & .input {
     background-color: transparent;
@@ -299,7 +299,7 @@ const Wrapper = styled.div`
     margin-bottom: 2rem;
     font-size: 1.5rem;
     /* font-size: 16px; */
-    font-family: "DM Serif Display", "Manrope", sans-serif;
+    font-family: "DM Serif Text", "Poppins", sans-serif;
   }
 
   form {
@@ -307,7 +307,7 @@ const Wrapper = styled.div`
   }
 
   & .sign-up-btn-wrapper p {
-    color: ${defaultTheme.primaryColor[400]};
+    color: ${defaultTheme.primaryColor};
     cursor: pointer;
   }
 

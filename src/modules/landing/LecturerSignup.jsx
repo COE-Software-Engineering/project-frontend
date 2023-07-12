@@ -247,7 +247,7 @@ const HeaderWrapper = styled.div`
   align-items: center;
 
   & h3 {
-    font-family: "DM Serif Display", sans-serif;
+    font-family: "DM Serif Text", sans-serif;
   }
 
   & .segmented-block {

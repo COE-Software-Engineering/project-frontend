@@ -10,14 +10,14 @@ const Course = () => {
 
   return (
     <CourseWrapper>
-      <Headerbar>
+      {/* <Headerbar>
         <BreadCrumb
           items={[
             { title: "Courses", onClick: () => navigate(-1) },
             { title: "Intro. to Software Eng." },
           ]}
         />
-      </Headerbar>
+      </Headerbar> */}
       <ContentWrapper>
         <CourseDetailsWrapper>
           <h3>INTRODUCTION TO SOFTWARE ENGINEERING</h3>
@@ -90,6 +90,7 @@ const CourseDetailsWrapper = styled.div`
   & h3 {
     font-size: 2rem;
     display: block;
+    font-family: "DM Serif Text", "Poppins", sans-serif;
   }
 `;
 

@@ -1,16 +1,14 @@
 import React from "react";
 import styled from "styled-components";
-import Headerbar from "../../../shared/components/Headerbar";
 import IonIcon from "../../../shared/components/Ionicon";
 import { defaultTheme } from "../../../shared/theme/theme";
 import { Input, Upload } from "antd";
+import Titlebar from "../../../shared/components/Titlebar";
 
 const Files = () => {
   return (
     <FilesWrapper>
-      <Headerbar>
-        <p>My Files</p>
-      </Headerbar>
+      <Titlebar title="My Files" />
       <ContentWrapper>
         <Upload
           // type="file"
@@ -65,7 +63,7 @@ const FileUploaderWrapper = styled.div`
   }
 
   span {
-    color: ${defaultTheme.primaryColor[400]};
+    color: ${defaultTheme.primaryColor};
   }
 `;
 

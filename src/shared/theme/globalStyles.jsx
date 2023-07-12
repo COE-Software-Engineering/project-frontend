@@ -13,20 +13,20 @@ body {
   height: 100%;
   background-color:${({ theme }) => theme.bodyBackgroundColor};
   color:${({ theme }) => theme.textColor};
-  font-family: 'Manrope', sans-serif;
-  /* font-weight:300; */
+  font-family: 'Poppins', sans-serif;
+  font-weight:400;
     /* font-size:12px; */
   font-style:normal;
-    /* -webkit-font-smoothing: antialiased;
-    -webkit-text-stroke-width: 0.1px;
-    -moz-osx-font-smoothing: grayscale; */
+    -webkit-font-smoothing: antialiased;
+    /* -webkit-text-stroke-width: 0.1px; */
+    -moz-osx-font-smoothing: grayscale;
   transition:all 0.50s linear;
   scroll-behavior:smooth;
   overflow-x:hidden;
 }
 
 ion-icon {
-    --ionicon-stroke-width: 16px;
+    --ionicon-stroke-width: 10px;
     color: ${({ theme }) => theme.textColor};
     font-size: 16px;
   }

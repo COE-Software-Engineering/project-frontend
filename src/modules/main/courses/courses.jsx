@@ -1,9 +1,9 @@
 import React from "react";
 import styled from "styled-components";
-import Headerbar from "../../../shared/components/Headerbar";
 import { MEDIA_QUERIES } from "../../../shared/utils/constants";
 import { useNavigate } from "react-router-dom";
 import CourseCard from "./CourseCard";
+import Titlebar from "../../../shared/components/Titlebar";
 
 const Courses = () => {
   const courses = ["", "", "", "", "", "", "", "", ""];
@@ -11,9 +11,7 @@ const Courses = () => {
 
   return (
     <CoursesWrapper>
-      <Headerbar>
-        <p>My Courses</p>
-      </Headerbar>
+      <Titlebar title={"My Courses"} />
       <ContentWrapper>
         {courses.map((course, index) => (
           <CourseCard key={index} />

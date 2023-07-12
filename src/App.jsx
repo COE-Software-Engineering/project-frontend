@@ -2,24 +2,27 @@ import { ConfigProvider, theme } from "antd";
 import { ThemeProvider } from "styled-components";
 import { GlobalStyles } from "./shared/theme/globalStyles";
 import { darkTheme, defaultTheme, lightTheme } from "./shared/theme/theme";
-import { Suspense, useState } from "react";
+import { Suspense, lazy, useContext } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import MainRoutes from "./modules/main/mainRoutes";
-import Landingpage from "./modules/landing/landingpage";
-import LecturerSignup from "./modules/landing/LecturerSignup";
-import StudentSignup from "./modules/landing/StudentSignup";
+import { LIGHTTHEME } from "./shared/utils/constants";
+import Loader from "./shared/components/Loader";
+import { GlobalContext } from "./shared/context/context";
+
+const LandingPage = lazy(() => import("./modules/landing/landingpage"));
+const LecturerSignup = lazy(() => import("./modules/landing/LecturerSignup"));
+const StudentSignup = lazy(() => import("./modules/landing/StudentSignup"));
+const MainRoutes = lazy(() => import("./modules/main/mainRoutes"));
 
 function App() {
-  const [appTheme] = useState("dark");
-
+  const { appTheme } = useContext(GlobalContext);
   return (
     <>
       <ConfigProvider
         theme={{
           token: {
-            colorPrimary: `${defaultTheme.primaryColor[400]}`,
+            colorPrimary: `${defaultTheme.primaryColor}`,
             borderRadius: 3,
-            fontFamily: "Manrope,sans-serif",
+            fontFamily: "Poppins,sans-serif",
             boxShadow: "none",
           },
           components: {
@@ -38,15 +41,17 @@ function App() {
           },
 
           algorithm:
-            appTheme === "light" ? theme.defaultAlgorithm : theme.darkAlgorithm,
+            appTheme === LIGHTTHEME
+              ? theme.defaultAlgorithm
+              : theme.darkAlgorithm,
         }}
       >
-        <ThemeProvider theme={appTheme === "light" ? lightTheme : darkTheme}>
+        <ThemeProvider theme={appTheme === LIGHTTHEME ? lightTheme : darkTheme}>
           <GlobalStyles />
           <BrowserRouter>
-            <Suspense>
+            <Suspense fallback={<Loader />}>
               <Routes>
-                <Route path="/" element={<Landingpage />} />
+                <Route path="/" element={<LandingPage />} />
                 <Route path="/lecturer-signup" element={<LecturerSignup />} />
                 <Route path="/student-signup" element={<StudentSignup />} />
                 <Route path="/main/*" element={<MainRoutes />} />

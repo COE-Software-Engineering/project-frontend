@@ -47,7 +47,7 @@ const CommentSectionWrapper = styled.div`
     border: none;
     outline: none;
     padding: 1rem;
-    font-family: "Manrope", sans-serif;
+    font-family: "Poppins", sans-serif;
   }
 
   & input {
