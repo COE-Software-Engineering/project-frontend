@@ -7,6 +7,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { LIGHTTHEME } from "./shared/utils/constants";
 import Loader from "./shared/components/Loader";
 import { GlobalContext } from "./shared/context/context";
+import { AnimatePresence } from "framer-motion";
 
 const LandingPage = lazy(() => import("./modules/landing/landingpage"));
 const LecturerSignup = lazy(() => import("./modules/landing/LecturerSignup"));
@@ -48,16 +49,18 @@ function App() {
       >
         <ThemeProvider theme={appTheme === LIGHTTHEME ? lightTheme : darkTheme}>
           <GlobalStyles />
-          <BrowserRouter>
-            <Suspense fallback={<Loader />}>
-              <Routes>
-                <Route path="/" element={<LandingPage />} />
-                <Route path="/lecturer-signup" element={<LecturerSignup />} />
-                <Route path="/student-signup" element={<StudentSignup />} />
-                <Route path="/main/*" element={<MainRoutes />} />
-              </Routes>
-            </Suspense>
-          </BrowserRouter>
+          <AnimatePresence mode="wait">
+            <BrowserRouter>
+              <Suspense fallback={<Loader />}>
+                <Routes>
+                  <Route path="/" element={<LandingPage />} />
+                  <Route path="/lecturer-signup" element={<LecturerSignup />} />
+                  <Route path="/student-signup" element={<StudentSignup />} />
+                  <Route path="/main/*" element={<MainRoutes />} />
+                </Routes>
+              </Suspense>
+            </BrowserRouter>
+          </AnimatePresence>
         </ThemeProvider>
       </ConfigProvider>
     </>

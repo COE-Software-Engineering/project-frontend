@@ -5,20 +5,23 @@ import Timeline from "./Timeline";
 import MyFiles from "./MyFiles";
 import Calendar from "./Calendar";
 import { MEDIA_QUERIES } from "../../../shared/utils/constants";
+import AnimationLayout from "../../../shared/components/AnimationLayout";
 
 const Dashboard = () => {
   return (
-    <DashboardWrapper>
-      <MainAreaWrapper>
-        <RecentCourses />
-        <RecentCourses />
-      </MainAreaWrapper>
-      <AsideAreaWrapper>
-        <Timeline />
-        <Calendar />
-        <MyFiles />
-      </AsideAreaWrapper>
-    </DashboardWrapper>
+    <AnimationLayout>
+      <DashboardWrapper>
+        <MainAreaWrapper>
+          <RecentCourses />
+          <RecentCourses />
+        </MainAreaWrapper>
+        <AsideAreaWrapper>
+          <Timeline />
+          <Calendar />
+          <MyFiles />
+        </AsideAreaWrapper>
+      </DashboardWrapper>
+    </AnimationLayout>
   );
 };
 

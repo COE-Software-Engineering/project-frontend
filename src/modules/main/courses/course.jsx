@@ -4,13 +4,15 @@ import BreadCrumb from "../../../shared/components/BreadCrumb";
 import styled from "styled-components";
 import ComponentWrapper from "../dashboard/ComponentWrapper";
 import { useNavigate } from "react-router-dom";
+import AnimationLayout from "../../../shared/components/AnimationLayout";
 
 const Course = () => {
   const navigate = useNavigate();
 
   return (
-    <CourseWrapper>
-      {/* <Headerbar>
+    <AnimationLayout>
+      <CourseWrapper>
+        {/* <Headerbar>
         <BreadCrumb
           items={[
             { title: "Courses", onClick: () => navigate(-1) },
@@ -18,30 +20,31 @@ const Course = () => {
           ]}
         />
       </Headerbar> */}
-      <ContentWrapper>
-        <CourseDetailsWrapper>
-          <h3>INTRODUCTION TO SOFTWARE ENGINEERING</h3>
-          <div className="other-details">
-            <p>
-              <span className="bold">Course Code :</span>
-              <span>392</span>
-            </p>
-            <p>
-              <span className="bold">Credit Hours :</span>
-              <span>392</span>
-            </p>
-            <p>
-              <span className="bold">Lecturer :</span>
-              <span>392</span>
-            </p>
-          </div>
-        </CourseDetailsWrapper>
-        <CourseContentWrapper>
-          <ComponentWrapper title="Announcements" />
-          <ComponentWrapper title="Course materials" />
-        </CourseContentWrapper>
-      </ContentWrapper>
-    </CourseWrapper>
+        <ContentWrapper>
+          <CourseDetailsWrapper>
+            <h3>INTRODUCTION TO SOFTWARE ENGINEERING</h3>
+            <div className="other-details">
+              <p>
+                <span className="bold">Course Code :</span>
+                <span>392</span>
+              </p>
+              <p>
+                <span className="bold">Credit Hours :</span>
+                <span>392</span>
+              </p>
+              <p>
+                <span className="bold">Lecturer :</span>
+                <span>392</span>
+              </p>
+            </div>
+          </CourseDetailsWrapper>
+          <CourseContentWrapper>
+            <ComponentWrapper title="Announcements" />
+            <ComponentWrapper title="Course materials" />
+          </CourseContentWrapper>
+        </ContentWrapper>
+      </CourseWrapper>
+    </AnimationLayout>
   );
 };
 

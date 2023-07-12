@@ -36,7 +36,7 @@ const SidebarWrapper = styled.div`
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  box-shadow: 0.5px 0 0px 0px ${({ theme }) => theme.accentColor2};
+  box-shadow: 0.5px 0 0px 0px ${({ theme }) => theme.sidebarBorder};
   transition: all 0.3s ease-in-out 0s;
 
   & .active {

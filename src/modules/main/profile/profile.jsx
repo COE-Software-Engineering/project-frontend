@@ -7,34 +7,37 @@ import { Button } from "antd";
 import { defaultTheme } from "../../../shared/theme/theme";
 import CourseDetails from "./CourseDetails";
 import { MEDIA_QUERIES } from "../../../shared/utils/constants";
+import AnimationLayout from "../../../shared/components/AnimationLayout";
 
 const Profile = () => {
   return (
-    <ProfileWrapper>
-      <HeaderContentWrapper>
-        <div className="img-details-wrapper">
-          <div className="img-wrapper">
-            {/* <img src="" alt="user-img" /> */}
+    <AnimationLayout>
+      <ProfileWrapper>
+        <HeaderContentWrapper>
+          <div className="img-details-wrapper">
+            <div className="img-wrapper">
+              {/* <img src="" alt="user-img" /> */}
+            </div>
+            <div className="header-details-wrapper">
+              <h3>Owusu-Ansah Solomon</h3>
+              <p>Student</p>
+            </div>
           </div>
-          <div className="header-details-wrapper">
-            <h3>Owusu-Ansah Solomon</h3>
-            <p>Student</p>
-          </div>
-        </div>
-        <Button type="primary" shape="round">
-          Update Profile
-        </Button>
-      </HeaderContentWrapper>
-      <BodyContentWrapper>
-        <MainAreaWrapper>
-          <UserDetails />
-          <CourseDetails />
-        </MainAreaWrapper>
-        <AsideAreaWrapper>
-          <LoginActivity />
-        </AsideAreaWrapper>
-      </BodyContentWrapper>
-    </ProfileWrapper>
+          <Button type="primary" shape="round">
+            Update Profile
+          </Button>
+        </HeaderContentWrapper>
+        <BodyContentWrapper>
+          <MainAreaWrapper>
+            <UserDetails />
+            <CourseDetails />
+          </MainAreaWrapper>
+          <AsideAreaWrapper>
+            <LoginActivity />
+          </AsideAreaWrapper>
+        </BodyContentWrapper>
+      </ProfileWrapper>
+    </AnimationLayout>
   );
 };
 

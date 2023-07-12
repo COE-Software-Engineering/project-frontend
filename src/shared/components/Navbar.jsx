@@ -31,7 +31,7 @@ const Navbar = () => {
   ];
 
   return (
-    <NavWrapper>
+    <NavWrapper appTheme={appTheme}>
       <LogoWrapper>
         <Drawerbar />
         <img src="/knust-logo.png" alt="logo" />
@@ -97,6 +97,10 @@ const NavWrapper = styled.nav`
     align-items: center;
     justify-content: center;
     margin-right: 1rem;
+  }
+
+  ion-icon {
+    color: #ffffff;
   }
 `;
 

@@ -5,6 +5,7 @@ import { useState } from "react";
 import { MEDIA_QUERIES } from "../../shared/utils/constants";
 import IonIcon from "../../shared/components/Ionicon";
 import { useNavigate } from "react-router-dom";
+import AnimationLayout from "../../shared/components/AnimationLayout";
 
 const Landingpage = () => {
   const [isStudentSignin, setIsStudentSignin] = useState(false);
@@ -47,122 +48,124 @@ const Landingpage = () => {
   ];
 
   return (
-    <LandingPageWrapper>
-      <HeaderWrapper>
-        <img src="/knust-logo.png" alt="logo" />
+    <AnimationLayout>
+      <LandingPageWrapper>
+        <HeaderWrapper>
+          <img src="/knust-logo.png" alt="logo" />
 
-        <Dropdown
-          menu={{
-            items,
-          }}
-          placement="bottom"
-        >
-          <Button
-            type="ghost"
-            style={{
-              backgroundColor: "transparent",
-              boxShadow: 0,
-              borderRadius: "7px",
-              fontSize: "12px",
+          <Dropdown
+            menu={{
+              items,
             }}
+            placement="bottom"
           >
-            Sign up
-          </Button>
-        </Dropdown>
-      </HeaderWrapper>
-      <HeroWrapper>
-        <img src="/main-banner-img.svg" alt="" />
-        <div>
-          <h3>COE Virtual Classroom</h3>
-          <p>
-            This web app seeks to bridge the gap between students and lecturers
-            in terms of communication between them.
-          </p>
-        </div>
-      </HeroWrapper>
-      <FormWrapper>
-        <Wrapper>
-          <h3>Welcome back,{isStudentSignin ? " Student" : " Lecturer"}</h3>
-          <Form
-            form={form}
-            name="basic"
-            initialValues={{
-              remember: true,
-            }}
-            onFinish={onFinish}
-            onFinishFailed={onFinishFailed}
-            autoComplete="on"
-            layout="vertical"
-          >
-            <Form.Item
-              name="email"
-              rules={[
-                {
-                  required: true,
-                  type: "email",
-                  message: "Invalid email!",
-                },
-              ]}
+            <Button
+              type="ghost"
+              style={{
+                backgroundColor: "transparent",
+                boxShadow: 0,
+                borderRadius: "7px",
+                fontSize: "12px",
+              }}
             >
-              <Input className="input" placeholder="Email" />
-            </Form.Item>
-
-            <Form.Item
-              name="password"
-              rules={[
-                {
-                  required: true,
-                  message: "Invalid password!",
-                },
-              ]}
+              Sign up
+            </Button>
+          </Dropdown>
+        </HeaderWrapper>
+        <HeroWrapper>
+          <img src="/main-banner-img.svg" alt="" />
+          <div>
+            <h3>COE Virtual Classroom</h3>
+            <p>
+              This web app seeks to bridge the gap between students and
+              lecturers in terms of communication between them.
+            </p>
+          </div>
+        </HeroWrapper>
+        <FormWrapper>
+          <Wrapper>
+            <h3>Welcome back,{isStudentSignin ? " Student" : " Lecturer"}</h3>
+            <Form
+              form={form}
+              name="basic"
+              initialValues={{
+                remember: true,
+              }}
+              onFinish={onFinish}
+              onFinishFailed={onFinishFailed}
+              autoComplete="on"
+              layout="vertical"
             >
-              <Input.Password
-                className="input"
-                placeholder="Password"
-                styles={{
-                  input: {
-                    backgroundColor: "transparent",
-                    fontSize: "12px",
+              <Form.Item
+                name="email"
+                rules={[
+                  {
+                    required: true,
+                    type: "email",
+                    message: "Invalid email!",
                   },
-                }}
-              />
-            </Form.Item>
+                ]}
+              >
+                <Input className="input" placeholder="Email" />
+              </Form.Item>
 
-            <Form.Item>
-              <Checkbox
-                style={{ backgroundColor: "transparent" }}
-                defaultChecked
-                children={<p>Remember me</p>}
-              />
-            </Form.Item>
+              <Form.Item
+                name="password"
+                rules={[
+                  {
+                    required: true,
+                    message: "Invalid password!",
+                  },
+                ]}
+              >
+                <Input.Password
+                  className="input"
+                  placeholder="Password"
+                  styles={{
+                    input: {
+                      backgroundColor: "transparent",
+                      fontSize: "12px",
+                    },
+                  }}
+                />
+              </Form.Item>
 
-            <Form.Item>
-              <Button type="primary" htmlType="submit">
-                Sign in
-              </Button>
-            </Form.Item>
-          </Form>
+              <Form.Item>
+                <Checkbox
+                  style={{ backgroundColor: "transparent" }}
+                  defaultChecked
+                  children={<p>Keep me signed in</p>}
+                />
+              </Form.Item>
 
-          <small className="sign-in-toggle-wrapper" onClick={toggleAuth}>
-            {isStudentSignin ? (
-              <span>
-                Are you a lecturer?{" "}
-                <span style={{ color: `${defaultTheme.primaryColor}` }}>
+              <Form.Item>
+                <Button type="primary" htmlType="submit">
                   Sign in
+                </Button>
+              </Form.Item>
+            </Form>
+
+            <small className="sign-in-toggle-wrapper" onClick={toggleAuth}>
+              {isStudentSignin ? (
+                <span>
+                  Are you a lecturer?{" "}
+                  <span style={{ color: `${defaultTheme.primaryColor}` }}>
+                    Sign in
+                  </span>
                 </span>
-              </span>
-            ) : (
-              <span>
-                Are you a student?{" "}
-                <span style={{ color: `${defaultTheme.primaryColor}` }}>
-                  Sign in
+              ) : (
+                <span>
+                  Are you a student?{" "}
+                  <span style={{ color: `${defaultTheme.primaryColor}` }}>
+                    Sign in
+                  </span>
                 </span>
-              </span>
-            )}
-          </small>
-        </Wrapper>
-      </FormWrapper>
-    </LandingPageWrapper>
+              )}
+            </small>
+          </Wrapper>
+        </FormWrapper>
+      </LandingPageWrapper>
+    </AnimationLayout>
   );
 };
 

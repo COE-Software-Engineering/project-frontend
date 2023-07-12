@@ -1,13 +1,16 @@
 import React from "react";
 import CommentSection from "../../../shared/components/CommentSection";
 import styled from "styled-components";
+import AnimationLayout from "../../../shared/components/AnimationLayout";
 
 const Announcements = () => {
   return (
-    <AnnouncementsWrapper>
-      <CommentsWrapper></CommentsWrapper>
-      <CommentSection />
-    </AnnouncementsWrapper>
+    <AnimationLayout>
+      <AnnouncementsWrapper>
+        <CommentsWrapper></CommentsWrapper>
+        <CommentSection />
+      </AnnouncementsWrapper>
+    </AnimationLayout>
   );
 };
 

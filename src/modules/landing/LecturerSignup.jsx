@@ -1,199 +1,228 @@
+import { Button, Checkbox, Form, Input, message } from "antd";
 import React, { useState } from "react";
 import styled from "styled-components";
 import { MEDIA_QUERIES } from "../../shared/utils/constants";
-import { Button, Form, Input, Segmented, Select, Steps } from "antd";
-import IonIcon from "../../shared/components/Ionicon";
 import { defaultTheme } from "../../shared/theme/theme";
+import IonIcon from "../../shared/components/Ionicon";
+import { useNavigate } from "react-router-dom";
+import AnimationLayout from "../../shared/components/AnimationLayout";
 
 const LecturerSignup = () => {
-  const [value, setValue] = useState("personalDetails");
+  const navigate = useNavigate();
+
+  const [pageIndex, setPageIndex] = useState(1);
 
   const [form] = Form.useForm();
-
-  const onFinish = async (values) => {
+  const onFinish = (values) => {
     console.log("Success:", values);
-
-    message.success("Message submitted :)");
-    form.resetFields();
   };
 
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
+    message.error(`Authentication failed!`);
   };
 
-  const PersonalDetailsWrapper = () => (
+  const PersonalDetailsSection = () => (
     <>
-      <div className="form-divider">
-        <Form.Item
-          className="form-item"
-          name="firstName"
-          rules={[
-            {
-              required: true,
-              message: "Invalid first name!",
-            },
-          ]}
-        >
-          <Input className="input-field" placeholder="First Name" />
-        </Form.Item>
-        <Form.Item
-          className="form-item"
-          name="lastName"
-          rules={[
-            {
-              required: true,
-              message: "Invalid last name!",
-            },
-          ]}
-        >
-          <Input className="input-field" placeholder="Last Name" />
-        </Form.Item>
-      </div>
-      <div className="form-divider">
-        <Form.Item
-          className="form-item"
-          name="gender"
-          rules={[
-            {
-              required: true,
-              message: "Invalid gender!",
-            },
-          ]}
-        >
-          <Input className="input-field" placeholder="Gender" />
-          {/* <Select
-            // defaultValue="lucy"
-            className="select-input"
-            placeholder="Gender"
-            style={{ backgroundColor: "rebeccapurple" }}
-            options={[
-              {
-                value: "male",
-                label: "Male",
-              },
-              {
-                value: "female",
-                label: "Female",
-              },
-            ]}
-          /> */}
-        </Form.Item>
-        <Form.Item
-          className="form-item"
-          name="officeAddress"
-          rules={[
-            {
-              required: true,
-              message: "Invalid office address!",
-            },
-          ]}
-        >
-          <Input className="input-field" placeholder="Office Address" />
-        </Form.Item>
-      </div>
       <Form.Item
-        name="bio"
+        name="full_name"
         rules={[
           {
             required: true,
-            message: "Invalid bio!",
+            type: "string",
+            message: "Invalid full name!",
           },
         ]}
       >
-        <Input.TextArea className="message-field" placeholder="Bio" rows={6} />
+        <Input className="input" placeholder="Full name" />
       </Form.Item>
-      <div className="form-divider">
-        <Form.Item
-          className="form-item"
-          name="phoneNumber"
-          rules={[
-            {
-              required: true,
-              message: "Invalid phone number!",
+      <Form.Item
+        name="staff_id"
+        rules={[
+          {
+            required: true,
+            // type: "number",
+            message: "Invalid staff id!",
+          },
+        ]}
+      >
+        <Input className="input" placeholder="Staff id" />
+      </Form.Item>
+      <Form.Item
+        name="email"
+        rules={[
+          {
+            required: true,
+            type: "email",
+            message: "Invalid email!",
+          },
+        ]}
+      >
+        <Input className="input" placeholder="Email" />
+      </Form.Item>
+      <Form.Item
+        name="password"
+        rules={[
+          {
+            required: true,
+            message: "Invalid password!",
+          },
+        ]}
+      >
+        <Input.Password
+          className="input"
+          placeholder="Password"
+          styles={{
+            input: {
+              backgroundColor: "transparent",
+              fontSize: "12px",
             },
-          ]}
-        >
-          <Input className="input-field" placeholder="Phone number" />
-        </Form.Item>
-        <Form.Item
-          className="form-item"
-          name="email"
-          rules={[
-            {
-              required: true,
-              type: "email",
-              message: "Invalid email!",
+          }}
+        />
+      </Form.Item>
+      <Form.Item
+        name="confirm_password"
+        rules={[
+          {
+            required: true,
+            message: "Invalid password!",
+          },
+        ]}
+      >
+        <Input.Password
+          className="input"
+          placeholder="Confirm password"
+          styles={{
+            input: {
+              backgroundColor: "transparent",
+              fontSize: "12px",
             },
-          ]}
-        >
-          <Input className="input-field" placeholder="Email" />
-        </Form.Item>
-      </div>
-      <div className="form-divider">
-        <Form.Item
-          className="form-item"
-          name="password"
-          rules={[
-            {
-              required: true,
-              message: "Invalid pasword!",
-            },
-          ]}
-        >
-          <Input className="input-field" placeholder="Password" />
-        </Form.Item>
-        <Form.Item
-          className="form-item"
-          name="confirmPassword"
-          rules={[
-            {
-              required: true,
-              message: "Invalid password!",
-            },
-          ]}
-        >
-          <Input className="input-field" placeholder="Confirm Password" />
-        </Form.Item>
-      </div>
-
+          }}
+        />
+      </Form.Item>
       <Form.Item>
-        <Button type="primary" htmlType="submit">
+        <Checkbox
+          style={{ backgroundColor: "transparent" }}
+          defaultChecked
+          children={<p>Keep me signed in</p>}
+        />
+      </Form.Item>
+      <Form.Item>
+        <Button type="primary" onClick={() => setPageIndex((prev) => prev + 1)}>
           Next
         </Button>
       </Form.Item>
     </>
   );
 
-  const CourseDetailsWrapper = () => <>Course Details</>;
+  const CourseDetailsSection = () => (
+    <>
+      <Form.Item
+        name="course_name"
+        rules={[
+          {
+            required: true,
+            type: "string",
+            message: "Invalid course name!",
+          },
+        ]}
+      >
+        <Input className="input" placeholder="Course name" />
+      </Form.Item>
+      <Form.Item
+        name="course_code"
+        rules={[
+          {
+            required: true,
+            type: "string",
+            message: "Invalid course code!",
+          },
+        ]}
+      >
+        <Input className="input" placeholder="Course code" />
+      </Form.Item>
+      <Form.Item
+        name="credit_hours"
+        rules={[
+          {
+            required: true,
+            // type: "number",
+            message: "Invalid credit hours!",
+          },
+        ]}
+      >
+        <Input className="input" placeholder="Credit Hours" />
+      </Form.Item>
+      <Form.Item
+        name="course_bio"
+        rules={[
+          {
+            required: false,
+            message: "Invalid details!",
+          },
+        ]}
+      >
+        <Input.TextArea
+          rows={4}
+          className="input"
+          placeholder="About Course"
+          styles={{
+            input: {
+              backgroundColor: "transparent",
+              fontSize: "12px",
+            },
+          }}
+        />
+      </Form.Item>
+
+      <Form.Item>
+        <Checkbox
+          style={{ backgroundColor: "transparent" }}
+          defaultChecked
+          children={<p>Add more course</p>}
+        />
+      </Form.Item>
+      <div
+        style={{
+          width: "100%",
+          display: "flex",
+          flexDirection: "row",
+          alignItems: "center",
+          justifyContent: "space-between",
+        }}
+      >
+        <Form.Item>
+          <Button
+            type="default"
+            style={{ backgroundColor: "transparent" }}
+            onClick={() => setPageIndex((prev) => prev - 1)}
+          >
+            Back
+          </Button>
+        </Form.Item>
+        <Form.Item>
+          <Button type="primary" htmlType="submit">
+            Sign up
+          </Button>
+        </Form.Item>
+      </div>
+    </>
+  );
 
   return (
-    <SignupWrapper>
-      <ContentWrapper>
-        <HeaderWrapper>
-          <h3>Let's help you get started</h3>
-          <Segmented
-            options={[
-              {
-                label: "Personal Details",
-                value: "personalDetails",
-                icon: <IonIcon iconName={"person-circle"} />,
-              },
-              {
-                label: "Course Details",
-                value: "courseDetails",
-                icon: <IonIcon iconName={"school"} />,
-              },
-            ]}
-            value={value}
-            onChange={setValue}
-            // block
-            className="segmented-block"
-          />
-        </HeaderWrapper>
-        <BodyWrapper>
-          <FormWrapper>
+    <AnimationLayout>
+      <StudentSignupWrapper>
+        <Button
+          type="ghost"
+          shape="circle"
+          icon={<IonIcon iconName={"arrow-back"} />}
+          style={{ position: "absolute", top: "10px", left: "10px" }}
+          onClick={() => navigate(-1)}
+        />
+        <FormWrapper>
+          <Wrapper>
+            <h3>Let's help you get started</h3>
             <Form
-              id="myForm"
               form={form}
               name="basic"
               initialValues={{
@@ -204,143 +233,99 @@ const LecturerSignup = () => {
               autoComplete="on"
               layout="vertical"
             >
-              {value === "personalDetails" ? (
-                <PersonalDetailsWrapper />
+              {pageIndex === 1 ? (
+                <PersonalDetailsSection />
               ) : (
-                <CourseDetailsWrapper />
+                <CourseDetailsSection />
               )}
             </Form>
-          </FormWrapper>
-        </BodyWrapper>
-      </ContentWrapper>
-    </SignupWrapper>
+          </Wrapper>
+        </FormWrapper>
+      </StudentSignupWrapper>
+    </AnimationLayout>
   );
 };
 
-const SignupWrapper = styled.div`
+const StudentSignupWrapper = styled.div`
   width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  scroll-behavior: smooth;
-
-  ${MEDIA_QUERIES.MOBILE} {
-    & {
-      flex-direction: column;
-    }
-  }
-`;
-
-const ContentWrapper = styled.div`
-  width: 60%;
-  height: 100%;
-  padding: 2rem 0;
-`;
-
-const HeaderWrapper = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-
-  & h3 {
-    font-family: "DM Serif Text", sans-serif;
-  }
-
-  & .segmented-block {
-    /* width: 100%; */
-    background-color: ${({ theme }) => theme.accentColor};
-    /* background-color: red; */
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    margin: 2rem 0;
-  }
-`;
-
-const BodyWrapper = styled.div`
-  width: 100%;
-  min-height: 300px;
-  /* background-color: ${({ theme }) => theme.accentColor2}; */
-  border-radius: 10px;
+  min-height: 100vh;
   padding: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 const FormWrapper = styled.div`
-  width: 100%;
+  width: 40%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  background-color: ${({ theme }) => theme.accentColor2};
 
-  ion-icon {
-    color: rgba(230, 230, 255, 0.5);
-  }
-
-  .form-divider {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  .form-item {
-    width: 48%;
-  }
-
-  .select-input {
+  & .input {
+    background-color: transparent;
+    border-radius: 7px;
+    background-color: ${({ theme }) => theme.bodyBackgroundColor};
+    /* font-size: 12px; */
     border: none;
-    border-radius: 4px;
-    background: ${({ theme }) => theme.accentColor2};
-    backdrop-filter: blur(3.5px);
-    -webkit-backdrop-filter: blur(3.5px);
   }
 
-  .input-field,
-  .message-field {
-    border: none;
-    border-radius: 4px;
-    padding: 6px;
-    background: ${({ theme }) => theme.accentColor2};
-    backdrop-filter: blur(3.5px);
-    -webkit-backdrop-filter: blur(3.5px);
-    /* border: 1px solid rgba(255, 255, 255, 0.18); */
-  }
-
-  .message-field {
-    height: 160px;
-    align-items: flex-start;
-  }
-
-  textarea::placeholder,
-  input::placeholder {
-    color: rgba(230, 230, 255, 0.5);
+  & .input::placeholder {
     font-size: 12px;
   }
 
-  button {
+  & button {
     font-size: 12px;
     border-radius: 7px;
     box-shadow: none;
+    width: 100px;
   }
 
-  @media screen and (max-width: 768px) {
+  ${MEDIA_QUERIES.MOBILE} {
     & {
       width: 100%;
-      padding-right: 0px;
     }
+  }
+`;
 
-    .form-divider {
-      flex-direction: column;
-    }
+const Wrapper = styled.div`
+  width: 100%;
+  height: 100%;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  /* align-items: center; */
+  justify-content: center;
 
-    .form-item {
-      width: 100%;
-    }
+  h3 {
+    margin-bottom: 2rem;
+    font-size: 1.5rem;
+    /* font-size: 16px; */
+    font-family: "DM Serif Text", "Poppins", sans-serif;
+  }
 
-    .input-field,
-    .message-field {
-      margin: 0;
+  form {
+    width: 100%;
+  }
+
+  & .sign-up-btn-wrapper p {
+    color: ${defaultTheme.primaryColor};
+    cursor: pointer;
+  }
+
+  & .sign-in-toggle-wrapper {
+    position: absolute;
+    bottom: 10px;
+    padding: 1rem 0;
+    font-size: 11px;
+    cursor: pointer;
+  }
+
+  ${MEDIA_QUERIES.MOBILE} {
+    & {
+      padding: 1rem;
     }
   }
 `;

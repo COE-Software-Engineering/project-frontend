@@ -2,9 +2,9 @@ import React from "react";
 import styled from "styled-components";
 import { MEDIA_QUERIES } from "../../../shared/utils/constants";
 
-const CourseCard = () => {
+const CourseCard = ({ width = "32%" }) => {
   return (
-    <CourseCardWrapper>
+    <CourseCardWrapper style={{ width: width }}>
       <ImageWrapper>
         <img src="/img.jpg" alt="course-img" />
       </ImageWrapper>
@@ -17,7 +17,7 @@ const CourseCard = () => {
 };
 
 const CourseCardWrapper = styled.div`
-  width: 32%;
+  /* width: 32%; */
   min-height: 200px;
   display: flex;
   flex-direction: column;
