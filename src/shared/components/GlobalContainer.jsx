@@ -25,6 +25,7 @@ const LayoutWrapper = styled.div`
   min-height: calc(100vh - 50px);
   display: flex;
   flex-direction: row;
+  position: relative;
 `;
 
 const ContentWrapper = styled.div`

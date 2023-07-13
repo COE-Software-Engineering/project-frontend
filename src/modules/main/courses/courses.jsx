@@ -1,25 +1,26 @@
 import React from "react";
 import styled from "styled-components";
-import Headerbar from "../../../shared/components/Headerbar";
 import { MEDIA_QUERIES } from "../../../shared/utils/constants";
 import { useNavigate } from "react-router-dom";
 import CourseCard from "./CourseCard";
+import Titlebar from "../../../shared/components/Titlebar";
+import AnimationLayout from "../../../shared/components/AnimationLayout";
 
 const Courses = () => {
   const courses = ["", "", "", "", "", "", "", "", ""];
   const navigate = useNavigate();
 
   return (
-    <CoursesWrapper>
-      <Headerbar>
-        <p>My Courses</p>
-      </Headerbar>
-      <ContentWrapper>
-        {courses.map((course, index) => (
-          <CourseCard key={index} />
-        ))}
-      </ContentWrapper>
-    </CoursesWrapper>
+    <AnimationLayout>
+      <CoursesWrapper>
+        <Titlebar title={"My Courses"} />
+        <ContentWrapper>
+          {courses.map((course, index) => (
+            <CourseCard key={index} width={"24%"} />
+          ))}
+        </ContentWrapper>
+      </CoursesWrapper>
+    </AnimationLayout>
   );
 };
 

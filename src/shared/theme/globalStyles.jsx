@@ -13,21 +13,21 @@ body {
   height: 100%;
   background-color:${({ theme }) => theme.bodyBackgroundColor};
   color:${({ theme }) => theme.textColor};
-  font-family: 'Kumbh Sans', sans-serif;
-  /* font-weight:400; */
-    font-size:12px;
+  font-family: 'Poppins', sans-serif;
+  font-weight:400;
+    /* font-size:12px; */
   font-style:normal;
-    /* -webkit-font-smoothing: antialiased;
-    -webkit-text-stroke-width: 0.1px;
-    -moz-osx-font-smoothing: grayscale; */
+    -webkit-font-smoothing: antialiased;
+    /* -webkit-text-stroke-width: 0.1px; */
+    -moz-osx-font-smoothing: grayscale;
   transition:all 0.50s linear;
   scroll-behavior:smooth;
   overflow-x:hidden;
 }
 
 ion-icon {
-    --ionicon-stroke-width: 16px;
-    color: white;
+    --ionicon-stroke-width: 10px;
+    color: ${({ theme }) => theme.textColor};
     font-size: 16px;
   }
 

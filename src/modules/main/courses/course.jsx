@@ -4,44 +4,47 @@ import BreadCrumb from "../../../shared/components/BreadCrumb";
 import styled from "styled-components";
 import ComponentWrapper from "../dashboard/ComponentWrapper";
 import { useNavigate } from "react-router-dom";
+import AnimationLayout from "../../../shared/components/AnimationLayout";
 
 const Course = () => {
   const navigate = useNavigate();
 
   return (
-    <CourseWrapper>
-      <Headerbar>
+    <AnimationLayout>
+      <CourseWrapper>
+        {/* <Headerbar>
         <BreadCrumb
           items={[
             { title: "Courses", onClick: () => navigate(-1) },
             { title: "Intro. to Software Eng." },
           ]}
         />
-      </Headerbar>
-      <ContentWrapper>
-        <CourseDetailsWrapper>
-          <h3>INTRODUCTION TO SOFTWARE ENGINEERING</h3>
-          <div className="other-details">
-            <p>
-              <span className="bold">Course Code :</span>
-              <span>392</span>
-            </p>
-            <p>
-              <span className="bold">Credit Hours :</span>
-              <span>392</span>
-            </p>
-            <p>
-              <span className="bold">Lecturer :</span>
-              <span>392</span>
-            </p>
-          </div>
-        </CourseDetailsWrapper>
-        <CourseContentWrapper>
-          <ComponentWrapper title="Announcements" />
-          <ComponentWrapper title="Course materials" />
-        </CourseContentWrapper>
-      </ContentWrapper>
-    </CourseWrapper>
+      </Headerbar> */}
+        <ContentWrapper>
+          <CourseDetailsWrapper>
+            <h3>INTRODUCTION TO SOFTWARE ENGINEERING</h3>
+            <div className="other-details">
+              <p>
+                <span className="bold">Course Code :</span>
+                <span>392</span>
+              </p>
+              <p>
+                <span className="bold">Credit Hours :</span>
+                <span>392</span>
+              </p>
+              <p>
+                <span className="bold">Lecturer :</span>
+                <span>392</span>
+              </p>
+            </div>
+          </CourseDetailsWrapper>
+          <CourseContentWrapper>
+            <ComponentWrapper title="Announcements" />
+            <ComponentWrapper title="Course materials" />
+          </CourseContentWrapper>
+        </ContentWrapper>
+      </CourseWrapper>
+    </AnimationLayout>
   );
 };
 
@@ -67,7 +70,7 @@ const CourseDetailsWrapper = styled.div`
   padding: 1rem;
   margin-bottom: 1rem;
   border-radius: 10px;
-  background: rgba(255, 255, 255, 0.02);
+  background: ${({ theme }) => theme.accentColor2};
   backdrop-filter: blur(4px);
   -webkit-backdrop-filter: blur(4px);
 
@@ -90,6 +93,7 @@ const CourseDetailsWrapper = styled.div`
   & h3 {
     font-size: 2rem;
     display: block;
+    font-family: "DM Serif Text", "Poppins", sans-serif;
   }
 `;
 

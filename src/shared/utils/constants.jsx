@@ -5,3 +5,6 @@ export const MEDIA_QUERIES = {
   DESKTOP: "@media only screen and (min-width: 1025px) and (max-width: 1200px)",
   TV: "@media only screen and (min-width: 1201px)",
 };
+
+export const LIGHTTHEME = "light";
+export const DARKTHEME = "dark";

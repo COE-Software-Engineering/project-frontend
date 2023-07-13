@@ -4,27 +4,21 @@ import { defaultTheme } from "../../shared/theme/theme";
 import { useState } from "react";
 import { MEDIA_QUERIES } from "../../shared/utils/constants";
 import IonIcon from "../../shared/components/Ionicon";
+import { useNavigate } from "react-router-dom";
+import AnimationLayout from "../../shared/components/AnimationLayout";
 
 const Landingpage = () => {
   const [isStudentSignin, setIsStudentSignin] = useState(false);
+  const navigate = useNavigate();
   const [form] = Form.useForm();
   const onFinish = (values) => {
     console.log("Success:", values);
-
-    if (isStudentSignin) {
-      if (values.confirmPassword === values.password) {
-        //something
-      } else {
-        message.error("Passwords do not match!");
-      }
-    } else {
-      //something
-    }
+    navigate("/main");
   };
 
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
-    message.error(`Authentication failed!`);
+    message.error(`Sign in failed!`);
   };
 
   const toggleAuth = () => {
@@ -35,130 +29,134 @@ const Landingpage = () => {
     {
       key: "1",
       label: <p>As lecturer</p>,
+      onClick: () => navigate("/lecturer-signup"),
     },
     {
       key: "2",
       label: <p>As student</p>,
+      onClick: () => navigate("/student-signup"),
     },
   ];
 
   return (
-    <LandingPageWrapper>
-      <HeaderWrapper>
-        <img src="/knust-logo.png" alt="logo" />
+    <AnimationLayout>
+      <LandingPageWrapper>
+        <HeaderWrapper>
+          <img src="/knust-logo.png" alt="logo" />
 
-        <Dropdown
-          style={{ backgroundColor: "red" }}
-          menu={{
-            items,
-          }}
-          placement="bottom"
-        >
-          <Button
-            type="ghost"
-            style={{
-              backgroundColor: "transparent",
-              boxShadow: 0,
-              border: "1px solid rgba(255, 255, 255,0.1)",
-              borderRadius: "20px",
-              fontSize: "12px",
+          <Dropdown
+            menu={{
+              items,
             }}
+            placement="bottom"
           >
-            Sign up
-          </Button>
-        </Dropdown>
-      </HeaderWrapper>
-      <HeroWrapper>
-        <img src="/main-banner-img.svg" alt="" />
-        <div>
-          <h3>COE Virtual Classroom</h3>
-          <p>
-            This web app seeks to bridge the gap between students and lecturers
-            in terms of communication between them.
-          </p>
-        </div>
-      </HeroWrapper>
-      <FormWrapper>
-        <Wrapper>
-          <h3>Welcome back</h3>
-          <Form
-            form={form}
-            name="basic"
-            initialValues={{
-              remember: true,
-            }}
-            onFinish={onFinish}
-            onFinishFailed={onFinishFailed}
-            autoComplete="on"
-            layout="vertical"
-          >
-            <Form.Item
-              name="email"
-              rules={[
-                {
-                  required: true,
-                  type: "email",
-                  message: "Invalid email!",
-                },
-              ]}
+            <Button
+              type="ghost"
+              style={{
+                backgroundColor: "transparent",
+                boxShadow: 0,
+                borderRadius: "7px",
+                fontSize: "12px",
+              }}
             >
-              <label className="label">Email</label>
-              <Input className="input" placeholder="Email" />
-            </Form.Item>
-
-            <Form.Item
-              name="password"
-              rules={[
-                {
-                  required: true,
-                  message: "Invalid password!",
-                },
-              ]}
+              Sign up
+            </Button>
+          </Dropdown>
+        </HeaderWrapper>
+        <HeroWrapper>
+          <img src="/main-banner-img.svg" alt="" />
+          <div>
+            <h3>COE Virtual Classroom</h3>
+            <p>
+              This web app seeks to bridge the gap between students and
+              lecturers in terms of communication between them.
+            </p>
+          </div>
+        </HeroWrapper>
+        <FormWrapper>
+          <Wrapper>
+            <h3>Welcome back,{isStudentSignin ? " Student" : " Lecturer"}</h3>
+            <Form
+              form={form}
+              name="basic"
+              initialValues={{
+                remember: true,
+              }}
+              onFinish={onFinish}
+              onFinishFailed={onFinishFailed}
+              autoComplete="on"
+              layout="vertical"
             >
-              <label className="label">Password</label>
-              <Input.Password
-                className="input"
-                placeholder="Password"
-                styles={{
-                  input: {
-                    backgroundColor: "transparent",
-                    fontSize: "12px",
+              <Form.Item
+                name="email"
+                rules={[
+                  {
+                    required: true,
+                    type: "email",
+                    message: "Invalid email!",
                   },
-                }}
-              />
-            </Form.Item>
+                ]}
+              >
+                <Input className="input" placeholder="Email" />
+              </Form.Item>
 
-            <Form.Item>
-              <Checkbox children={<p>Remember me</p>} />
-            </Form.Item>
+              <Form.Item
+                name="password"
+                rules={[
+                  {
+                    required: true,
+                    message: "Invalid password!",
+                  },
+                ]}
+              >
+                <Input.Password
+                  className="input"
+                  placeholder="Password"
+                  styles={{
+                    input: {
+                      backgroundColor: "transparent",
+                      fontSize: "12px",
+                    },
+                  }}
+                />
+              </Form.Item>
 
-            <Form.Item>
-              <Button type="primary" htmlType="submit">
-                Sign in
-              </Button>
-            </Form.Item>
-          </Form>
+              <Form.Item>
+                <Checkbox
+                  style={{ backgroundColor: "transparent" }}
+                  defaultChecked
+                  children={<p>Keep me signed in</p>}
+                />
+              </Form.Item>
 
-          <small className="sign-in-toggle-wrapper" onClick={toggleAuth}>
-            {isStudentSignin ? (
-              <span>
-                Are you a lecturer?{" "}
-                <span style={{ color: `${defaultTheme.primaryColor[400]}` }}>
+              <Form.Item>
+                <Button type="primary" htmlType="submit">
                   Sign in
+                </Button>
+              </Form.Item>
+            </Form>
+
+            <small className="sign-in-toggle-wrapper" onClick={toggleAuth}>
+              {isStudentSignin ? (
+                <span>
+                  Are you a lecturer?{" "}
+                  <span style={{ color: `${defaultTheme.primaryColor}` }}>
+                    Sign in
+                  </span>
                 </span>
-              </span>
-            ) : (
-              <span>
-                Are you a student?{" "}
-                <span style={{ color: `${defaultTheme.primaryColor[400]}` }}>
-                  Sign in
+              ) : (
+                <span>
+                  Are you a student?{" "}
+                  <span style={{ color: `${defaultTheme.primaryColor}` }}>
+                    Sign in
+                  </span>
                 </span>
-              </span>
-            )}
-          </small>
-        </Wrapper>
-      </FormWrapper>
-    </LandingPageWrapper>
+              )}
+            </small>
+          </Wrapper>
+        </FormWrapper>
+      </LandingPageWrapper>
+    </AnimationLayout>
   );
 };
 
@@ -196,6 +194,10 @@ export const HeaderWrapper = styled.nav`
     width: 25px;
     height: 30px;
   }
+
+  & button {
+    border: 1px solid ${({ theme }) => theme.borderColor};
+  }
 `;
 
 const HeroWrapper = styled.div`
@@ -217,7 +219,7 @@ const HeroWrapper = styled.div`
   h3 {
     font-size: 2rem;
     margin: 10px 0;
-    font-family: "Lobster Two", sans-serif;
+    font-family: "DM Serif Text", sans-serif;
   }
 
   p {
@@ -249,13 +251,14 @@ const FormWrapper = styled.div`
   align-items: center;
   justify-content: center;
   position: relative;
-  background-color: ${({ theme }) => theme.accentColor};
+  background-color: ${({ theme }) => theme.accentColor2};
 
   & .input {
     background-color: transparent;
-    margin-top: 0.5rem;
     border-radius: 7px;
+    background-color: ${({ theme }) => theme.bodyBackgroundColor};
     /* font-size: 12px; */
+    border: none;
   }
 
   & .input::placeholder {
@@ -266,7 +269,7 @@ const FormWrapper = styled.div`
     font-size: 12px;
     border-radius: 7px;
     box-shadow: none;
-    width: 40%;
+    width: 100px;
   }
 
   ${MEDIA_QUERIES.MOBILE} {
@@ -290,6 +293,7 @@ const Wrapper = styled.div`
     margin-bottom: 2rem;
     font-size: 1.5rem;
     /* font-size: 16px; */
+    font-family: "DM Serif Text", "Poppins", sans-serif;
   }
 
   form {
@@ -297,7 +301,7 @@ const Wrapper = styled.div`
   }
 
   & .sign-up-btn-wrapper p {
-    color: ${defaultTheme.primaryColor[400]};
+    color: ${defaultTheme.primaryColor};
     cursor: pointer;
   }
 
@@ -307,11 +311,6 @@ const Wrapper = styled.div`
     padding: 1rem 0;
     font-size: 11px;
     cursor: pointer;
-  }
-
-  & .label {
-    font-size: 12px;
-    font-weight: bold;
   }
 
   ${MEDIA_QUERIES.MOBILE} {

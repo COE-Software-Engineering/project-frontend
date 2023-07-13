@@ -109,7 +109,7 @@ const BodyContent = styled.div`
   padding-right: 1rem;
 
   & .active {
-    background: rgba(255, 255, 255, 0.02);
+    background: ${({ theme }) => theme.accentColor2};
     backdrop-filter: blur(4px);
     -webkit-backdrop-filter: blur(4px);
     border-top-right-radius: 10px;

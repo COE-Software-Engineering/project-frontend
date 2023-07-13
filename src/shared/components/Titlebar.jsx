@@ -14,7 +14,8 @@ const TitlebarWrapper = styled.div`
 
   p {
     text-transform: capitalize;
-    font-weight: 800;
+    font-weight: 700;
+    color: ${({ theme }) => theme.secondaryColor};
   }
 `;
 

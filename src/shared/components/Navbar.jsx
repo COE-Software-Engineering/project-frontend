@@ -1,31 +1,74 @@
 import styled from "styled-components";
 import IonIcon from "./Ionicon";
-import { Avatar, Button } from "antd";
+import { Avatar, Button, Dropdown } from "antd";
 import Searchbar from "./Searchbar";
-import { MEDIA_QUERIES } from "../utils/constants";
+import { DARKTHEME, LIGHTTHEME, MEDIA_QUERIES } from "../utils/constants";
 import Drawerbar from "./Drawerbar";
 import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { GlobalContext } from "../context/context";
+import { defaultTheme } from "../theme/theme";
 
 const Navbar = () => {
   const navigate = useNavigate();
+  const { appTheme, setAppTheme } = useContext(GlobalContext);
+
+  const changeTheme = () => {
+    setAppTheme((prev) => (prev === LIGHTTHEME ? DARKTHEME : LIGHTTHEME));
+  };
+
+  const items = [
+    {
+      key: "1",
+      label: <p>Khobby</p>,
+      onClick: () => navigate("/main/profile"),
+    },
+    {
+      key: "2",
+      label: <p>Log out</p>,
+      onClick: () => navigate("/"),
+    },
+  ];
 
   return (
-    <NavWrapper>
+    <NavWrapper appTheme={appTheme}>
       <LogoWrapper>
         <Drawerbar />
         <img src="/knust-logo.png" alt="logo" />
       </LogoWrapper>
       {/* <Searchbar /> */}
       <ToolsWrapper>
-        <Button type="ghost" icon={<IonIcon iconName={"notifications"} />} />
-        <Avatar
-          src=""
-          size={"small"}
-          style={{ cursor: "pointer" }}
-          onClick={() => navigate("/main/profile")}
+        <Button
+          type="ghost"
+          shape="circle"
+          icon={<IonIcon iconName={"notifications"} />}
+        />
+        <Button
+          type="ghost"
+          shape="circle"
+          icon={
+            <IonIcon iconName={appTheme === LIGHTTHEME ? "moon" : "sunny"} />
+          }
+          onClick={changeTheme}
+        />
+
+        <Dropdown
+          menu={{
+            items,
+          }}
+          placement="bottom"
         >
-          A
-        </Avatar>
+          <Avatar
+            src=""
+            size={"small"}
+            style={{
+              cursor: "pointer",
+              backgroundColor: `${defaultTheme.tertiaryColor2}`,
+            }}
+          >
+            A
+          </Avatar>
+        </Dropdown>
       </ToolsWrapper>
     </NavWrapper>
   );
@@ -54,6 +97,10 @@ const NavWrapper = styled.nav`
     align-items: center;
     justify-content: center;
     margin-right: 1rem;
+  }
+
+  ion-icon {
+    color: #ffffff;
   }
 `;
 
