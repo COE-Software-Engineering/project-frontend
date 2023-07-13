@@ -10,7 +10,7 @@ const CourseCard = ({ width = "32%" }) => {
       </ImageWrapper>
       <ContentWrapper>
         <p>COE 392: Embedded Systems</p>
-        <p>Ing B. Kommey</p>
+        <p className="course-lecturer">Ing B. Kommey</p>
       </ContentWrapper>
     </CourseCardWrapper>
   );
@@ -57,6 +57,10 @@ const ContentWrapper = styled.div`
   /* height: 50px; */
   padding-bottom: 1rem;
   padding-left: 1rem;
+
+  & .course-lecturer {
+    opacity: 0.7;
+  }
 `;
 
 export default CourseCard;

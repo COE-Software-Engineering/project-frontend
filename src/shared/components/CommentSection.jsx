@@ -1,19 +1,65 @@
 import React from "react";
 import styled from "styled-components";
 import IonIcon from "./Ionicon";
+import { Button, Checkbox, Form, Input, message } from "antd";
+import { MEDIA_QUERIES } from "../utils/constants";
+import { defaultTheme } from "../theme/theme";
 
 const CommentSection = () => {
+  const createCommnent = () => {};
+  const deleteComment = () => {};
+
+  const [form] = Form.useForm();
+
+  const onFinish = (values) => {
+    console.log("Success:", values);
+  };
+
+  const onFinishFailed = (errorInfo) => {
+    console.log("Failed:", errorInfo);
+    message.error(`Authentication failed!`);
+  };
+
   return (
     <CommentSectionWrapper>
-      <div className="attach-input-wrapper">
-        <button>
-          <IonIcon iconName={"attach"} />
-        </button>
-        <input type="text" placeholder="Type or send an announcement..." />
-      </div>
-      <button>
-        <IonIcon iconName={"send"} />
-      </button>
+      <Form
+        form={form}
+        name="basic"
+        initialValues={{
+          remember: true,
+        }}
+        onFinish={onFinish}
+        onFinishFailed={onFinishFailed}
+        autoComplete="on"
+        layout="vertical"
+      >
+        <Form.Item
+          name="title"
+          rules={[
+            {
+              message: "Invalid title!",
+            },
+          ]}
+        >
+          <Input className="input" placeholder="Title (optional)" />
+        </Form.Item>
+        <Form.Item
+          name="details"
+          rules={[
+            {
+              required: true,
+              message: "Invalid message!",
+            },
+          ]}
+        >
+          <Input.TextArea rows={7} className="input" placeholder="Message" />
+        </Form.Item>
+        <Form.Item>
+          <Button type="primary" htmlType="submit">
+            Send
+          </Button>
+        </Form.Item>
+      </Form>
     </CommentSectionWrapper>
   );
 };
@@ -21,44 +67,70 @@ const CommentSection = () => {
 const CommentSectionWrapper = styled.div`
   width: 100%;
   border-radius: 10px;
-  background: rgba(255, 255, 255, 0.02);
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
-  z-index: 10;
-  position: fixed;
   bottom: 20px;
   display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 1rem;
-  /* margin: 0 5rem; */
+  flex-direction: column;
 
-  & .attach-input-wrapper {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: flex-start;
+  form {
+    width: 100%;
   }
 
-  & input,
-  button {
+  & .sign-up-btn-wrapper p {
+    color: ${defaultTheme.primaryColor};
+    cursor: pointer;
+  }
+
+  & .sign-in-toggle-wrapper {
+    position: absolute;
+    bottom: 10px;
+    padding: 1rem 0;
+    font-size: 11px;
+    cursor: pointer;
+  }
+  & .input {
     background-color: transparent;
+    border-radius: 7px;
+    background-color: ${({ theme }) => theme.bodyBackgroundColor};
+    /* font-size: 12px; */
     border: none;
-    outline: none;
-    padding: 1rem;
-    font-family: "Poppins", sans-serif;
   }
 
-  & input {
-    width: 80%;
-    color: white;
+  & .input::placeholder {
+    font-size: 12px;
   }
 
   & button {
-    cursor: pointer;
-    border-radius: 10px;
-    /* height: 20px; */
+    font-size: 12px;
+    border-radius: 7px;
+    box-shadow: none;
+    width: 100px;
+  }
+`;
+
+const FormWrapper = styled.div`
+  width: 40%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  background-color: ${({ theme }) => theme.accentColor2};
+`;
+
+const Wrapper = styled.div`
+  width: 100%;
+  height: 100%;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  /* align-items: center; */
+  justify-content: center;
+
+  h3 {
+    margin-bottom: 2rem;
+    font-size: 1.5rem;
+    /* font-size: 16px; */
+    font-family: "DM Serif Text", "Poppins", sans-serif;
   }
 `;
 

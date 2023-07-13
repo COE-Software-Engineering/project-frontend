@@ -9,8 +9,8 @@ import AnimationLayout from "../../shared/components/AnimationLayout";
 
 const StudentSignup = () => {
   const navigate = useNavigate();
-
   const [form] = Form.useForm();
+
   const onFinish = (values) => {
     console.log("Success:", values);
   };

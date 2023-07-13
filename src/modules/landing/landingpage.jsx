@@ -13,21 +13,12 @@ const Landingpage = () => {
   const [form] = Form.useForm();
   const onFinish = (values) => {
     console.log("Success:", values);
-
-    if (isStudentSignin) {
-      if (values.confirmPassword === values.password) {
-        //something
-      } else {
-        message.error("Passwords do not match!");
-      }
-    } else {
-      //something
-    }
+    navigate("/main");
   };
 
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
-    message.error(`Authentication failed!`);
+    message.error(`Sign in failed!`);
   };
 
   const toggleAuth = () => {
