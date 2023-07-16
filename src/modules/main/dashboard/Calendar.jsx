@@ -1,6 +1,6 @@
 import React from "react";
 import { Calendar as AntdCalendar } from "antd";
-import ComponentWrapper from "./ComponentWrapper";
+import ComponentWrapper from "../../../shared/components/ComponentWrapper";
 
 const Calendar = () => {
   const onPanelChange = (value, mode) => {

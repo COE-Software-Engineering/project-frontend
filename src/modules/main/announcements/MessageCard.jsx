@@ -8,13 +8,7 @@ import { MEDIA_QUERIES } from "../../../shared/utils/constants";
 
 const MessageCard = ({ message }) => {
   return (
-    <MessageCardWrapper
-      style={{
-        borderRadius: `${
-          message.name === "Ama" ? "10px 10px 0 10px" : "10px 10px 10px 0"
-        }`,
-      }}
-    >
+    <MessageCardWrapper messageName={message.name}>
       <Titlebar title={message.name} />
       <p>{message.details}</p>
       <Space direction="horizontal">
@@ -33,12 +27,15 @@ const MessageCard = ({ message }) => {
 
 const MessageCardWrapper = styled.div`
   width: 70%;
+  background-color: ${({ theme }) => theme.accentColor2};
   /* height: 100%; */
   min-height: 50px;
   padding: 1rem;
   /* border-radius: 10px; */
-  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+  /* box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px; */
   cursor: pointer;
+  border-radius: ${(props) =>
+    props.messageName === "Ama" ? "10px 10px 0 10px" : "10px 10px 10px 0"};
 
   & p {
     margin: 0.5rem 0;

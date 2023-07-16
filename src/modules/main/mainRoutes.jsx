@@ -1,8 +1,9 @@
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import GlobalContainer from "../../shared/components/GlobalContainer";
-import { Suspense, lazy } from "react";
+import { Suspense, lazy, useContext, useEffect } from "react";
 import Loader from "../../shared/components/Loader";
 import AnimationLayout from "../../shared/components/AnimationLayout";
+import { GlobalContext } from "../../shared/context/context";
 
 const Dashboard = lazy(() => import("./dashboard/dashboard"));
 const Profile = lazy(() => import("./profile/profile"));
@@ -12,6 +13,13 @@ const Files = lazy(() => import("./files/files"));
 const Announcements = lazy(() => import("./announcements/announcements"));
 
 const MainRoutes = () => {
+  const { currentUser } = useContext(GlobalContext);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    !currentUser && navigate(-1);
+  });
+
   return (
     <AnimationLayout>
       <GlobalContainer

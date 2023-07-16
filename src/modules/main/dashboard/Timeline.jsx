@@ -1,5 +1,5 @@
 import React from "react";
-import ComponentWrapper from "./ComponentWrapper";
+import ComponentWrapper from "../../../shared/components/ComponentWrapper";
 
 const Timeline = () => {
   return (

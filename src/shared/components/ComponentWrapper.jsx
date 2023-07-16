@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import Titlebar from "../../../shared/components/Titlebar";
+import Titlebar from "./Titlebar";
 
 const ComponentWrapper = ({ title, styles, children }) => {
   return (

@@ -1,12 +1,39 @@
-import React from "react";
+import React, {
+  useMemo,
+  useState,
+  useContext,
+  useEffect,
+  useCallback,
+} from "react";
 import styled from "styled-components";
 import IonIcon from "../../../shared/components/Ionicon";
 import { defaultTheme } from "../../../shared/theme/theme";
 import { Input, Upload } from "antd";
 import Titlebar from "../../../shared/components/Titlebar";
 import AnimationLayout from "../../../shared/components/AnimationLayout";
+import { client } from "../../../shared/helpers/sanity/sanityClient";
+import { GlobalContext } from "../../../shared/context/context";
+import { userFilesQuery } from "../../../shared/helpers/sanity/sanityQueries";
 
 const Files = () => {
+  const { currentUser } = useContext(GlobalContext);
+
+  const [files, setFiles] = useState([]);
+
+  const fetchFiles = useCallback(async () => {
+    const q = userFilesQuery(currentUser?._id);
+    await client
+      .fetch(q)
+      .then((res) => {
+        setFiles(res);
+      })
+      .catch((err) => console.error(err));
+  }, [currentUser?._id]);
+
+  useEffect(() => {
+    fetchFiles();
+  }, [currentUser._id, fetchFiles]);
+
   return (
     <AnimationLayout>
       <FilesWrapper>

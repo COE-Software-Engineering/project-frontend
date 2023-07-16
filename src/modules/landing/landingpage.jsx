@@ -1,19 +1,45 @@
 import { Button, Checkbox, Dropdown, Form, Input, message } from "antd";
 import styled from "styled-components";
 import { defaultTheme } from "../../shared/theme/theme";
-import { useState } from "react";
+import { useContext, useState, useEffect, useCallback } from "react";
 import { MEDIA_QUERIES } from "../../shared/utils/constants";
-import IonIcon from "../../shared/components/Ionicon";
 import { useNavigate } from "react-router-dom";
 import AnimationLayout from "../../shared/components/AnimationLayout";
+import { client } from "../../shared/helpers/sanity/sanityClient";
+import { userQuery } from "../../shared/helpers/sanity/sanityQueries";
+import { GlobalContext } from "../../shared/context/context";
 
 const Landingpage = () => {
-  const [isStudentSignin, setIsStudentSignin] = useState(false);
+  const [isStudentSignin, setIsStudentSignin] = useState(true);
+  const [loading, setLoading] = useState(false);
+  const { currentUser, setCurrentUser } = useContext(GlobalContext);
+
   const navigate = useNavigate();
   const [form] = Form.useForm();
-  const onFinish = (values) => {
-    console.log("Success:", values);
-    navigate("/main");
+
+  useEffect(() => {
+    currentUser && navigate("/main");
+  });
+
+  const onFinish = async ({ email, password }) => {
+    const q = userQuery(
+      email,
+      password,
+      isStudentSignin ? "student" : "lecturer"
+    );
+
+    setLoading(true);
+
+    await client
+      .fetch(q)
+      .then((res) => {
+        setLoading(false);
+        if (res.length > 0) {
+          setCurrentUser(res[0]);
+          navigate("/main");
+        } else message.error("Sign in failed!");
+      })
+      .catch((err) => message.error(`Sign in failed!`));
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -130,7 +156,7 @@ const Landingpage = () => {
               </Form.Item>
 
               <Form.Item>
-                <Button type="primary" htmlType="submit">
+                <Button type="primary" htmlType="submit" loading={loading}>
                   Sign in
                 </Button>
               </Form.Item>

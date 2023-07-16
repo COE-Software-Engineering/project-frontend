@@ -1,9 +1,9 @@
 import React from "react";
-import ComponentWrapper from "./ComponentWrapper";
 import Empty from "../../../shared/components/Empty";
 import CourseCard from "../courses/CourseCard";
 import styled from "styled-components";
 import { MEDIA_QUERIES } from "../../../shared/utils/constants";
+import ComponentWrapper from "../../../shared/components/ComponentWrapper";
 
 const RecentCourses = () => {
   const courses = ["", "", ""];

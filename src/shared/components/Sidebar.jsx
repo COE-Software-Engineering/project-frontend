@@ -9,8 +9,6 @@ import { sidebarLinks } from "../utils/data";
 const Sidebar = () => {
   const navigate = useNavigate();
 
-  console.log(window.location.pathname);
-
   return (
     <SidebarWrapper>
       {sidebarLinks.map((link, index) => (

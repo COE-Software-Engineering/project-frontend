@@ -4,7 +4,7 @@ import { MEDIA_QUERIES } from "../../../shared/utils/constants";
 
 const CourseCard = ({ width = "32%" }) => {
   return (
-    <CourseCardWrapper style={{ width: width }}>
+    <CourseCardWrapper width={width}>
       <ImageWrapper>
         <img src="/img.jpg" alt="course-img" />
       </ImageWrapper>
@@ -17,7 +17,7 @@ const CourseCard = ({ width = "32%" }) => {
 };
 
 const CourseCardWrapper = styled.div`
-  /* width: 32%; */
+  width: ${(props) => props.width};
   min-height: 200px;
   display: flex;
   flex-direction: column;

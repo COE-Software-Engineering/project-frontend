@@ -11,7 +11,8 @@ import { defaultTheme } from "../theme/theme";
 
 const Navbar = () => {
   const navigate = useNavigate();
-  const { appTheme, setAppTheme } = useContext(GlobalContext);
+  const { appTheme, setAppTheme, currentUser, setCurrentUser } =
+    useContext(GlobalContext);
 
   const changeTheme = () => {
     setAppTheme((prev) => (prev === LIGHTTHEME ? DARKTHEME : LIGHTTHEME));
@@ -20,13 +21,16 @@ const Navbar = () => {
   const items = [
     {
       key: "1",
-      label: <p>Khobby</p>,
+      label: <p>{currentUser?.fullName}</p>,
       onClick: () => navigate("/main/profile"),
     },
     {
       key: "2",
       label: <p>Log out</p>,
-      onClick: () => navigate("/"),
+      onClick: () => {
+        navigate("/");
+        setCurrentUser(null);
+      },
     },
   ];
 
@@ -65,8 +69,9 @@ const Navbar = () => {
               cursor: "pointer",
               backgroundColor: `${defaultTheme.tertiaryColor2}`,
             }}
+            alt={null}
           >
-            A
+            {currentUser?.fullName.slice(0, 2)}
           </Avatar>
         </Dropdown>
       </ToolsWrapper>

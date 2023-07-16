@@ -1,9 +1,9 @@
 import React from "react";
-import CommentSection from "../../../shared/components/CommentSection";
+import CommentSection from "./CommentSection";
 import styled from "styled-components";
 import AnimationLayout from "../../../shared/components/AnimationLayout";
 import { MEDIA_QUERIES } from "../../../shared/utils/constants";
-import ComponentWrapper from "../dashboard/ComponentWrapper";
+import ComponentWrapper from "../../../shared/components/ComponentWrapper";
 import MessageCard from "./MessageCard";
 import Titlebar from "../../../shared/components/Titlebar";
 
@@ -168,18 +168,11 @@ const data = [
 const Announcements = () => {
   return (
     <AnimationLayout>
-      <Titlebar title="Chatroom" />
       <AnnouncementsWrapper>
         <MainChatWrapper>
+          <Titlebar title="Chatroom" />
           {data.map((item) => (
-            <CommentWrapper
-              style={{
-                display: "flex",
-                justifyContent: `${
-                  item.name == "Ama" ? "flex-end" : "flex-start"
-                }`,
-              }}
-            >
+            <CommentWrapper itemName={item.name}>
               <MessageCard message={item} />
             </CommentWrapper>
           ))}
@@ -187,7 +180,6 @@ const Announcements = () => {
         <AsideWrapper>
           <ComponentWrapper
             title="Send comment/announcement"
-            // styles={{ minHeight: "400px" }}
             children={<CommentSection />}
           />
         </AsideWrapper>
@@ -250,7 +242,8 @@ const CommentWrapper = styled.div`
   flex-direction: row;
   width: 100%;
   align-items: center;
-  /* justify-content: flex-end; */
+  justify-content: ${(props) =>
+    props.itemName === "Ama" ? "flex-end" : "flex-start"};
   margin-bottom: 1rem;
 `;
 

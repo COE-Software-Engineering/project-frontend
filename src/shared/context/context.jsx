@@ -10,13 +10,15 @@ const GlobalProvider = ({ children }) => {
     "appTheme",
     isDarkTheme ? DARKTHEME : LIGHTTHEME
   );
-
+  const [currentUser, setCurrentUser] = useLocalStorage("currentUser", null);
   const value = useMemo(() => {
     return {
       appTheme,
       setAppTheme,
+      currentUser,
+      setCurrentUser,
     };
-  }, [appTheme, setAppTheme]);
+  }, [appTheme, setAppTheme, currentUser, setCurrentUser]);
 
   return (
     <GlobalContext.Provider value={value}>{children}</GlobalContext.Provider>
