@@ -6,6 +6,7 @@ import { defaultTheme } from "../../shared/theme/theme";
 import IonIcon from "../../shared/components/Ionicon";
 import { useNavigate } from "react-router-dom";
 import AnimationLayout from "../../shared/components/AnimationLayout";
+import axios from "axios";
 
 const StudentSignup = () => {
   const navigate = useNavigate();
@@ -13,6 +14,14 @@ const StudentSignup = () => {
 
   const onFinish = (values) => {
     console.log("Success:", values);
+    axios
+      .post("http://localhost:3001/students/signup", values)
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -61,7 +70,7 @@ const StudentSignup = () => {
                 rules={[
                   {
                     required: true,
-                    type: "number",
+                    type: "text",
                     message: "Invalid index number!",
                   },
                 ]}
@@ -85,6 +94,7 @@ const StudentSignup = () => {
                 rules={[
                   {
                     required: true,
+                    type: "text",
                     message: "Invalid password!",
                   },
                 ]}

@@ -6,14 +6,27 @@ import { MEDIA_QUERIES } from "../../shared/utils/constants";
 import IonIcon from "../../shared/components/Ionicon";
 import { useNavigate } from "react-router-dom";
 import AnimationLayout from "../../shared/components/AnimationLayout";
+import axios from "axios";
 
 const Landingpage = () => {
   const [isStudentSignin, setIsStudentSignin] = useState(false);
   const navigate = useNavigate();
   const [form] = Form.useForm();
   const onFinish = (values) => {
+    let endpoint =
+      "http://localhost:3001/" + (isStudentSignin
+        ? "students"
+        : "lecturers") + "/signin";
     console.log("Success:", values);
-    navigate("/main");
+    axios
+      .post(endpoint, values)
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    // navigate("/main");
   };
 
   const onFinishFailed = (errorInfo) => {
