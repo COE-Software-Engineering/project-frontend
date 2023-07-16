@@ -8,5 +8,6 @@ export default defineConfig({
     open: true,
     port: 3000,
     host: true,
+    cors: true,
   },
 });
