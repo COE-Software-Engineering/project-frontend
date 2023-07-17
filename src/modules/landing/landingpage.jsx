@@ -14,14 +14,17 @@ const Landingpage = () => {
   const [form] = Form.useForm();
   const onFinish = (values) => {
     let endpoint =
-      "http://localhost:3001/" + (isStudentSignin
-        ? "students"
-        : "lecturers") + "/signin";
+      "http://localhost:3001/" +
+      (isStudentSignin ? "students" : "lecturers") +
+      "/signin";
     console.log("Success:", values);
     axios
       .post(endpoint, values)
       .then((response) => {
-        console.log(response);
+        console.log(response.data);
+        if ((response.data.length === 0)) {
+          navigate("/main");
+        }
       })
       .catch((err) => {
         console.log(err);

@@ -17,13 +17,13 @@ const LecturerSignup = () => {
   const onFinish = (values) => {
     console.log("Success:", values);
     axios
-    .post("http://localhost:3001/lecturers/signup", values)
-    .then((response) => {
-      console.log(response.data);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+      .post("http://localhost:3001/lecturers/signup", values)
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -116,9 +116,14 @@ const LecturerSignup = () => {
           children={<p>Keep me signed in</p>}
         />
       </Form.Item>
-      <Form.Item>
+      {/* <Form.Item>
         <Button type="primary" onClick={() => setPageIndex((prev) => prev + 1)}>
           Next
+        </Button>
+      </Form.Item> */}
+      <Form.Item>
+        <Button type="primary" htmlType="submit">
+          Sign up
         </Button>
       </Form.Item>
     </>
@@ -242,11 +247,12 @@ const LecturerSignup = () => {
               autoComplete="on"
               layout="vertical"
             >
-              {pageIndex === 1 ? (
+              {/* {pageIndex === 1 ? (
                 <PersonalDetailsSection />
               ) : (
                 <CourseDetailsSection />
-              )}
+              )} */}
+              {<PersonalDetailsSection />}
             </Form>
           </Wrapper>
         </FormWrapper>
