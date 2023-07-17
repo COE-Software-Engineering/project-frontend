@@ -1,10 +1,11 @@
 import React from "react";
 import ComponentWrapper from "../../../shared/components/ComponentWrapper";
+import Empty from "../../../shared/components/Empty";
 
 const MyFiles = () => {
   return (
     <ComponentWrapper title="My Files">
-      <p>No files available.</p>
+      <Empty subText={"No files available."} />
     </ComponentWrapper>
   );
 };

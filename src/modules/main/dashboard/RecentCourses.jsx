@@ -11,12 +11,12 @@ const RecentCourses = () => {
   return (
     <ComponentWrapper title="Recent Courses" styles={{ minHeight: "240px" }}>
       {/* <p>No new courses!</p> */}
-      {/* <Empty subText={"No recent courses!"} /> */}
-      <ContentWrapper>
+      <Empty subText={"No recent courses!"} />
+      {/* <ContentWrapper>
         {courses.map((course, index) => (
           <CourseCard key={index} />
         ))}
-      </ContentWrapper>
+      </ContentWrapper> */}
     </ComponentWrapper>
   );
 };

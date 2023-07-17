@@ -1,48 +1,76 @@
 import { Button, Checkbox, Form, Input, message } from "antd";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import styled from "styled-components";
 import { MEDIA_QUERIES } from "../../shared/utils/constants";
 import { defaultTheme } from "../../shared/theme/theme";
 import IonIcon from "../../shared/components/Ionicon";
 import { useNavigate } from "react-router-dom";
 import AnimationLayout from "../../shared/components/AnimationLayout";
+import SignupComplete from "./SignupComplete";
+import { GlobalContext } from "../../shared/context/context";
 
 const LecturerSignup = () => {
+  const { signupUser, registerCourse, currentUser } = useContext(GlobalContext);
   const navigate = useNavigate();
-
-  const [pageIndex, setPageIndex] = useState(1);
-
   const [form] = Form.useForm();
+  const [pageIndex, setPageIndex] = useState(1);
+  const [loading, setLoading] = useState(false);
+
   const onFinish = (values) => {
-    console.log("Success:", values);
+    if (pageIndex === 1) {
+      if (values.password !== values.confirmPassword) {
+        message.error("Passwords don't match!");
+        return;
+      }
+      const signupData = {
+        fullName: values.fullName,
+        email: values.email,
+        password: values.password,
+        staffId: values.staffId,
+      };
+      setLoading(true);
+      signupUser("lecturer", signupData, () => {
+        setPageIndex((prev) => prev + 1);
+        setLoading(false);
+      });
+    } else if (pageIndex === 2) {
+      console.log(values);
+      setLoading(true);
+      registerCourse(values.courses, () => {
+        setLoading(false);
+        setPageIndex((prev) => prev + 1);
+      });
+    }
   };
 
   const onFinishFailed = (errorInfo) => {
-    console.log("Failed:", errorInfo);
-    message.error(`Authentication failed!`);
+    message.error(`Signup failed!`);
   };
 
   const PersonalDetailsSection = () => (
     <>
       <Form.Item
-        name="full_name"
+        name="fullName"
         rules={[
           {
             required: true,
+            min: 3,
             type: "string",
             message: "Invalid full name!",
+            whitespace: true,
           },
         ]}
       >
         <Input className="input" placeholder="Full name" />
       </Form.Item>
       <Form.Item
-        name="staff_id"
+        name="staffId"
         rules={[
           {
             required: true,
-            // type: "number",
+            min: 5,
             message: "Invalid staff id!",
+            whitespace: true,
           },
         ]}
       >
@@ -55,6 +83,7 @@ const LecturerSignup = () => {
             required: true,
             type: "email",
             message: "Invalid email!",
+            whitespace: true,
           },
         ]}
       >
@@ -65,7 +94,9 @@ const LecturerSignup = () => {
         rules={[
           {
             required: true,
+            min: 6,
             message: "Invalid password!",
+            whitespace: true,
           },
         ]}
       >
@@ -81,11 +112,13 @@ const LecturerSignup = () => {
         />
       </Form.Item>
       <Form.Item
-        name="confirm_password"
+        name="confirmPassword"
         rules={[
           {
             required: true,
+            min: 6,
             message: "Invalid password!",
+            whitespace: true,
           },
         ]}
       >
@@ -108,57 +141,72 @@ const LecturerSignup = () => {
         />
       </Form.Item>
       <Form.Item>
-        <Button type="primary" onClick={() => setPageIndex((prev) => prev + 1)}>
+        <Button htmlType="submit" type="primary" loading={loading}>
           Next
         </Button>
       </Form.Item>
     </>
   );
 
-  const CourseDetailsSection = () => (
+  const CourseDetailsSection = ({ name, restField, remove }) => (
     <>
+      <Form.Item>
+        <Button
+          type="primary"
+          onClick={() => remove(name)}
+          style={{ backgroundColor: `${defaultTheme.tertiaryColor2}` }}
+        >
+          Remove course
+        </Button>
+      </Form.Item>
       <Form.Item
-        name="course_name"
+        {...restField}
+        name={[name, "courseName"]}
         rules={[
           {
             required: true,
             type: "string",
             message: "Invalid course name!",
+            whitespace: true,
           },
         ]}
       >
         <Input className="input" placeholder="Course name" />
       </Form.Item>
       <Form.Item
-        name="course_code"
+        {...restField}
+        name={[name, "courseCode"]}
         rules={[
           {
             required: true,
-            type: "string",
             message: "Invalid course code!",
+            whitespace: true,
           },
         ]}
       >
         <Input className="input" placeholder="Course code" />
       </Form.Item>
       <Form.Item
-        name="credit_hours"
+        {...restField}
+        name={[name, "creditHours"]}
         rules={[
           {
             required: true,
-            // type: "number",
             message: "Invalid credit hours!",
+            whitespace: true,
           },
         ]}
       >
         <Input className="input" placeholder="Credit Hours" />
       </Form.Item>
       <Form.Item
-        name="course_bio"
+        {...restField}
+        name={[name, "courseBio"]}
         rules={[
           {
             required: false,
-            message: "Invalid details!",
+            message: "Invalid course bio!",
+            whitespace: true,
           },
         ]}
       >
@@ -174,38 +222,6 @@ const LecturerSignup = () => {
           }}
         />
       </Form.Item>
-
-      <Form.Item>
-        <Checkbox
-          style={{ backgroundColor: "transparent" }}
-          defaultChecked
-          children={<p>Add more course</p>}
-        />
-      </Form.Item>
-      <div
-        style={{
-          width: "100%",
-          display: "flex",
-          flexDirection: "row",
-          alignItems: "center",
-          justifyContent: "space-between",
-        }}
-      >
-        <Form.Item>
-          <Button
-            type="default"
-            style={{ backgroundColor: "transparent" }}
-            onClick={() => setPageIndex((prev) => prev - 1)}
-          >
-            Back
-          </Button>
-        </Form.Item>
-        <Form.Item>
-          <Button type="primary" htmlType="submit">
-            Sign up
-          </Button>
-        </Form.Item>
-      </div>
     </>
   );
 
@@ -220,23 +236,80 @@ const LecturerSignup = () => {
           onClick={() => navigate(-1)}
         />
         <FormWrapper>
-          <Wrapper>
-            <h3>Let's help you get started</h3>
+          <Wrapper pageIndex={pageIndex}>
+            <h3>
+              {pageIndex == 1
+                ? "Let's help you get started"
+                : "Your course(s) Info"}
+            </h3>
             <Form
               form={form}
-              name="basic"
+              name="lecturer-signup"
               initialValues={{
                 remember: true,
               }}
               onFinish={onFinish}
               onFinishFailed={onFinishFailed}
+              preserve={true}
+              scrollToFirstError={true}
               autoComplete="on"
               layout="vertical"
             >
               {pageIndex === 1 ? (
                 <PersonalDetailsSection />
+              ) : pageIndex === 2 ? (
+                <>
+                  <Form.List name="courses">
+                    {(fields, { add, remove }) => (
+                      <>
+                        {fields.map(({ key, name, ...restField }) => (
+                          <CourseDetailsSection
+                            key={key}
+                            name={name}
+                            resetField={restField}
+                            remove={remove}
+                          />
+                        ))}
+                        <Form.Item>
+                          <Button
+                            type="default"
+                            onClick={() => add()}
+                            icon={<IonIcon iconName={"add"} />}
+                            className="add-field-btn"
+                          >
+                            Add course
+                          </Button>
+                        </Form.Item>
+                      </>
+                    )}
+                  </Form.List>
+                  <div
+                    style={{
+                      width: "100%",
+                      display: "flex",
+                      flexDirection: "row",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    <Form.Item>
+                      <Button
+                        type="default"
+                        style={{ backgroundColor: "transparent" }}
+                        onClick={() => setPageIndex((prev) => prev - 1)}
+                      >
+                        Back
+                      </Button>
+                    </Form.Item>
+                    <Form.Item>
+                      <Button type="primary" htmlType="submit">
+                        Sign up
+                      </Button>
+                    </Form.Item>
+                  </div>
+                </>
               ) : (
-                <CourseDetailsSection />
+                <SignupComplete />
               )}
             </Form>
           </Wrapper>
@@ -263,6 +336,12 @@ const FormWrapper = styled.div`
   justify-content: center;
   position: relative;
   background-color: ${({ theme }) => theme.accentColor2};
+
+  & .add-field-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 
   & .input {
     background-color: transparent;
@@ -304,6 +383,7 @@ const Wrapper = styled.div`
     font-size: 1.5rem;
     /* font-size: 16px; */
     font-family: "DM Serif Text", "Poppins", sans-serif;
+    display: ${(props) => (props.pageIndex > 2 ? "none" : "block")};
   }
 
   form {

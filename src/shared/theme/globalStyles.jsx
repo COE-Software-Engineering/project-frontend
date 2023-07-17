@@ -25,6 +25,7 @@ body {
   overflow-x:hidden;
 }
 
+
 ion-icon {
     --ionicon-stroke-width: 10px;
     color: ${({ theme }) => theme.textColor};

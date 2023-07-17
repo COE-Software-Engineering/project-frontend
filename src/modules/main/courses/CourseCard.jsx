@@ -1,15 +1,23 @@
 import React from "react";
 import styled from "styled-components";
 import { MEDIA_QUERIES } from "../../../shared/utils/constants";
+import { useNavigate } from "react-router-dom";
 
-const CourseCard = ({ width = "32%" }) => {
+const CourseCard = ({ width = "32%", course }) => {
+  const navigate = useNavigate();
+
   return (
-    <CourseCardWrapper width={width}>
+    <CourseCardWrapper
+      width={width}
+      onClick={() => navigate(`/main/courses/${course._id}`, course)}
+    >
       <ImageWrapper>
         <img src="/img.jpg" alt="course-img" />
       </ImageWrapper>
       <ContentWrapper>
-        <p>COE 392: Embedded Systems</p>
+        <p>
+          {course.courseCode} : {course.courseName.slice(0, 20)}...
+        </p>
         <p className="course-lecturer">Ing B. Kommey</p>
       </ContentWrapper>
     </CourseCardWrapper>

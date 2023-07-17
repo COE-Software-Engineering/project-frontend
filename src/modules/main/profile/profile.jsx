@@ -34,6 +34,7 @@ const Profile = () => {
           </MainAreaWrapper>
           <AsideAreaWrapper>
             <LoginActivity />
+            <LoginActivity />
           </AsideAreaWrapper>
         </BodyContentWrapper>
       </ProfileWrapper>

@@ -20,6 +20,65 @@ const Files = () => {
 
   const [files, setFiles] = useState([]);
 
+  // const [imageAsset, setImageAsset] = useState(null);
+
+  // const navigate = useNavigate();
+
+  // const uploadImage = (e) => {
+  //   const { type, name } = e.target.files[0];
+  //   if (
+  //     type === "image/png" ||
+  //     type === "image/jpeg" ||
+  //     type === "image/svg" ||
+  //     type === "image/gif" ||
+  //     type === "image/tiff"
+  //   ) {
+  //     client.assets
+  //       .upload("image", e.target.files[0], {
+  //         contentType: type,
+  //         filename: name,
+  //       })
+  //       .then((document) => {
+  //         setImageAsset(document);
+  //       })
+  //       .catch((err) => console.log(err));
+  //   } else {
+  //     return;
+  //   }
+  // };
+
+  // const onFinish = (values) => {
+  //   console.log("Success:", values);
+
+  //   const doc = {
+  //     _type: "pin",
+  //     title: values.title,
+  //     about: values.about,
+  //     destination: values.destination,
+  //     image: {
+  //       _type: "image",
+  //       asset: {
+  //         _type: "reference",
+  //         _ref: imageAsset?._id,
+  //       },
+  //     },
+  //     userId: user._id,
+  //     postedBy: {
+  //       _type: "postedBy",
+  //       _ref: user._id,
+  //     },
+  //     category: values.category,
+  //   };
+
+  //   client.create(doc).then(() => {
+  //     navigate("/");
+  //   });
+  // };
+
+  // const onFinishFailed = (errorInfo) => {
+  //   console.log("Failed:", errorInfo);
+  // };
+
   const fetchFiles = useCallback(async () => {
     const q = userFilesQuery(currentUser?._id);
     await client

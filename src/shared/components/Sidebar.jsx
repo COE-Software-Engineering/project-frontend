@@ -43,6 +43,7 @@ const SidebarWrapper = styled.div`
     -webkit-backdrop-filter: blur(4px);
     border-top-right-radius: 10px;
     border-bottom-right-radius: 10px;
+    opacity: 1;
   }
 
   ${MEDIA_QUERIES.MOBILE} {
@@ -62,6 +63,7 @@ export const SidebarItem = styled.div`
   margin-bottom: 1rem;
   padding-left: 1rem;
   cursor: pointer;
+  opacity: 0.7;
 
   & p {
     margin-left: 0.5rem;

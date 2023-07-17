@@ -40,7 +40,7 @@ const Courses = () => {
         <Titlebar title={"My Courses"} />
         <ContentWrapper>
           {courses.map((course, index) => (
-            <CourseCard key={index} width={"24%"} />
+            <CourseCard key={index} width={"24%"} course={course} />
           ))}
         </ContentWrapper>
       </CoursesWrapper>

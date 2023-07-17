@@ -1,7 +1,7 @@
 import { Button, Checkbox, Dropdown, Form, Input, message } from "antd";
 import styled from "styled-components";
 import { defaultTheme } from "../../shared/theme/theme";
-import { useContext, useState, useEffect, useCallback } from "react";
+import { useContext, useState, useEffect } from "react";
 import { MEDIA_QUERIES } from "../../shared/utils/constants";
 import { useNavigate } from "react-router-dom";
 import AnimationLayout from "../../shared/components/AnimationLayout";
@@ -39,7 +39,10 @@ const Landingpage = () => {
           navigate("/main");
         } else message.error("Sign in failed!");
       })
-      .catch((err) => message.error(`Sign in failed!`));
+      .catch((err) => {
+        message.error(`Sign in failed!`);
+        setLoading(false);
+      });
   };
 
   const onFinishFailed = (errorInfo) => {

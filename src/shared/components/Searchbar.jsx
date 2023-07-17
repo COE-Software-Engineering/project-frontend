@@ -32,7 +32,7 @@ const SearchbarWrapper = styled.div`
     color: white;
     border: none;
     outline: none;
-    border-radius: 20px;
+    border-radius: 7px;
     font-size: 0.7rem;
     -webkit-transition: all 0.3s ease-out 0s;
     transition: all 0.3s ease-out 0s;
@@ -43,7 +43,7 @@ const SearchbarWrapper = styled.div`
     outline: none;
     background-color: transparent;
     position: absolute;
-    right: 5px;
+    right: 2px;
   }
 `;
 

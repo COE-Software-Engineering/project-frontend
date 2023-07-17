@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { GlobalContext } from "../context/context";
 import { defaultTheme } from "../theme/theme";
+import Confirm from "./Confirm";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -26,11 +27,18 @@ const Navbar = () => {
     },
     {
       key: "2",
-      label: <p>Log out</p>,
-      onClick: () => {
-        navigate("/");
-        setCurrentUser(null);
-      },
+      label: (
+        <Confirm
+          component={<p>Log out</p>}
+          title="Log out"
+          description="Are you sure you want to log out?"
+          onConfirm={() => {
+            navigate("/");
+            setCurrentUser(null);
+          }}
+          onCancel={() => null}
+        />
+      ),
     },
   ];
 
@@ -38,7 +46,11 @@ const Navbar = () => {
     <NavWrapper appTheme={appTheme}>
       <LogoWrapper>
         <Drawerbar />
-        <img src="/knust-logo.png" alt="logo" />
+        <img
+          src="/knust-logo.png"
+          alt="logo"
+          onClick={() => navigate("/main")}
+        />
       </LogoWrapper>
       {/* <Searchbar /> */}
       <ToolsWrapper>
@@ -61,6 +73,7 @@ const Navbar = () => {
             items,
           }}
           placement="bottom"
+          trigger={"click"}
         >
           <Avatar
             src=""
@@ -69,7 +82,6 @@ const Navbar = () => {
               cursor: "pointer",
               backgroundColor: `${defaultTheme.tertiaryColor2}`,
             }}
-            alt={null}
           >
             {currentUser?.fullName.slice(0, 2)}
           </Avatar>

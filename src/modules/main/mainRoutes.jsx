@@ -27,7 +27,7 @@ const MainRoutes = () => {
           <div style={{ height: "100%" }}>
             <Suspense fallback={<Loader />}>
               <Routes>
-                <Route path="/" element={<Dashboard />} />
+                <Route path="/*" element={<Dashboard />} />
                 <Route path="/profile" element={<Profile />} />
                 <Route path="/courses" element={<Courses />} />
                 <Route path="/courses/:courseId" element={<Course />} />

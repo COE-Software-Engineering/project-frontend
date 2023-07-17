@@ -1,5 +1,5 @@
 import React from "react";
-import ComponentWrapper from "../dashboard/ComponentWrapper";
+import ComponentWrapper from "../../../shared/components/ComponentWrapper";
 
 const CourseDetails = () => {
   return (

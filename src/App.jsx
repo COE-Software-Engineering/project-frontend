@@ -8,6 +8,7 @@ import { LIGHTTHEME } from "./shared/utils/constants";
 import Loader from "./shared/components/Loader";
 import { GlobalContext } from "./shared/context/context";
 import { AnimatePresence } from "framer-motion";
+import PageNotFound from "./modules/pageNotFound";
 
 const LandingPage = lazy(() => import("./modules/landing/landingpage"));
 const LecturerSignup = lazy(() => import("./modules/landing/LecturerSignup"));
@@ -38,6 +39,11 @@ function App() {
             },
             Dropdown: {
               colorBgElevated: "transparent",
+              zIndexPopup: 99,
+            },
+            Popconfirm: {
+              colorBgElevated: "transparent",
+              colorBgContainer: "transparent",
             },
           },
 
@@ -57,6 +63,7 @@ function App() {
                   <Route path="/lecturer-signup" element={<LecturerSignup />} />
                   <Route path="/student-signup" element={<StudentSignup />} />
                   <Route path="/main/*" element={<MainRoutes />} />
+                  <Route path="/*" element={<PageNotFound />} />
                 </Routes>
               </Suspense>
             </BrowserRouter>

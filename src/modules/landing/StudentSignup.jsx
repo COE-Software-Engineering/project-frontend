@@ -1,24 +1,145 @@
 import { Button, Checkbox, Form, Input, message } from "antd";
-import React from "react";
+import React, { useContext, useState } from "react";
 import styled from "styled-components";
 import { MEDIA_QUERIES } from "../../shared/utils/constants";
 import { defaultTheme } from "../../shared/theme/theme";
 import IonIcon from "../../shared/components/Ionicon";
 import { useNavigate } from "react-router-dom";
 import AnimationLayout from "../../shared/components/AnimationLayout";
+import SignupComplete from "./SignupComplete";
+import { GlobalContext } from "../../shared/context/context";
 
 const StudentSignup = () => {
+  const { signupUser } = useContext(GlobalContext);
   const navigate = useNavigate();
   const [form] = Form.useForm();
+  const [pageIndex, setPageIndex] = useState(1);
+  const [loading, setLoading] = useState(false);
 
   const onFinish = (values) => {
-    console.log("Success:", values);
+    if (values.password !== values.confirmPassword) {
+      message.error("Passwords don't match!");
+      return;
+    }
+
+    const signupData = {
+      fullName: values.fullName,
+      email: values.email,
+      password: values.password,
+      indexNumber: values.indexNumber,
+    };
+    setLoading(true);
+    signupUser("student", signupData, () => {
+      setPageIndex((prev) => prev + 1);
+      setLoading(false);
+    });
   };
 
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
     message.error(`Authentication failed!`);
   };
+
+  const SignupDetailsSection = () => (
+    <>
+      <Form.Item
+        name="fullName"
+        rules={[
+          {
+            required: true,
+            type: "string",
+            min: 3,
+            message: "Invalid full name!",
+            whitespace: true,
+          },
+        ]}
+      >
+        <Input className="input" placeholder="Full name" />
+      </Form.Item>
+      <Form.Item
+        name="indexNumber"
+        rules={[
+          {
+            required: true,
+            min: 5,
+            message: "Invalid index number!",
+            whitespace: true,
+          },
+        ]}
+      >
+        <Input className="input" placeholder="Index no." />
+      </Form.Item>
+      <Form.Item
+        name="email"
+        rules={[
+          {
+            required: true,
+            type: "email",
+            message: "Invalid email!",
+            whitespace: true,
+          },
+        ]}
+      >
+        <Input className="input" placeholder="Email" />
+      </Form.Item>
+      <Form.Item
+        name="password"
+        rules={[
+          {
+            required: true,
+            min: 6,
+            message: "Invalid password!",
+            whitespace: true,
+          },
+        ]}
+      >
+        <Input.Password
+          className="input"
+          placeholder="Password"
+          styles={{
+            input: {
+              backgroundColor: "transparent",
+              fontSize: "12px",
+            },
+          }}
+        />
+      </Form.Item>
+      <Form.Item
+        name="confirmPassword"
+        rules={[
+          {
+            required: true,
+            min: 6,
+            message: "Invalid password!",
+            whitespace: true,
+          },
+        ]}
+      >
+        <Input.Password
+          className="input"
+          placeholder="Confirm password"
+          styles={{
+            input: {
+              backgroundColor: "transparent",
+              fontSize: "12px",
+            },
+          }}
+        />
+      </Form.Item>
+      <Form.Item>
+        <Checkbox
+          style={{ backgroundColor: "transparent" }}
+          defaultChecked
+          children={<p>Keep me signed in</p>}
+        />
+      </Form.Item>
+      <Form.Item>
+        <Button type="primary" htmlType="submit" loading={loading}>
+          Sign up
+        </Button>
+      </Form.Item>
+    </>
+  );
 
   return (
     <AnimationLayout>
@@ -31,7 +152,7 @@ const StudentSignup = () => {
           onClick={() => navigate(-1)}
         />
         <FormWrapper>
-          <Wrapper>
+          <Wrapper pageIndex={pageIndex}>
             <h3>Let's help you get started</h3>
             <Form
               form={form}
@@ -44,97 +165,7 @@ const StudentSignup = () => {
               autoComplete="on"
               layout="vertical"
             >
-              <Form.Item
-                name="full_name"
-                rules={[
-                  {
-                    required: true,
-                    type: "string",
-                    message: "Invalid full name!",
-                  },
-                ]}
-              >
-                <Input className="input" placeholder="Full name" />
-              </Form.Item>
-              <Form.Item
-                name="index_number"
-                rules={[
-                  {
-                    required: true,
-                    type: "number",
-                    message: "Invalid index number!",
-                  },
-                ]}
-              >
-                <Input className="input" placeholder="Index no." />
-              </Form.Item>
-              <Form.Item
-                name="email"
-                rules={[
-                  {
-                    required: true,
-                    type: "email",
-                    message: "Invalid email!",
-                  },
-                ]}
-              >
-                <Input className="input" placeholder="Email" />
-              </Form.Item>
-              <Form.Item
-                name="password"
-                rules={[
-                  {
-                    required: true,
-                    message: "Invalid password!",
-                  },
-                ]}
-              >
-                <Input.Password
-                  className="input"
-                  placeholder="Password"
-                  styles={{
-                    input: {
-                      backgroundColor: "transparent",
-                      fontSize: "12px",
-                    },
-                  }}
-                />{" "}
-              </Form.Item>
-
-              <Form.Item
-                name="confirm_password"
-                rules={[
-                  {
-                    required: true,
-                    message: "Invalid password!",
-                  },
-                ]}
-              >
-                <Input.Password
-                  className="input"
-                  placeholder="Confirm password"
-                  styles={{
-                    input: {
-                      backgroundColor: "transparent",
-                      fontSize: "12px",
-                    },
-                  }}
-                />
-              </Form.Item>
-
-              <Form.Item>
-                <Checkbox
-                  style={{ backgroundColor: "transparent" }}
-                  defaultChecked
-                  children={<p>Keep me signed in</p>}
-                />
-              </Form.Item>
-
-              <Form.Item>
-                <Button type="primary" htmlType="submit">
-                  Sign up
-                </Button>
-              </Form.Item>
+              {pageIndex === 1 ? <SignupDetailsSection /> : <SignupComplete />}
             </Form>
           </Wrapper>
         </FormWrapper>
@@ -145,7 +176,7 @@ const StudentSignup = () => {
 
 const StudentSignupWrapper = styled.div`
   width: 100%;
-  height: 100vh;
+  min-height: 100vh;
   padding: 2rem;
   display: flex;
   align-items: center;
@@ -201,6 +232,7 @@ const Wrapper = styled.div`
     font-size: 1.5rem;
     /* font-size: 16px; */
     font-family: "DM Serif Text", "Poppins", sans-serif;
+    display: ${(props) => (props.pageIndex > 1 ? "none" : "block")};
   }
 
   form {

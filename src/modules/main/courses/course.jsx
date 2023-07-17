@@ -2,12 +2,15 @@ import React from "react";
 import Headerbar from "../../../shared/components/Headerbar";
 import BreadCrumb from "../../../shared/components/BreadCrumb";
 import styled from "styled-components";
-import ComponentWrapper from "../dashboard/ComponentWrapper";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import AnimationLayout from "../../../shared/components/AnimationLayout";
+import ComponentWrapper from "../../../shared/components/ComponentWrapper";
 
 const Course = () => {
   const navigate = useNavigate();
+  const { courseId } = useParams();
+
+  console.log(courseId);
 
   return (
     <AnimationLayout>

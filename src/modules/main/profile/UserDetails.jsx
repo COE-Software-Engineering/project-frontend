@@ -1,5 +1,5 @@
-import React from 'react'
-import ComponentWrapper from '../dashboard/ComponentWrapper';
+import React from "react";
+import ComponentWrapper from "../../../shared/components/ComponentWrapper";
 
 const UserDetails = () => {
   return (
@@ -7,6 +7,6 @@ const UserDetails = () => {
       <p>No user details!</p>
     </ComponentWrapper>
   );
-}
+};
 
-export default UserDetails
+export default UserDetails;
