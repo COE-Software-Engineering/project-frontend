@@ -18,6 +18,9 @@ const StudentSignup = () => {
       .post("http://localhost:3001/students/signup", values)
       .then((response) => {
         console.log(response.data);
+        if(!response.data.length){
+          // navigate("/");
+        }
       })
       .catch((err) => {
         console.log(err);

@@ -20,6 +20,9 @@ const LecturerSignup = () => {
       .post("http://localhost:3001/lecturers/signup", values)
       .then((response) => {
         console.log(response.data);
+        if (!response.data.length) {
+          // navigate("/");
+        }
       })
       .catch((err) => {
         console.log(err);
