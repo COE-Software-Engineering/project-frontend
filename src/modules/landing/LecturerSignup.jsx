@@ -6,6 +6,7 @@ import { defaultTheme } from "../../shared/theme/theme";
 import IonIcon from "../../shared/components/Ionicon";
 import { useNavigate } from "react-router-dom";
 import AnimationLayout from "../../shared/components/AnimationLayout";
+import axios from "axios";
 
 const LecturerSignup = () => {
   const navigate = useNavigate();
@@ -15,6 +16,14 @@ const LecturerSignup = () => {
   const [form] = Form.useForm();
   const onFinish = (values) => {
     console.log("Success:", values);
+    axios
+    .post("http://localhost:3001/lecturers/signup", values)
+    .then((response) => {
+      console.log(response.data);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
   };
 
   const onFinishFailed = (errorInfo) => {

@@ -17,7 +17,7 @@ const StudentSignup = () => {
     axios
       .post("http://localhost:3001/students/signup", values)
       .then((response) => {
-        console.log(response);
+        console.log(response.data);
       })
       .catch((err) => {
         console.log(err);
