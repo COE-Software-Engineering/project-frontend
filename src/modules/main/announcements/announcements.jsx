@@ -172,7 +172,7 @@ const Announcements = () => {
         <MainChatWrapper>
           <Titlebar title="Chatroom" />
           {data.map((item) => (
-            <CommentWrapper itemName={item.name}>
+            <CommentWrapper itemName={item.name} key={item}>
               <MessageCard message={item} />
             </CommentWrapper>
           ))}
@@ -192,6 +192,7 @@ const AnnouncementsWrapper = styled.div`
   width: 100%;
   height: 100%;
   display: flex;
+  align-items: flex-start;
   flex-direction: row;
   justify-content: space-between;
 
@@ -212,6 +213,7 @@ const MainChatWrapper = styled.section`
   align-items: flex-start;
   padding: 0 2rem;
   border-right: 0.5px solid ${({ theme }) => theme.sidebarBorder};
+  overflow-y: scroll;
 
   ${MEDIA_QUERIES.MOBILE} {
     & {
@@ -226,7 +228,7 @@ const AsideWrapper = styled.aside`
   height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: flex-start;
   /* border: 1px solid blue; */
 

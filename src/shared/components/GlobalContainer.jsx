@@ -17,12 +17,12 @@ const GlobalContainer = ({ routesComponent }) => {
 const MainWrapper = styled.div`
   width: 100%;
   height: 100vh;
-  overflow-y: scroll;
+  /* overflow-y: hidden; */
 `;
 
 const LayoutWrapper = styled.div`
   width: 100%;
-  min-height: calc(100vh - 50px);
+  height: calc(100vh - 50px);
   display: flex;
   flex-direction: row;
   position: relative;
@@ -32,6 +32,7 @@ const ContentWrapper = styled.div`
   width: 100%;
   height: 100%;
   padding: 1rem;
+  overflow-y: scroll;
 `;
 
 export default GlobalContainer;
