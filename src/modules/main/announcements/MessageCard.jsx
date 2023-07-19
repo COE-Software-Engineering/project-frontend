@@ -1,12 +1,15 @@
-import React from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
 import Titlebar from "../../../shared/components/Titlebar";
 import IonIcon from "../../../shared/components/Ionicon";
 import { Button, Space } from "antd";
 import moment from "moment/moment";
 import { MEDIA_QUERIES } from "../../../shared/utils/constants";
+import { GlobalContext } from "../../../shared/context/context";
 
 const MessageCard = ({ message }) => {
+  const { deleteAnnouncement } = useContext(GlobalContext);
+
   return (
     <MessageCardWrapper>
       <Titlebar title={message.name} />

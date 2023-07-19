@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import CommentSection from "./CommentSection";
 import styled from "styled-components";
 import AnimationLayout from "../../../shared/components/AnimationLayout";
@@ -6,6 +6,9 @@ import { MEDIA_QUERIES } from "../../../shared/utils/constants";
 import ComponentWrapper from "../../../shared/components/ComponentWrapper";
 import MessageCard from "./MessageCard";
 import Titlebar from "../../../shared/components/Titlebar";
+import { Avatar, BackTop } from "antd";
+import { client } from "../../../shared/helpers/sanity/sanityClient";
+import { chatMessagesQuery } from "../../../shared/helpers/sanity/sanityQueries";
 
 const data = [
   {
@@ -166,6 +169,26 @@ const data = [
 ];
 
 const Announcements = () => {
+  const [messages, setMessages] = useState([]);
+
+  // const getAllChatMessages = useCallback(async () => {
+  //   await client
+  //     .fetch(chatMessagesQuery)
+  //     .then((result) => {
+  //       setMessages(result);
+  //     })
+  //     .catch((err) => console.error(err));
+  // }, []);
+
+  // const getChatUpdates = useCallback(() => {
+  //   client.listen(chatMessagesQuery).subscribe((update) => {
+  //     // setMessages(update.result)
+  //     console.log(update.result);
+  //   });
+  // }, []);
+
+  // useEffect(() => getChatMessages(), []);
+
   return (
     <AnimationLayout>
       <AnnouncementsWrapper>
@@ -173,13 +196,16 @@ const Announcements = () => {
           <Titlebar title="Chatroom" />
           {data.map((item) => (
             <CommentWrapper itemName={item.name} key={item}>
+              <Avatar size={"small"} className="avatar">
+                {item.name.slice(0, 2)}
+              </Avatar>
               <MessageCard message={item} />
             </CommentWrapper>
           ))}
         </MainChatWrapper>
         <AsideWrapper>
           <ComponentWrapper
-            title="Send comment/announcement"
+            title="Send announcement"
             children={<CommentSection />}
           />
         </AsideWrapper>
@@ -198,7 +224,7 @@ const AnnouncementsWrapper = styled.div`
 
   ${MEDIA_QUERIES.MOBILE} {
     & {
-      flex-direction: column-reverse;
+      flex-direction: 0 0 0 1rem;
     }
   }
 `;
@@ -241,12 +267,16 @@ const AsideWrapper = styled.aside`
 
 const CommentWrapper = styled.div`
   display: flex;
-  flex-direction: row;
+  flex-direction: ${(props) =>
+    props.itemName === "Ama" ? "row-reverse" : "row"};
   width: 100%;
-  align-items: center;
-  justify-content: ${(props) =>
-    props.itemName === "Ama" ? "flex-end" : "flex-start"};
   margin-bottom: 1rem;
+
+  & .avatar {
+    background-color: ${({ theme }) => theme.tertiaryColor};
+    margin: ${(props) =>
+      props.itemName === "Ama" ? "0 0 0 0.5rem" : "0 0.5rem 0 0"};
+  }
 `;
 
 export default Announcements;

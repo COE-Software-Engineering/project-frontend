@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import UserDetails from "./UserDetails";
 import LoginActivity from "./LoginActivity";
 import styled from "styled-components";
@@ -8,22 +8,28 @@ import { defaultTheme } from "../../../shared/theme/theme";
 import CourseDetails from "./CourseDetails";
 import { MEDIA_QUERIES } from "../../../shared/utils/constants";
 import AnimationLayout from "../../../shared/components/AnimationLayout";
+import { GlobalContext } from "../../../shared/context/context";
 
 const Profile = () => {
+  const { currentUser } = useContext(GlobalContext);
+
   return (
     <AnimationLayout>
       <ProfileWrapper>
         <HeaderContentWrapper>
           <div className="img-details-wrapper">
             <div className="img-wrapper">
-              {/* <img src="" alt="user-img" /> */}
+              <img
+                src="https://img.freepik.com/free-icon/user_318-159711.jpg"
+                alt="user-img"
+              />
             </div>
             <div className="header-details-wrapper">
-              <h3>Owusu-Ansah Solomon</h3>
-              <p>Student</p>
+              <h3>{currentUser?.fullName}</h3>
+              <p>{currentUser?._type}</p>
             </div>
           </div>
-          <Button type="primary" shape="round">
+          <Button type="default" icon={<IonIcon iconName={"create"} />}>
             Update Profile
           </Button>
         </HeaderContentWrapper>
@@ -76,7 +82,7 @@ const HeaderContentWrapper = styled.div`
   }
 
   & .img-wrapper {
-    background-color: #eee;
+    /* background-color: ${({ theme }) => theme.bodyBackgroundColor}; */
     width: 100px;
     height: 100px;
     border-radius: 10px;
@@ -90,6 +96,17 @@ const HeaderContentWrapper = styled.div`
 
   & .header-details-wrapper h3 {
     font-size: 2rem;
+  }
+
+  & button {
+    box-shadow: none;
+    border-radius: 7px;
+    background-color: transparent;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    /* flex-wrap: wrap; */
+    align-items: center;
   }
 
   ${MEDIA_QUERIES.MOBILE} {

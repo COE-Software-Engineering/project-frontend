@@ -1,30 +1,53 @@
-import React, {
-  useMemo,
-  useState,
-  useContext,
-  useEffect,
-  useCallback,
-} from "react";
+import React, { useState, useContext, useEffect, useCallback } from "react";
 import styled from "styled-components";
-import IonIcon from "../../../shared/components/Ionicon";
 import { defaultTheme } from "../../../shared/theme/theme";
-import { Input, Upload } from "antd";
+import { Button, Form, Input, Space, Upload, message } from "antd";
 import Titlebar from "../../../shared/components/Titlebar";
 import AnimationLayout from "../../../shared/components/AnimationLayout";
 import { client } from "../../../shared/helpers/sanity/sanityClient";
 import { GlobalContext } from "../../../shared/context/context";
 import { userFilesQuery } from "../../../shared/helpers/sanity/sanityQueries";
+import Lottie from "lottie-react";
+import uploadAnimation from "../../../shared/helpers/lotties/upload.json";
+import IonIcon from "../../../shared/components/Ionicon";
+import moment from "moment";
 
 const Files = () => {
   const { currentUser } = useContext(GlobalContext);
 
   const [files, setFiles] = useState([]);
 
-  // const [imageAsset, setImageAsset] = useState(null);
+  const [fileAsset, setFileAsset] = useState(null);
 
-  // const navigate = useNavigate();
+  const uploadProps = {
+    name: "files",
+    multiple: true,
+    action: "https://www.mocky.io/v2/5cc8019d300000980a055e76",
+    onChange(info) {
+      const { status } = info.file;
+      if (status !== "uploading") {
+        console.log(info.file, info.fileList);
+      }
+      if (status === "done") {
+        message.success(`${info.file.name} file uploaded successfully.`);
+      } else if (status === "error") {
+        message.error(`${info.file.name} file upload failed.`);
+      }
+    },
+    onDrop(e) {
+      console.log("Dropped files", e.dataTransfer.files);
+    },
+  };
 
-  // const uploadImage = (e) => {
+  const normFile = (e) => {
+    console.log("Upload event:", e);
+    if (Array.isArray(e)) {
+      return e;
+    }
+    return e?.fileList;
+  };
+
+  // const uploadFile = (e) => {
   //   const { type, name } = e.target.files[0];
   //   if (
   //     type === "image/png" ||
@@ -34,7 +57,7 @@ const Files = () => {
   //     type === "image/tiff"
   //   ) {
   //     client.assets
-  //       .upload("image", e.target.files[0], {
+  //       .upload("file", e.target.files[0], {
   //         contentType: type,
   //         filename: name,
   //       })
@@ -79,36 +102,111 @@ const Files = () => {
   //   console.log("Failed:", errorInfo);
   // };
 
-  const fetchFiles = useCallback(async () => {
-    const q = userFilesQuery(currentUser?._id);
-    await client
-      .fetch(q)
-      .then((res) => {
-        setFiles(res);
-      })
-      .catch((err) => console.error(err));
-  }, [currentUser?._id]);
+  const [form] = Form.useForm();
 
-  useEffect(() => {
-    fetchFiles();
-  }, [currentUser._id, fetchFiles]);
+  const onFinish = async (values) => {
+    console.log(values);
+  };
+
+  const onFinishFailed = (errorInfo) => {
+    console.log("Failed:", errorInfo);
+    message.error(`File upload failed!`);
+  };
+
+  // const fetchFiles = useCallback(async () => {
+  //   const q = userFilesQuery(currentUser?._id);
+  //   await client
+  //     .fetch(q)
+  //     .then((res) => {
+  //       setFiles(res);
+  //     })
+  //     .catch((err) => console.error(err));
+  // }, [currentUser?._id]);
+
+  // useEffect(() => {
+  //   fetchFiles();
+  // }, [currentUser._id, fetchFiles]);
 
   return (
     <AnimationLayout>
       <FilesWrapper>
         <Titlebar title="My Files" />
         <ContentWrapper>
-          <label>
-            <div className="file-uploader-content">
-              <IonIcon iconName="cloud-upload" />
-              <p>Drag and drop here</p>
-              <p>or</p>
-              <p>
-                <span>Browse</span> to upload your files
-              </p>
-            </div>
-          </label>
-          <FileUploaderWrapper type="file" />
+          <Form
+            form={form}
+            name="basic"
+            initialValues={{
+              remember: true,
+            }}
+            onFinish={onFinish}
+            onFinishFailed={onFinishFailed}
+            autoComplete="on"
+            layout="vertical"
+          >
+            <Form.Item
+              name="dragger"
+              valuePropName="fileList"
+              getValueFromEvent={normFile}
+              noStyle
+            >
+              <Upload.Dragger
+                {...uploadProps}
+                itemRender={(ReactElement, file, fileList, actions) => {
+                  return (
+                    <FileItemWrapper>
+                      <Space direction="horizontal" size={8}>
+                        <IonIcon iconName="attach-outline" />
+                        <Space direction="vertical" size={2}>
+                          <p className="file_name">
+                            {file.name} - {file.size / 1000}Kb
+                          </p>
+                          <small>
+                            {moment(file.lastModified).format(
+                              "dddd, Mo MMMM yyyy hh:mm a"
+                            )}
+                          </small>
+                        </Space>
+                      </Space>
+                      <Space direction="horizontal" size={8}>
+                        <Button
+                          icon={
+                            <IonIcon
+                              iconName={"cloud-download-outline"}
+                              onClick={actions.download}
+                            />
+                          }
+                        />
+                        <Button
+                          icon={<IonIcon iconName={"trash-outline"} />}
+                          onClick={actions.remove}
+                        />
+                      </Space>
+                    </FileItemWrapper>
+                  );
+                }}
+              >
+                <p
+                  style={{
+                    width: "100%",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <Lottie
+                    animationData={uploadAnimation}
+                    style={{ width: 100, height: 100 }}
+                  />
+                </p>
+                <p className="ant-upload-text" style={{ fontSize: "13px" }}>
+                  Click or drag file to this area to upload
+                </p>
+                <p className="ant-upload-hint" style={{ fontSize: "12px" }}>
+                  Support for a single or bulk upload.
+                </p>
+              </Upload.Dragger>
+            </Form.Item>
+          </Form>
         </ContentWrapper>
       </FilesWrapper>
     </AnimationLayout>
@@ -127,38 +225,31 @@ const ContentWrapper = styled.div`
   width: 100%;
 `;
 
-const FileUploaderWrapper = styled.input`
+const FileItemWrapper = styled.div`
   width: 100%;
-  height: 240px;
-  border-radius: 10px;
-  background-color: transparent;
-  border: 2px dashed ${({ theme }) => theme.accentColor2};
+  min-height: 40px;
+  border-radius: 7px;
+  background: ${({ theme }) => theme.accentColor2};
+  margin: 0.5rem 0;
+  padding: 1rem;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  position: relative;
+  justify-content: space-between;
 
-  ion-icon {
-    font-size: 80px;
-    margin-bottom: 1rem;
+  & .file_name {
+    font-weight: bold;
   }
 
-  p {
-    line-height: 1.4rem;
-  }
-
-  span {
-    color: ${defaultTheme.primaryColor};
-  }
-
-  & .file-uploader-content {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 240px;
+  & button {
+    box-shadow: none;
+    border-radius: 7px;
+    background-color: transparent;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    /* flex-wrap: wrap; */
+    align-items: center;
   }
 `;
 

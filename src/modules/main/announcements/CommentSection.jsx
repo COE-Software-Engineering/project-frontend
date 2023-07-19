@@ -1,18 +1,23 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import styled from "styled-components";
 import IonIcon from "../../../shared/components/Ionicon";
 import { Button, Checkbox, Form, Input, message } from "antd";
 import { MEDIA_QUERIES } from "../../../shared/utils/constants";
 import { defaultTheme } from "../../../shared/theme/theme";
+import { GlobalContext } from "../../../shared/context/context";
 
 const CommentSection = () => {
-  const createCommnent = () => {};
-  const deleteComment = () => {};
+  const [loading, setLoading] = useState(false);
+  const { createAnnouncement } = useContext(GlobalContext);
 
   const [form] = Form.useForm();
 
   const onFinish = (values) => {
-    console.log("Success:", values);
+    setLoading(true);
+    createAnnouncement(values, () => {
+      setLoading(false);
+      message.success("Announcement created successfully :)");
+    });
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -38,6 +43,7 @@ const CommentSection = () => {
           rules={[
             {
               message: "Invalid title!",
+              whitespace: true,
             },
           ]}
         >
@@ -49,13 +55,14 @@ const CommentSection = () => {
             {
               required: true,
               message: "Invalid message!",
+              whitespace: true,
             },
           ]}
         >
           <Input.TextArea rows={7} className="input" placeholder="Message" />
         </Form.Item>
         <Form.Item>
-          <Button type="primary" htmlType="submit">
+          <Button type="primary" htmlType="submit" loading={loading}>
             Send
           </Button>
         </Form.Item>

@@ -14,6 +14,7 @@ const GlobalProvider = ({ children }) => {
   );
   const [currentUser, setCurrentUser] = useLocalStorage("currentUser", null);
 
+  //auth
   const signupUser = useCallback(async (userType, userDetails, next) => {
     const doc = {
       _id: uuidv4(),
@@ -29,6 +30,7 @@ const GlobalProvider = ({ children }) => {
       .catch((err) => console.error(err));
   }, []);
 
+  //courses
   const registerCourse = useCallback((courses, next) => {
     courses.forEach(async (course) => {
       const doc = {
@@ -46,6 +48,37 @@ const GlobalProvider = ({ children }) => {
         .catch((err) => console.error(err));
     });
   }, []);
+  const updateCourse = useCallback(() => {}, []);
+
+  //announcements
+  const createAnnouncement = useCallback((announcementData, next) => {
+    const doc = {
+      _type: "announcement",
+      title: announcementData?.title,
+      details: announcementData?.details,
+      createdBy: {
+        _type: "createdBy",
+        _ref: currentUser?._id,
+      },
+    };
+    client
+      .create(doc)
+      .then((res) => {
+        next();
+        console.log(res);
+      })
+      .catch((err) => console.error(err));
+  }, []);
+
+  //delete function for either file, course or announcement
+  const deleteItem = useCallback(async (itemId, next) => {
+    await client
+      .delete(itemId)
+      .then((res) => {
+        next();
+      })
+      .catch((err) => console.error(err));
+  }, []);
 
   const value = useMemo(() => {
     return {
@@ -55,6 +88,8 @@ const GlobalProvider = ({ children }) => {
       setCurrentUser,
       signupUser,
       registerCourse,
+      createAnnouncement,
+      deleteItem,
     };
   }, [
     appTheme,
@@ -63,6 +98,8 @@ const GlobalProvider = ({ children }) => {
     setCurrentUser,
     signupUser,
     registerCourse,
+    createAnnouncement,
+    deleteItem,
   ]);
 
   return (

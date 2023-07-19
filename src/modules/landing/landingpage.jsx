@@ -123,6 +123,7 @@ const Landingpage = () => {
                     required: true,
                     type: "email",
                     message: "Invalid email!",
+                    whitespace: true,
                   },
                 ]}
               >
@@ -135,6 +136,7 @@ const Landingpage = () => {
                   {
                     required: true,
                     message: "Invalid password!",
+                    whitespace: true,
                   },
                 ]}
               >
