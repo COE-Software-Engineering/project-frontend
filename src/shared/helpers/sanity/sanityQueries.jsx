@@ -16,13 +16,31 @@ export const chatMessagesQuery = `*[_type == 'announcement']{
 
 export const coursesQuery = (userId = null) => {
   const query = userId
-    ? `*[_type == 'course' && createdBy._ref == '${userId}']{...}`
-    : `*[_type == 'course']{...}`;
+    ? `*[_type == 'course' && userId == '${userId}']{...,createdBy -> {
+    _id,
+    fullName
+}, courseImage {
+      asset -> {
+        url
+      }
+    },
+  }`
+    : `*[_type == 'course']{...,createdBy -> {
+    _id,
+    fullName
+},courseImage {
+      asset -> {
+        url
+      }
+    }}`;
   return query;
 };
 
 export const courseQuery = (courseId) => {
-  const query = `*[_type == 'course' && _id == '${courseId}']{...}`;
+  const query = `*[_type == 'course' && _id == '${courseId}']{...,createdBy -> {
+    _id,
+    fullName
+}}`;
   return query;
 };
 

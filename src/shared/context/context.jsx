@@ -31,25 +31,28 @@ const GlobalProvider = ({ children }) => {
   }, []);
 
   //courses
-  const registerCourse = useCallback((courses, next) => {
-    courses.map(async (course) => {
-      const doc = {
-        _id: uuidv4(),
-        _type: "course",
-        ...course,
-        createdBy: {
-          _type: "createdBy",
-          _ref: currentUser._id,
-        },
-      };
-
-      await client
-        .createIfNotExists(doc)
-        .then((res) => {
-          next();
-        })
-        .catch((err) => console.error(err));
-    });
+  const registerCourse = useCallback(async (courses, userId, next) => {
+    await Promise.all(
+      courses.map(async (course) => {
+        const doc = {
+          _id: uuidv4(),
+          _type: "course",
+          ...course,
+          userId: userId,
+          createdBy: {
+            _type: "createdBy",
+            _ref: userId,
+          },
+        };
+        console.log(doc);
+        await client
+          .createIfNotExists(doc)
+          .then((res) => {
+            next();
+          })
+          .catch((err) => console.error(err));
+      })
+    );
   }, []);
   const updateCourse = useCallback(() => {}, []);
 
@@ -59,9 +62,10 @@ const GlobalProvider = ({ children }) => {
       _type: "announcement",
       title: announcementData?.title,
       details: announcementData?.details,
+      userId: currentUser._id,
       createdBy: {
         _type: "createdBy",
-        _ref: currentUser?._id,
+        _ref: currentUser._id,
       },
     };
     client

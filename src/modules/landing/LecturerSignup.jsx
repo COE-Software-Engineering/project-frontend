@@ -10,7 +10,8 @@ import SignupComplete from "./SignupComplete";
 import { GlobalContext } from "../../shared/context/context";
 
 const LecturerSignup = () => {
-  const { signupUser, registerCourse, currentUser } = useContext(GlobalContext);
+  const { signupUser, registerCourse, currentUser } =
+    useContext(GlobalContext);
   const navigate = useNavigate();
   const [form] = Form.useForm();
   const [pageIndex, setPageIndex] = useState(1);
@@ -36,7 +37,7 @@ const LecturerSignup = () => {
     } else if (pageIndex === 2) {
       console.log(values);
       setLoading(true);
-      registerCourse(values.courses, () => {
+      registerCourse(values.courses,currentUser._id, () => {
         setLoading(false);
         setPageIndex((prev) => prev + 1);
       });
@@ -141,7 +142,12 @@ const LecturerSignup = () => {
         />
       </Form.Item>
       <Form.Item>
-        <Button htmlType="submit" type="primary" loading={loading}>
+        <Button
+          htmlType="submit"
+          type="primary"
+          loading={loading}
+          className="submit-btn"
+        >
           Next
         </Button>
       </Form.Item>
@@ -302,7 +308,12 @@ const LecturerSignup = () => {
                       </Button>
                     </Form.Item>
                     <Form.Item>
-                      <Button type="primary" htmlType="submit">
+                      <Button
+                        type="primary"
+                        htmlType="submit"
+                        loading={loading}
+                        className="submit-btn"
+                      >
                         Sign up
                       </Button>
                     </Form.Item>
@@ -359,6 +370,9 @@ const FormWrapper = styled.div`
     font-size: 12px;
     border-radius: 7px;
     box-shadow: none;
+  }
+
+  & .submit-btn {
     width: 100px;
   }
 

@@ -10,6 +10,7 @@ import { Avatar, BackTop } from "antd";
 import { client } from "../../../shared/helpers/sanity/sanityClient";
 import { chatMessagesQuery } from "../../../shared/helpers/sanity/sanityQueries";
 import { GlobalContext } from "../../../shared/context/context";
+import Empty from "../../../shared/components/Empty";
 
 const Announcements = () => {
   const [messages, setMessages] = useState([]);
@@ -43,18 +44,22 @@ const Announcements = () => {
       <AnnouncementsWrapper>
         <MainChatWrapper>
           <Titlebar title="Chatroom" />
-          {messages.map((message) => (
-            <CommentWrapper
-              messageRef={message.createdBy._id}
-              currentUserId={currentUser._id}
-              key={message._id}
-            >
-              <Avatar size={"small"} className="avatar">
-                {message.createdBy.fullName.slice(0, 2)}
-              </Avatar>
-              <MessageCard message={message} />
-            </CommentWrapper>
-          ))}
+          {!messages || messages.length === 0 ? (
+            <Empty subText={"No announcements avalilable!"} />
+          ) : (
+            messages.map((message) => (
+              <CommentWrapper
+                messageRef={message.createdBy._id}
+                currentUserId={currentUser._id}
+                key={message._id}
+              >
+                <Avatar size={"small"} className="avatar">
+                  {message.createdBy.fullName.slice(0, 2)}
+                </Avatar>
+                <MessageCard message={message} />
+              </CommentWrapper>
+            ))
+          )}
         </MainChatWrapper>
         <AsideWrapper>
           <ComponentWrapper

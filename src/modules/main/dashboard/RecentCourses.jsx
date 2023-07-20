@@ -51,7 +51,7 @@ const ContentWrapper = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
   flex-wrap: wrap;
 
   ${MEDIA_QUERIES.MOBILE} {
