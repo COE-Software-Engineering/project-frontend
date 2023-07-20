@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import styled from "styled-components";
 import RecentCourses from "./RecentCourses";
 import Timeline from "./Timeline";
@@ -6,8 +6,12 @@ import MyFiles from "./MyFiles";
 import Calendar from "./Calendar";
 import { MEDIA_QUERIES } from "../../../shared/utils/constants";
 import AnimationLayout from "../../../shared/components/AnimationLayout";
+import { GlobalContext } from "../../../shared/context/context";
 
 const Dashboard = () => {
+
+   
+
   return (
     <AnimationLayout>
       <DashboardWrapper>

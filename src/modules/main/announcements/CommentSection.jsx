@@ -17,6 +17,7 @@ const CommentSection = () => {
     createAnnouncement(values, () => {
       setLoading(false);
       message.success("Announcement created successfully :)");
+      form.resetFields();
     });
   };
 

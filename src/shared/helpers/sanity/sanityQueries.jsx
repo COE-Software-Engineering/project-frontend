@@ -8,12 +8,21 @@ export const userFilesQuery = (userId) => {
   return query;
 };
 
-export const chatMessagesQuery = `*[_type == 'announcement']{...}`;
+export const chatMessagesQuery = `*[_type == 'announcement']{
+...,createdBy -> {
+    _id,
+    fullName
+}} | order(_createdAt desc)`;
 
 export const coursesQuery = (userId = null) => {
   const query = userId
-    ? `*[_type == 'course' && userId == '${userId}']{...}`
+    ? `*[_type == 'course' && createdBy._ref == '${userId}']{...}`
     : `*[_type == 'course']{...}`;
+  return query;
+};
+
+export const courseQuery = (courseId) => {
+  const query = `*[_type == 'course' && _id == '${courseId}']{...}`;
   return query;
 };
 

@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import CommentSection from "./CommentSection";
 import styled from "styled-components";
 import AnimationLayout from "../../../shared/components/AnimationLayout";
@@ -9,197 +9,50 @@ import Titlebar from "../../../shared/components/Titlebar";
 import { Avatar, BackTop } from "antd";
 import { client } from "../../../shared/helpers/sanity/sanityClient";
 import { chatMessagesQuery } from "../../../shared/helpers/sanity/sanityQueries";
-
-const data = [
-  {
-    title: "Hello",
-    name: "Solo",
-    details:
-      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-  },
-  {
-    title: "Hello",
-    name: "Solo",
-    details:
-      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-  },
-  {
-    title: "Hello",
-    name: "Ama",
-    details:
-      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-  },
-  {
-    title: "Hello",
-    name: "Solo",
-    details:
-      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-  },
-  {
-    title: "Hello",
-    name: "Solo",
-    details:
-      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-  },
-  {
-    title: "Hello",
-    name: "Ama",
-    details:
-      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-  },
-  {
-    title: "Hello",
-    name: "Solo",
-    details: "Lorem Ipsum",
-  },
-  {
-    title: "Hello",
-    name: "Solo",
-    details:
-      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-  },
-  {
-    title: "Hello",
-    name: "Solo",
-    details:
-      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-  },
-  {
-    title: "Hello",
-    name: "Solo",
-    details:
-      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-  },
-  {
-    title: "Hello",
-    name: "Solo",
-    details:
-      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-  },
-  {
-    title: "Hello",
-    name: "Solo",
-    details:
-      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-  },
-  {
-    title: "Hello",
-    name: "Solo",
-    details:
-      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-  },
-  {
-    title: "Hello",
-    name: "Solo",
-    details:
-      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-  },
-  {
-    title: "Hello",
-    name: "Solo",
-    details:
-      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-  },
-  {
-    title: "Hello",
-    name: "Solo",
-    details:
-      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-  },
-  {
-    title: "Hello",
-    name: "Solo",
-    details:
-      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-  },
-  {
-    title: "Hello",
-    name: "Solo",
-    details:
-      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-  },
-  {
-    title: "Hello",
-    name: "Solo",
-    details:
-      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-  },
-  {
-    title: "Hello",
-    name: "Solo",
-    details:
-      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-  },
-  {
-    title: "Hello",
-    name: "Solo",
-    details:
-      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-  },
-  {
-    title: "Hello",
-    name: "Solo",
-    details:
-      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-  },
-  {
-    title: "Hello",
-    name: "Solo",
-    details:
-      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-  },
-  {
-    title: "Hello",
-    name: "Solo",
-    details:
-      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-  },
-  {
-    title: "Hello",
-    name: "Solo",
-    details:
-      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-  },
-  {
-    title: "Hello",
-    name: "Solo",
-    details:
-      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-  },
-];
+import { GlobalContext } from "../../../shared/context/context";
 
 const Announcements = () => {
   const [messages, setMessages] = useState([]);
+  const { currentUser } = useContext(GlobalContext);
 
-  // const getAllChatMessages = useCallback(async () => {
-  //   await client
-  //     .fetch(chatMessagesQuery)
-  //     .then((result) => {
-  //       setMessages(result);
-  //     })
-  //     .catch((err) => console.error(err));
-  // }, []);
+  const getChatUpdates = useCallback(() => {
+    client.listen(chatMessagesQuery).subscribe((update) => {
+      // setMessages(update.result)
+      console.log(update.result);
+      // setMessages((prev) => [...prev, update.result]);
+    });
+  }, []);
 
-  // const getChatUpdates = useCallback(() => {
-  //   client.listen(chatMessagesQuery).subscribe((update) => {
-  //     // setMessages(update.result)
-  //     console.log(update.result);
-  //   });
-  // }, []);
+  const getAllChatMessages = useCallback(async () => {
+    await client
+      .fetch(chatMessagesQuery)
+      .then((result) => {
+        console.log(result);
+        setMessages(result);
+      })
+      .catch((err) => console.error(err));
+  }, [getChatUpdates]);
 
-  // useEffect(() => getChatMessages(), []);
+  useEffect(() => {
+    getAllChatMessages();
+    getChatUpdates();
+  }, []);
 
   return (
     <AnimationLayout>
       <AnnouncementsWrapper>
         <MainChatWrapper>
           <Titlebar title="Chatroom" />
-          {data.map((item) => (
-            <CommentWrapper itemName={item.name} key={item}>
+          {messages.map((message) => (
+            <CommentWrapper
+              messageRef={message.createdBy._id}
+              currentUserId={currentUser._id}
+              key={message._id}
+            >
               <Avatar size={"small"} className="avatar">
-                {item.name.slice(0, 2)}
+                {message.createdBy.fullName.slice(0, 2)}
               </Avatar>
-              <MessageCard message={item} />
+              <MessageCard message={message} />
             </CommentWrapper>
           ))}
         </MainChatWrapper>
@@ -268,14 +121,16 @@ const AsideWrapper = styled.aside`
 const CommentWrapper = styled.div`
   display: flex;
   flex-direction: ${(props) =>
-    props.itemName === "Ama" ? "row-reverse" : "row"};
+    props.messageRef === props.currentUserId ? "row-reverse" : "row"};
   width: 100%;
   margin-bottom: 1rem;
 
   & .avatar {
     background-color: ${({ theme }) => theme.tertiaryColor};
     margin: ${(props) =>
-      props.itemName === "Ama" ? "0 0 0 0.5rem" : "0 0.5rem 0 0"};
+      props.messageRef === props.currentUserId
+        ? "0 0 0 0.5rem"
+        : "0 0.5rem 0 0"};
   }
 `;
 

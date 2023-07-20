@@ -12,7 +12,8 @@ const MessageCard = ({ message }) => {
 
   return (
     <MessageCardWrapper>
-      <Titlebar title={message.name} />
+      <Titlebar title={message.createdBy.fullName} />
+      <p style={{ fontWeight: "bold" }}>{message.title}</p>
       <p>{message.details}</p>
       <Space direction="horizontal">
         <Button
@@ -22,7 +23,9 @@ const MessageCard = ({ message }) => {
         >
           4
         </Button>
-        <small>{moment().format("dddd, Mo MMMM yyyy hh:mm a")}</small>
+        <small>
+          {moment(message._createdAt).format("dddd, Mo MMMM yyyy hh:mm a")}
+        </small>
       </Space>
     </MessageCardWrapper>
   );
@@ -33,7 +36,7 @@ const MessageCardWrapper = styled.div`
   background-color: ${({ theme }) => theme.accentColor2};
   /* height: 100%; */
   min-height: 50px;
-  padding: 1rem;
+  padding: 0.5rem 1rem;
   /* border-radius: 10px; */
   /* box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px; */
   cursor: pointer;

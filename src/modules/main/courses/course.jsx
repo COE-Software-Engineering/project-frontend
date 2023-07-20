@@ -1,16 +1,34 @@
-import React from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import Headerbar from "../../../shared/components/Headerbar";
 import BreadCrumb from "../../../shared/components/BreadCrumb";
 import styled from "styled-components";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import AnimationLayout from "../../../shared/components/AnimationLayout";
 import ComponentWrapper from "../../../shared/components/ComponentWrapper";
+import { client } from "../../../shared/helpers/sanity/sanityClient";
+import { courseQuery } from "../../../shared/helpers/sanity/sanityQueries";
 
 const Course = () => {
   const navigate = useNavigate();
   const { courseId } = useParams();
+  const [course, setCourse] = useState(null);
 
   console.log(courseId);
+
+  const getCourseDetails = useCallback(async () => {
+    const q = courseQuery(courseId);
+    await client
+      .fetch(q)
+      .then((res) => {
+        setCourse(res[0]);
+        console.log(res[0]);
+      })
+      .catch((err) => console.error(err));
+  }, []);
+
+  useEffect(() => {
+    getCourseDetails();
+  }, [courseId]);
 
   return (
     <AnimationLayout>
@@ -23,29 +41,31 @@ const Course = () => {
           ]}
         />
       </Headerbar> */}
-        <ContentWrapper>
-          <CourseDetailsWrapper>
-            <h3>INTRODUCTION TO SOFTWARE ENGINEERING</h3>
-            <div className="other-details">
-              <p>
-                <span className="bold">Course Code :</span>
-                <span>392</span>
-              </p>
-              <p>
-                <span className="bold">Credit Hours :</span>
-                <span>392</span>
-              </p>
-              <p>
-                <span className="bold">Lecturer :</span>
-                <span>392</span>
-              </p>
-            </div>
-          </CourseDetailsWrapper>
-          <CourseContentWrapper>
-            <ComponentWrapper title="Announcements" />
-            <ComponentWrapper title="Course materials" />
-          </CourseContentWrapper>
-        </ContentWrapper>
+        {course && (
+          <ContentWrapper>
+            <CourseDetailsWrapper>
+              <h3>{course.courseName}</h3>
+              <div className="other-details">
+                <p>
+                  <span className="bold">Course Code :</span>
+                  <span>{course.courseCode}</span>
+                </p>
+                <p>
+                  <span className="bold">Credit Hours :</span>
+                  <span>{course.creditHours}</span>
+                </p>
+                <p>
+                  <span className="bold">Lecturer :</span>
+                  <span>392</span>
+                </p>
+              </div>
+            </CourseDetailsWrapper>
+            <CourseContentWrapper>
+              <ComponentWrapper title="Announcements" />
+              <ComponentWrapper title="Course materials" />
+            </CourseContentWrapper>
+          </ContentWrapper>
+        )}
       </CourseWrapper>
     </AnimationLayout>
   );

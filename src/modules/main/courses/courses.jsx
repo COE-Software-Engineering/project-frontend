@@ -8,6 +8,7 @@ import AnimationLayout from "../../../shared/components/AnimationLayout";
 import { coursesQuery } from "../../../shared/helpers/sanity/sanityQueries";
 import { client } from "../../../shared/helpers/sanity/sanityClient";
 import { GlobalContext } from "../../../shared/context/context";
+import Empty from "../../../shared/components/Empty";
 
 const Courses = () => {
   const navigate = useNavigate();
@@ -38,11 +39,15 @@ const Courses = () => {
     <AnimationLayout>
       <CoursesWrapper>
         <Titlebar title={"My Courses"} />
-        <ContentWrapper>
-          {courses.map((course, index) => (
-            <CourseCard key={index} width={"24%"} course={course} />
-          ))}
-        </ContentWrapper>
+        {courses.length === 0 ? (
+          <Empty subText={"No recent courses!"} />
+        ) : (
+          <ContentWrapper>
+            {courses.map((course) => (
+              <CourseCard key={course._id} width={"24%"} course={course} />
+            ))}
+          </ContentWrapper>
+        )}
       </CoursesWrapper>
     </AnimationLayout>
   );

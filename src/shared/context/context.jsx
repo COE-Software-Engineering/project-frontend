@@ -32,12 +32,15 @@ const GlobalProvider = ({ children }) => {
 
   //courses
   const registerCourse = useCallback((courses, next) => {
-    courses.forEach(async (course) => {
+    courses.map(async (course) => {
       const doc = {
         _id: uuidv4(),
         _type: "course",
         ...course,
-        userId: currentUser?._id,
+        createdBy: {
+          _type: "createdBy",
+          _ref: currentUser._id,
+        },
       };
 
       await client
