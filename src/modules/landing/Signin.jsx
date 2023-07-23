@@ -6,6 +6,7 @@ import { Button, Checkbox, Form, Input, message } from "antd";
 import { defaultTheme } from "../../shared/theme/theme";
 import React, { useContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { MEDIA_QUERIES } from "../../shared/utils/constants";
 
 const Signin = () => {
   const [isStudentSignin, setIsStudentSignin] = useState(true);

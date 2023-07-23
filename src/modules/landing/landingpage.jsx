@@ -2,10 +2,12 @@ import { Button, Dropdown } from "antd";
 import styled from "styled-components";
 import { MEDIA_QUERIES } from "../../shared/utils/constants";
 import AnimationLayout from "../../shared/components/AnimationLayout";
+import { useNavigate } from "react-router-dom";
 
 import Signin from "./Signin";
 
 const Landingpage = () => {
+  const navigate = useNavigate();
   const items = [
     {
       key: "1",
