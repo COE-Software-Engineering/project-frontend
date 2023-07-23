@@ -13,23 +13,24 @@ const RecentCourses = () => {
 
   const [courses, setCourses] = useState([]);
 
-  const fetchCourses = useCallback(async () => {
-    const q =
-      currentUser?._type == "student"
-        ? coursesQuery()
-        : coursesQuery(currentUser?._id);
-    await client
-      .fetch(q)
-      .then((res) => {
-        setCourses(res);
-        console.log(res);
-      })
-      .catch((err) => console.error(err));
-  }, [currentUser?._id, currentUser?._type]);
+  // const fetchCourses = useCallback(async () => {
+  //   const q =
+  //     currentUser?._type == "student"
+  //       ? coursesQuery()
+  //       : coursesQuery(currentUser?._id);
+  //   await client
+  //     .fetch(q)
+  //     .then((res) => {
+  //       setCourses(res);
+  //       console.log(res);
+  //     })
+  //     .catch((err) => console.error(err));
+  // }, [currentUser?._id, currentUser?._type]);
 
-  useEffect(() => {
-    fetchCourses();
-  }, [currentUser._id, currentUser._type, fetchCourses]);
+  // useEffect(() => {
+  //   fetchCourses();
+  // }, [currentUser._id, currentUser._type, fetchCourses]);
+
   return (
     <ComponentWrapper title="Recent Courses" styles={{ minHeight: "240px" }}>
       {courses.length === 0 ? (

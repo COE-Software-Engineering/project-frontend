@@ -1,11 +1,13 @@
 import styled from "styled-components";
-import { client } from "../../shared/helpers/sanity/sanityClient";
-import { userQuery } from "../../shared/helpers/sanity/sanityQueries";
 import { GlobalContext } from "../../shared/context/context";
 import { Button, Checkbox, Form, Input, message } from "antd";
 import { defaultTheme } from "../../shared/theme/theme";
 import React, { useContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { MEDIA_QUERIES } from "../../shared/utils/constants";
+import { errorMessageDisplay } from "../../shared/helpers/functions/functions";
+import { signinQuery } from "../../shared/helpers/axios/queries";
+import axiosInstance from "../../shared/helpers/axios/axiosInstance";
 
 const Signin = () => {
   const [isStudentSignin, setIsStudentSignin] = useState(true);
@@ -19,32 +21,31 @@ const Signin = () => {
     currentUser && navigate("/main");
   });
 
-  const onFinish = async ({ email, password }) => {
-    const q = userQuery(
-      email,
-      password,
-      isStudentSignin ? "student" : "lecturer"
-    );
+  const onFinish = async (values) => {
+    const url = signinQuery(isStudentSignin ? "students" : "lecturers");
 
     setLoading(true);
 
-    await client
-      .fetch(q)
+    await axiosInstance
+      .post(url, values)
       .then((res) => {
+        console.log(res);
         setLoading(false);
-        if (res.length > 0) {
-          setCurrentUser(res[0]);
+        if (res?.data.errorCodes.length > 0) {
+          errorMessageDisplay(res?.data.errorCodes);
+        } else {
+          setCurrentUser(res?.data.userInfo);
           navigate("/main");
-        } else message.error("Sign in failed!");
+        }
       })
       .catch((err) => {
-        message.error(`Sign in failed!`);
+        message.error("Sign in failed!");
         setLoading(false);
       });
   };
 
   const onFinishFailed = (errorInfo) => {
-    console.log("Failed:", errorInfo);
+    console.error("Failed:", errorInfo);
     message.error(`Sign in failed!`);
   };
 

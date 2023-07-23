@@ -4,6 +4,7 @@ import { Suspense, lazy, useContext, useEffect } from "react";
 import Loader from "../../shared/components/Loader";
 import AnimationLayout from "../../shared/components/AnimationLayout";
 import { GlobalContext } from "../../shared/context/context";
+import Settings from "../settings/settings";
 
 const Dashboard = lazy(() => import("./dashboard/dashboard"));
 const Profile = lazy(() => import("./profile/profile"));
@@ -33,6 +34,7 @@ const MainRoutes = () => {
                 <Route path="/courses/:courseId" element={<Course />} />
                 <Route path="/files" element={<Files />} />
                 <Route path="/announcements" element={<Announcements />} />
+                <Route path="/settings" element={<Settings />} />
               </Routes>
             </Suspense>
           </div>

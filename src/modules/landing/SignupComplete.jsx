@@ -12,8 +12,12 @@ const SignupComplete = () => {
     <SignupCompleteWrapper>
       <Lottie animationData={CheckmarkAnimation} width={40} height={40} />
       <p>You are all set and done!</p>
-      <Button type="primary" onClick={() => navigate("/main")}>
-        Let's go
+      <p>
+        An email has been sent to your email containing a temporary password for
+        you.
+      </p>
+      <Button type="primary" onClick={() => navigate("/")}>
+        Go to sign in
       </Button>
     </SignupCompleteWrapper>
   );
@@ -29,6 +33,7 @@ const SignupCompleteWrapper = styled.div`
 
   & p {
     margin: 1rem 0;
+    text-align: center;
   }
 `;
 

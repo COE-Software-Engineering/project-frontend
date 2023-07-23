@@ -115,31 +115,5 @@ const CommentSectionWrapper = styled.div`
   }
 `;
 
-const FormWrapper = styled.div`
-  width: 40%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  background-color: ${({ theme }) => theme.accentColor2};
-`;
-
-const Wrapper = styled.div`
-  width: 100%;
-  height: 100%;
-  padding: 2rem;
-  display: flex;
-  flex-direction: column;
-  /* align-items: center; */
-  justify-content: center;
-
-  h3 {
-    margin-bottom: 2rem;
-    font-size: 1.5rem;
-    /* font-size: 16px; */
-    font-family: "DM Serif Text", "Poppins", sans-serif;
-  }
-`;
 
 export default CommentSection;

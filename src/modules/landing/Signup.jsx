@@ -4,49 +4,61 @@ import styled from "styled-components";
 import { MEDIA_QUERIES } from "../../shared/utils/constants";
 import { defaultTheme } from "../../shared/theme/theme";
 import IonIcon from "../../shared/components/Ionicon";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import AnimationLayout from "../../shared/components/AnimationLayout";
 import SignupComplete from "./SignupComplete";
 import { GlobalContext } from "../../shared/context/context";
+import axiosInstance from "../../shared/helpers/axios/axiosInstance";
+import { signupQuery } from "../../shared/helpers/axios/queries";
+import { errorMessageDisplay } from "../../shared/helpers/functions/functions";
 
-const LecturerSignup = () => {
-  const { signupUser, registerCourse, currentUser } = useContext(GlobalContext);
+const Signup = () => {
   const navigate = useNavigate();
   const [form] = Form.useForm();
   const [pageIndex, setPageIndex] = useState(1);
   const [loading, setLoading] = useState(false);
 
-  const onFinish = (values) => {
-      if (values.password !== values.confirmPassword) {
-        message.error("Passwords don't match!");
-        return;
-      }
-      const signupData = {
-        fullName: values.fullName,
-        email: values.email,
-        password: values.password,
-        staffId: values.staffId,
-      };
-      setLoading(true);
-      signupUser("lecturer", signupData, () => {
-        setPageIndex((prev) => prev + 1);
+  const { userType } = useParams();
+
+  const onFinish = async (values) => {
+    // console.log(values);
+    const url = signupQuery(userType);
+
+    setLoading(true);
+
+    await axiosInstance
+      .post(url, values)
+      .then((res) => {
+        console.log(res);
         setLoading(false);
+        if (res?.data.length > 0) {
+          errorMessageDisplay(res?.data);
+        } else {
+          setLoading(false);
+          setPageIndex((prev) => prev + 1);
+        }
+      })
+      .catch((err) => {
+        setLoading(false);
+        message.error("Sign up failed!");
+        console.log(err);
       });
   };
 
   const onFinishFailed = (errorInfo) => {
-    message.error(`Signup failed!`);
+    console.log("Failed:", errorInfo);
+    message.error(`Authentication failed!`);
   };
 
-  const PersonalDetailsSection = () => (
+  const SignupDetailsSection = () => (
     <>
       <Form.Item
-        name="fullName"
+        name="full_name"
         rules={[
           {
             required: true,
-            min: 3,
             type: "string",
+            min: 3,
             message: "Invalid full name!",
             whitespace: true,
           },
@@ -55,17 +67,22 @@ const LecturerSignup = () => {
         <Input className="input" placeholder="Full name" />
       </Form.Item>
       <Form.Item
-        name="staffId"
+        name={userType === "students" ? "index_number" : "staff_id"}
         rules={[
           {
             required: true,
-            min: 5,
-            message: "Invalid staff id!",
+            min: 4,
+            message: `Invalid ${
+              userType === "students" ? "index number" : "staff id"
+            }!`,
             whitespace: true,
           },
         ]}
       >
-        <Input className="input" placeholder="Staff id" />
+        <Input
+          className="input"
+          placeholder={userType === "students" ? "Index number" : "Staff id"}
+        />
       </Form.Item>
       <Form.Item
         name="email"
@@ -80,50 +97,6 @@ const LecturerSignup = () => {
       >
         <Input className="input" placeholder="Email" />
       </Form.Item>
-      <Form.Item
-        name="password"
-        rules={[
-          {
-            required: true,
-            min: 6,
-            message: "Invalid password!",
-            whitespace: true,
-          },
-        ]}
-      >
-        <Input.Password
-          className="input"
-          placeholder="Password"
-          styles={{
-            input: {
-              backgroundColor: "transparent",
-              fontSize: "12px",
-            },
-          }}
-        />
-      </Form.Item>
-      <Form.Item
-        name="confirmPassword"
-        rules={[
-          {
-            required: true,
-            min: 6,
-            message: "Invalid password!",
-            whitespace: true,
-          },
-        ]}
-      >
-        <Input.Password
-          className="input"
-          placeholder="Confirm password"
-          styles={{
-            input: {
-              backgroundColor: "transparent",
-              fontSize: "12px",
-            },
-          }}
-        />
-      </Form.Item>
       <Form.Item>
         <Checkbox
           style={{ backgroundColor: "transparent" }}
@@ -132,13 +105,8 @@ const LecturerSignup = () => {
         />
       </Form.Item>
       <Form.Item>
-        <Button
-          htmlType="submit"
-          type="primary"
-          loading={loading}
-          className="submit-btn"
-        >
-          Next
+        <Button type="primary" htmlType="submit" loading={loading}>
+          Sign up
         </Button>
       </Form.Item>
     </>
@@ -156,25 +124,20 @@ const LecturerSignup = () => {
         />
         <FormWrapper>
           <Wrapper pageIndex={pageIndex}>
-            <h3>"Let's help you get started"</h3>
+            <h3>Let's help you get started</h3>
             <Form
               form={form}
-              name="lecturer-signup"
+              name="basic"
               initialValues={{
                 remember: true,
               }}
               onFinish={onFinish}
               onFinishFailed={onFinishFailed}
-              preserve={true}
-              scrollToFirstError={true}
               autoComplete="on"
               layout="vertical"
             >
-              {pageIndex === 1 ? (
-                <PersonalDetailsSection />
-              ) : (
-                <SignupComplete />
-              )}
+              {pageIndex === 1 ? <SignupDetailsSection /> : <SignupComplete />}
+              {/* <SignupComplete /> */}
             </Form>
           </Wrapper>
         </FormWrapper>
@@ -186,7 +149,7 @@ const LecturerSignup = () => {
 const StudentSignupWrapper = styled.div`
   width: 100%;
   min-height: 100vh;
-  padding: 1rem;
+  padding: 2rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -200,12 +163,6 @@ const FormWrapper = styled.div`
   justify-content: center;
   position: relative;
   background-color: ${({ theme }) => theme.accentColor2};
-
-  & .add-field-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
 
   & .input {
     background-color: transparent;
@@ -223,9 +180,6 @@ const FormWrapper = styled.div`
     font-size: 12px;
     border-radius: 7px;
     box-shadow: none;
-  }
-
-  & .submit-btn {
     width: 100px;
   }
 
@@ -250,7 +204,7 @@ const Wrapper = styled.div`
     font-size: 1.5rem;
     /* font-size: 16px; */
     font-family: "DM Serif Text", "Poppins", sans-serif;
-    display: ${(props) => (props.pageIndex > 2 ? "none" : "block")};
+    display: ${(props) => (props.pageIndex > 1 ? "none" : "block")};
   }
 
   form {
@@ -277,4 +231,4 @@ const Wrapper = styled.div`
   }
 `;
 
-export default LecturerSignup;
+export default Signup;

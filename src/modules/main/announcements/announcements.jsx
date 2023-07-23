@@ -16,27 +16,10 @@ const Announcements = () => {
   const [messages, setMessages] = useState([]);
   const { currentUser } = useContext(GlobalContext);
 
-  const getChatUpdates = useCallback(() => {
-    client.listen(chatMessagesQuery).subscribe((update) => {
-      // setMessages(update.result)
-      console.log(update.result);
-      // setMessages((prev) => [...prev, update.result]);
-    });
-  }, []);
-
-  const getAllChatMessages = useCallback(async () => {
-    await client
-      .fetch(chatMessagesQuery)
-      .then((result) => {
-        console.log(result);
-        setMessages(result);
-      })
-      .catch((err) => console.error(err));
-  }, [getChatUpdates]);
+  const getAllChatMessages = useCallback(async () => {}, []);
 
   useEffect(() => {
     getAllChatMessages();
-    getChatUpdates();
   }, []);
 
   return (

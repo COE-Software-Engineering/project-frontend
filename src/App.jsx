@@ -9,6 +9,7 @@ import Loader from "./shared/components/Loader";
 import { GlobalContext } from "./shared/context/context";
 import { AnimatePresence } from "framer-motion";
 import PageNotFound from "./modules/pageNotFound";
+import Signup from "./modules/landing/Signup";
 
 const LandingPage = lazy(() => import("./modules/landing/landingpage"));
 const LecturerSignup = lazy(() => import("./modules/landing/LecturerSignup"));
@@ -60,8 +61,7 @@ function App() {
               <Suspense fallback={<Loader />}>
                 <Routes>
                   <Route path="/" element={<LandingPage />} />
-                  <Route path="/lecturer-signup" element={<LecturerSignup />} />
-                  <Route path="/student-signup" element={<StudentSignup />} />
+                  <Route path="/signup/:userType" element={<Signup />} />
                   <Route path="/main/*" element={<MainRoutes />} />
                   <Route path="/*" element={<PageNotFound />} />
                 </Routes>

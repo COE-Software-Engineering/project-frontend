@@ -10,7 +10,7 @@ export const lightTheme = {
   bodyBackgroundColor: "#f4f6fc",
   textColor: "#181515",
   accentColor: "#21212b",
-  accentColor2: "rgba(0, 0, 0, 0.02)",
+  accentColor2: "rgba(0, 0, 0, 0.03)",
   landingSecondaryColor: "#f8f8ff",
   borderColor: "rgba(0,0,0,0.1)",
   sidebarBorder: "rgba(0,0,0,0.05)",

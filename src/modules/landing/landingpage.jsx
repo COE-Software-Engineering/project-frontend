@@ -2,20 +2,27 @@ import { Button, Dropdown } from "antd";
 import styled from "styled-components";
 import { MEDIA_QUERIES } from "../../shared/utils/constants";
 import AnimationLayout from "../../shared/components/AnimationLayout";
-
 import Signin from "./Signin";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 const Landingpage = () => {
+  const navigate = useNavigate();
+
   const items = [
     {
       key: "1",
       label: <p>As lecturer</p>,
-      onClick: () => navigate("/lecturer-signup"),
+      onClick: () => {
+        navigate("/signup/lecturers");
+      },
     },
     {
       key: "2",
       label: <p>As student</p>,
-      onClick: () => navigate("/student-signup"),
+      onClick: () => {
+        navigate("/signup/students");
+      },
     },
   ];
 
@@ -26,6 +33,7 @@ const Landingpage = () => {
           <img src="/knust-logo.png" alt="logo" />
 
           <Dropdown
+            trigger={"click"}
             menu={{
               items,
             }}
