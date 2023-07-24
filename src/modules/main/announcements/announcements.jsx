@@ -158,9 +158,9 @@ const CommentWrapper = styled.div`
   margin-bottom: 1rem;
   transition: all 0.2s ease-out 0s;
 
-  &:hover {
+  /* &:hover {
     background-color: ${({ theme }) => theme.accentColor2};
-  }
+  } */
 
   &:hover .delete-announcement-btn {
     display: ${(props) =>

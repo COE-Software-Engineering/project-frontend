@@ -32,6 +32,7 @@ const Landingpage = () => {
               items,
             }}
             placement="bottom"
+            trigger={"click"}
           >
             <Button
               type="ghost"
