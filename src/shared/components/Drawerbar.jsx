@@ -2,7 +2,7 @@ import { Button, Drawer } from "antd";
 import React, { useState } from "react";
 import styled from "styled-components";
 import { MEDIA_QUERIES } from "../utils/constants";
-import IonIcon from "./Ionicon";
+import IonIcon from "./IonIcon";
 import { sidebarLinks } from "../utils/data";
 import { SidebarItem } from "./Sidebar";
 import { useNavigate } from "react-router-dom";

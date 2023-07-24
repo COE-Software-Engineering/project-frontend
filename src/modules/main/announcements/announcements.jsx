@@ -12,7 +12,7 @@ import { chatMessagesQuery } from "../../../shared/helpers/sanity/sanityQueries"
 import { GlobalContext } from "../../../shared/context/context";
 import Empty from "../../../shared/components/Empty";
 import { useLocalStorage } from "../../../shared/helpers/hooks/useLocalStorage";
-import IonIcon from "../../../shared/components/Ionicon";
+import IonIcon from "../../../shared/components/IonIcon";
 import Confirm from "../../../shared/components/Confirm";
 import { defaultTheme } from "../../../shared/theme/theme";
 

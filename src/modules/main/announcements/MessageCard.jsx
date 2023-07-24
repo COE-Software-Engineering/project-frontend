@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import styled from "styled-components";
 import Titlebar from "../../../shared/components/Titlebar";
-import IonIcon from "../../../shared/components/Ionicon";
+import IonIcon from "../../../shared/components/IonIcon";
 import { Button, Space } from "antd";
 import moment from "moment/moment";
 import { MEDIA_QUERIES } from "../../../shared/utils/constants";

@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import UserDetails from "./UserDetails";
 import LoginActivity from "./LoginActivity";
 import styled from "styled-components";
-import IonIcon from "../../../shared/components/Ionicon";
+import IonIcon from "../../../shared/components/IonIcon";
 import { Button } from "antd";
 import { defaultTheme } from "../../../shared/theme/theme";
 import CourseDetails from "./CourseDetails";

@@ -9,7 +9,7 @@ import { GlobalContext } from "../../../shared/context/context";
 import { userFilesQuery } from "../../../shared/helpers/sanity/sanityQueries";
 import Lottie from "lottie-react";
 import uploadAnimation from "../../../shared/helpers/lotties/upload.json";
-import IonIcon from "../../../shared/components/Ionicon";
+import IonIcon from "../../../shared/components/IonIcon";
 import moment from "moment";
 
 const Files = () => {

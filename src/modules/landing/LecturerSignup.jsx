@@ -3,15 +3,14 @@ import React, { useContext, useState } from "react";
 import styled from "styled-components";
 import { MEDIA_QUERIES } from "../../shared/utils/constants";
 import { defaultTheme } from "../../shared/theme/theme";
-import IonIcon from "../../shared/components/Ionicon";
+import IonIcon from "../../shared/components/IonIcon";
 import { useNavigate } from "react-router-dom";
 import AnimationLayout from "../../shared/components/AnimationLayout";
 import SignupComplete from "./SignupComplete";
 import { GlobalContext } from "../../shared/context/context";
 
 const LecturerSignup = () => {
-  const { signupUser, registerCourse, currentUser } =
-    useContext(GlobalContext);
+  const { signupUser, registerCourse, currentUser } = useContext(GlobalContext);
   const navigate = useNavigate();
   const [form] = Form.useForm();
   const [pageIndex, setPageIndex] = useState(1);
@@ -37,7 +36,7 @@ const LecturerSignup = () => {
     } else if (pageIndex === 2) {
       console.log(values);
       setLoading(true);
-      registerCourse(values.courses,currentUser._id, () => {
+      registerCourse(values.courses, currentUser._id, () => {
         setLoading(false);
         setPageIndex((prev) => prev + 1);
       });

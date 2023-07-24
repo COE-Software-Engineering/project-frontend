@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import styled from "styled-components";
-import IonIcon from "../../../shared/components/Ionicon";
+import IonIcon from "../../../shared/components/IonIcon";
 import { Button, Checkbox, Form, Input, message } from "antd";
 import { MEDIA_QUERIES } from "../../../shared/utils/constants";
 import { defaultTheme } from "../../../shared/theme/theme";
