@@ -76,15 +76,17 @@ const Navbar = () => {
           trigger={"click"}
         >
           <Avatar
-            src=""
             size={"small"}
             style={{
               cursor: "pointer",
               backgroundColor: `${defaultTheme.tertiaryColor2}`,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
             }}
-          >
-            {currentUser?.fullName.slice(0, 2)}
-          </Avatar>
+            alt={currentUser?.fullName.slice(0, 2)}
+            icon={<IonIcon iconName={"person-circle"} />}
+          />
         </Dropdown>
       </ToolsWrapper>
     </NavWrapper>
