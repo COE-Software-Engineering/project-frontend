@@ -13,8 +13,11 @@ const UserDetails = () => {
       value: currentUser?.fullName,
     },
     {
-      type: "Index Number",
-      value: currentUser?.indexNumber,
+      type: currentUser._type === "student" ? "Index Number" : "Staff Id",
+      value:
+        currentUser._type === "student"
+          ? currentUser?.indexNumber
+          : currentUser.staffId,
     },
     {
       type: "Email",

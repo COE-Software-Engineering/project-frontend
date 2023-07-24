@@ -57,15 +57,15 @@ const GlobalProvider = ({ children }) => {
   const updateCourse = useCallback(() => {}, []);
 
   //announcements
-  const createAnnouncement = useCallback((announcementData, next) => {
+  const createAnnouncement = useCallback((announcementData, userId,next) => {
     const doc = {
       _type: "announcement",
       title: announcementData?.title,
       details: announcementData?.details,
-      userId: currentUser._id,
+      userId: userId,
       createdBy: {
         _type: "createdBy",
-        _ref: currentUser._id,
+        _ref: userId,
       },
     };
     client

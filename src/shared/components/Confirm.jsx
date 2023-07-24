@@ -7,7 +7,7 @@ const Confirm = ({ component, title, description, onCancel, onConfirm }) => {
     <Popconfirm
       autoAdjustOverflow={true}
       showArrow={false}
-      color="transparent"
+      // color="transparent"
       title={title}
       description={description || null}
       onConfirm={onConfirm}

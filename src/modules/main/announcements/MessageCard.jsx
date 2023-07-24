@@ -16,13 +16,6 @@ const MessageCard = ({ message }) => {
       <p style={{ fontWeight: "bold" }}>{message.title}</p>
       <p>{message.details}</p>
       <Space direction="horizontal">
-        <Button
-          icon={<IonIcon iconName={"heart"} />}
-          type="ghost"
-          shape={"round"}
-        >
-          4
-        </Button>
         <small>
           {moment(message._createdAt).format("dddd, Mo MMMM yyyy hh:mm a")}
         </small>
@@ -37,8 +30,8 @@ const MessageCardWrapper = styled.div`
   /* height: 100%; */
   min-height: 50px;
   padding: 0.5rem 1rem;
-  /* border-radius: 10px; */
-  /* box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px; */
+  border-radius: 7px;
+  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
   cursor: pointer;
 
   & p {

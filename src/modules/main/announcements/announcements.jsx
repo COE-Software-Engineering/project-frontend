@@ -6,23 +6,19 @@ import { MEDIA_QUERIES } from "../../../shared/utils/constants";
 import ComponentWrapper from "../../../shared/components/ComponentWrapper";
 import MessageCard from "./MessageCard";
 import Titlebar from "../../../shared/components/Titlebar";
-import { Avatar, BackTop } from "antd";
+import { Avatar, BackTop, message, Space, Button } from "antd";
 import { client } from "../../../shared/helpers/sanity/sanityClient";
 import { chatMessagesQuery } from "../../../shared/helpers/sanity/sanityQueries";
 import { GlobalContext } from "../../../shared/context/context";
 import Empty from "../../../shared/components/Empty";
+import { useLocalStorage } from "../../../shared/helpers/hooks/useLocalStorage";
+import IonIcon from "../../../shared/components/Ionicon";
+import Confirm from "../../../shared/components/Confirm";
+import { defaultTheme } from "../../../shared/theme/theme";
 
 const Announcements = () => {
   const [messages, setMessages] = useState([]);
-  const { currentUser } = useContext(GlobalContext);
-
-  const getChatUpdates = useCallback(() => {
-    client.listen(chatMessagesQuery).subscribe((update) => {
-      // setMessages(update.result)
-      console.log(update.result);
-      // setMessages((prev) => [...prev, update.result]);
-    });
-  }, []);
+  const { currentUser, deleteItem } = useContext(GlobalContext);
 
   const getAllChatMessages = useCallback(async () => {
     await client
@@ -32,12 +28,25 @@ const Announcements = () => {
         setMessages(result);
       })
       .catch((err) => console.error(err));
-  }, [getChatUpdates]);
-
-  useEffect(() => {
-    getAllChatMessages();
-    getChatUpdates();
   }, []);
+
+  const getChatUpdates = useCallback(() => {
+    client.listen(chatMessagesQuery).subscribe((update) => {
+      console.log(update);
+      getAllChatMessages();
+      // setMessages((prev) => [...prev, update.result]);
+    });
+  }, []);
+
+  const deleteAnnouncement = async (id) => {
+    await deleteItem(id, () =>
+      message.success("Announcement deleted succesfully")
+    );
+  };
+
+  useEffect(() => getChatUpdates, []);
+
+  useEffect(() => getAllChatMessages, []);
 
   return (
     <AnimationLayout>
@@ -57,15 +66,33 @@ const Announcements = () => {
                   {message.createdBy.fullName.slice(0, 2)}
                 </Avatar>
                 <MessageCard message={message} />
+                <Space>
+                  <Confirm
+                    component={
+                      <Button
+                        ghost
+                        className="delete-announcement-btn"
+                        icon={<IonIcon iconName={"trash"} />}
+                      />
+                    }
+                    description={
+                      "Are you sure you want to delete this announcement?"
+                    }
+                    title={"Delete announcement"}
+                    onConfirm={() => deleteAnnouncement(message._id)}
+                  />
+                </Space>
               </CommentWrapper>
             ))
           )}
         </MainChatWrapper>
         <AsideWrapper>
-          <ComponentWrapper
-            title="Send announcement"
-            children={<CommentSection />}
-          />
+          {currentUser._type === "lecturer" && (
+            <ComponentWrapper
+              title="Send announcement"
+              children={<CommentSection />}
+            />
+          )}
         </AsideWrapper>
       </AnnouncementsWrapper>
     </AnimationLayout>
@@ -82,7 +109,7 @@ const AnnouncementsWrapper = styled.div`
 
   ${MEDIA_QUERIES.MOBILE} {
     & {
-      flex-direction: 0 0 0 1rem;
+      flex-direction: column-reverse;
     }
   }
 `;
@@ -129,6 +156,16 @@ const CommentWrapper = styled.div`
     props.messageRef === props.currentUserId ? "row-reverse" : "row"};
   width: 100%;
   margin-bottom: 1rem;
+  transition: all 0.2s ease-out 0s;
+
+  &:hover {
+    background-color: ${({ theme }) => theme.accentColor2};
+  }
+
+  &:hover .delete-announcement-btn {
+    display: ${(props) =>
+      props.messageRef === props.currentUserId ? "inline" : "none"};
+  }
 
   & .avatar {
     background-color: ${({ theme }) => theme.tertiaryColor};
@@ -136,6 +173,16 @@ const CommentWrapper = styled.div`
       props.messageRef === props.currentUserId
         ? "0 0 0 0.5rem"
         : "0 0.5rem 0 0"};
+  }
+
+  & .delete-announcement-btn {
+    display: none;
+    box-shadow: none;
+    border: none;
+  }
+
+  & .delete-announcement-btn ion-icon {
+    color: ${({ theme }) => theme.tertiaryColor2};
   }
 `;
 

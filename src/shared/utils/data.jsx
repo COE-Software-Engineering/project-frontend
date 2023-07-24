@@ -10,7 +10,7 @@ export const sidebarLinks = [
     routeTo: "/main/courses",
   },
   {
-    name: "Chatroom",
+    name: "Announcements",
     iconName: "megaphone",
     routeTo: "/main/announcements",
   },

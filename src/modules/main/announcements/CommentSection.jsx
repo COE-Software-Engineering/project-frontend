@@ -8,13 +8,13 @@ import { GlobalContext } from "../../../shared/context/context";
 
 const CommentSection = () => {
   const [loading, setLoading] = useState(false);
-  const { createAnnouncement } = useContext(GlobalContext);
+  const { createAnnouncement, currentUser } = useContext(GlobalContext);
 
   const [form] = Form.useForm();
 
   const onFinish = (values) => {
     setLoading(true);
-    createAnnouncement(values, () => {
+    createAnnouncement(values, currentUser._id, () => {
       setLoading(false);
       message.success("Announcement created successfully :)");
       form.resetFields();
@@ -23,7 +23,7 @@ const CommentSection = () => {
 
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
-    message.error(`Authentication failed!`);
+    message.error(`announcement creation failed!`);
   };
 
   return (
