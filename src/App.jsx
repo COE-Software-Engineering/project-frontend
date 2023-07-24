@@ -12,8 +12,6 @@ import PageNotFound from "./modules/pageNotFound";
 import Signup from "./modules/landing/Signup";
 
 const LandingPage = lazy(() => import("./modules/landing/landingpage"));
-const LecturerSignup = lazy(() => import("./modules/landing/LecturerSignup"));
-const StudentSignup = lazy(() => import("./modules/landing/StudentSignup"));
 const MainRoutes = lazy(() => import("./modules/main/mainRoutes"));
 
 function App() {

@@ -22,7 +22,7 @@ const Navbar = () => {
   const items = [
     {
       key: "1",
-      label: <p>{currentUser.surname + " " + currentUser.othername}</p>,
+      label: <p>{currentUser?.last_name + " " + currentUser?.other_names}</p>,
       onClick: () => navigate("/main/profile"),
     },
     {
@@ -83,7 +83,7 @@ const Navbar = () => {
               backgroundColor: `${defaultTheme.tertiaryColor2}`,
             }}
           >
-            {currentUser.othername.slice(0, 2)}
+            {currentUser?.other_names.slice(0, 2)}
           </Avatar>
         </Dropdown>
       </ToolsWrapper>

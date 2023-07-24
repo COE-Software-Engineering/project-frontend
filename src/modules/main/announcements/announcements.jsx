@@ -11,15 +11,24 @@ import { client } from "../../../shared/helpers/sanity/sanityClient";
 import { chatMessagesQuery } from "../../../shared/helpers/sanity/sanityQueries";
 import { GlobalContext } from "../../../shared/context/context";
 import Empty from "../../../shared/components/Empty";
+import axiosInstance from "../../../shared/helpers/axios/axiosInstance";
 
 const Announcements = () => {
-  const [messages, setMessages] = useState([]);
+  const [announcements, setAnnouncements] = useState([]);
   const { currentUser } = useContext(GlobalContext);
 
-  const getAllChatMessages = useCallback(async () => {}, []);
+  const getAllAnnouncements = useCallback(async () => {
+    await axiosInstance
+      .post("/api/get_all_announcements", null)
+      .then((res) => {
+        setAnnouncements(res.data);
+        console.log(res);
+      })
+      .catch((err) => console.error(err));
+  }, []);
 
   useEffect(() => {
-    getAllChatMessages();
+    getAllAnnouncements();
   }, []);
 
   return (
@@ -27,28 +36,28 @@ const Announcements = () => {
       <AnnouncementsWrapper>
         <MainChatWrapper>
           <Titlebar title="Chatroom" />
-          {!messages || messages.length === 0 ? (
+          {!announcements || announcements.length === 0 ? (
             <Empty subText={"No announcements avalilable!"} />
           ) : (
-            messages.map((message) => (
-              <CommentWrapper
-                messageRef={message.createdBy._id}
-                currentUserId={currentUser._id}
-                key={message._id}
-              >
+            announcements.map((announcement) => (
+              <CommentWrapper>
                 <Avatar size={"small"} className="avatar">
-                  {message.createdBy.fullName.slice(0, 2)}
+                  {announcement.poster_name.slice(0, 2)}
                 </Avatar>
-                <MessageCard message={message} />
+                <MessageCard announcement={announcement} />
               </CommentWrapper>
             ))
           )}
         </MainChatWrapper>
         <AsideWrapper>
-          <ComponentWrapper
-            title="Send announcement"
-            children={<CommentSection />}
-          />
+          {currentUser.staff_id && (
+            <ComponentWrapper
+              title="Send announcement"
+              children={
+                <CommentSection getAllAnnouncements={getAllAnnouncements} />
+              }
+            />
+          )}
         </AsideWrapper>
       </AnnouncementsWrapper>
     </AnimationLayout>
@@ -108,17 +117,13 @@ const AsideWrapper = styled.aside`
 
 const CommentWrapper = styled.div`
   display: flex;
-  flex-direction: ${(props) =>
-    props.messageRef === props.currentUserId ? "row-reverse" : "row"};
+  flex-direction: row;
   width: 100%;
   margin-bottom: 1rem;
 
   & .avatar {
-    background-color: ${({ theme }) => theme.tertiaryColor};
-    margin: ${(props) =>
-      props.messageRef === props.currentUserId
-        ? "0 0 0 0.5rem"
-        : "0 0.5rem 0 0"};
+    background-color: ${({ theme }) => theme.tertiaryColor2};
+    margin: 0 0.5rem 0 0;
   }
 `;
 

@@ -4,7 +4,6 @@ import { Suspense, lazy, useContext, useEffect } from "react";
 import Loader from "../../shared/components/Loader";
 import AnimationLayout from "../../shared/components/AnimationLayout";
 import { GlobalContext } from "../../shared/context/context";
-import Settings from "../settings/settings";
 
 const Dashboard = lazy(() => import("./dashboard/dashboard"));
 const Profile = lazy(() => import("./profile/profile"));
@@ -12,6 +11,7 @@ const Courses = lazy(() => import("./courses/courses"));
 const Course = lazy(() => import("./courses/course"));
 const Files = lazy(() => import("./files/files"));
 const Announcements = lazy(() => import("./announcements/announcements"));
+const Settings = lazy(() => import("./settings/settings"));
 
 const MainRoutes = () => {
   const { currentUser } = useContext(GlobalContext);

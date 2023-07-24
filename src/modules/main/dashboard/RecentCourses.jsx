@@ -9,27 +9,18 @@ import { client } from "../../../shared/helpers/sanity/sanityClient";
 import { coursesQuery } from "../../../shared/helpers/sanity/sanityQueries";
 
 const RecentCourses = () => {
-  const { currentUser } = useContext(GlobalContext);
+  const { currentUser, getAllCourses } = useContext(GlobalContext);
 
   const [courses, setCourses] = useState([]);
+  const fetchCourses = useCallback(async () => {
+    getAllCourses((res) => {
+      setCourses(res.data);
+    });
+  }, []);
 
-  // const fetchCourses = useCallback(async () => {
-  //   const q =
-  //     currentUser?._type == "student"
-  //       ? coursesQuery()
-  //       : coursesQuery(currentUser?._id);
-  //   await client
-  //     .fetch(q)
-  //     .then((res) => {
-  //       setCourses(res);
-  //       console.log(res);
-  //     })
-  //     .catch((err) => console.error(err));
-  // }, [currentUser?._id, currentUser?._type]);
-
-  // useEffect(() => {
-  //   fetchCourses();
-  // }, [currentUser._id, currentUser._type, fetchCourses]);
+  useEffect(() => {
+    fetchCourses();
+  }, []);
 
   return (
     <ComponentWrapper title="Recent Courses" styles={{ minHeight: "240px" }}>
@@ -38,7 +29,7 @@ const RecentCourses = () => {
       ) : (
         <ContentWrapper>
           {courses.slice(0, 3).map((course) => (
-            <CourseCard key={course._id} course={course} />
+            <CourseCard key={course.course_code} course={course} />
           ))}
         </ContentWrapper>
       )}

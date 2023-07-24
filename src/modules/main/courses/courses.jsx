@@ -13,27 +13,19 @@ import Empty from "../../../shared/components/Empty";
 const Courses = () => {
   const navigate = useNavigate();
 
-  const { currentUser } = useContext(GlobalContext);
+  const { currentUser, getAllCourses } = useContext(GlobalContext);
 
   const [courses, setCourses] = useState([]);
 
   const fetchCourses = useCallback(async () => {
-    const q =
-      currentUser?._type == "student"
-        ? coursesQuery()
-        : coursesQuery(currentUser?._id);
-    await client
-      .fetch(q)
-      .then((res) => {
-        setCourses(res);
-        console.log(res);
-      })
-      .catch((err) => console.error(err));
-  }, [currentUser?._id, currentUser?._type]);
+    getAllCourses((res) => {
+      setCourses(res.data);
+    });
+  }, []);
 
   useEffect(() => {
     fetchCourses();
-  }, [currentUser._id, currentUser._type, fetchCourses]);
+  }, []);
 
   return (
     <AnimationLayout>
@@ -44,7 +36,7 @@ const Courses = () => {
         ) : (
           <ContentWrapper>
             {courses.map((course) => (
-              <CourseCard key={course._id} width={"24%"} course={course} />
+              <CourseCard key={course.course_code} width={"24%"} course={course} />
             ))}
           </ContentWrapper>
         )}

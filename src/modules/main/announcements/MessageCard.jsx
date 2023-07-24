@@ -7,24 +7,17 @@ import moment from "moment/moment";
 import { MEDIA_QUERIES } from "../../../shared/utils/constants";
 import { GlobalContext } from "../../../shared/context/context";
 
-const MessageCard = ({ message }) => {
+const MessageCard = ({ announcement }) => {
   const { deleteAnnouncement } = useContext(GlobalContext);
 
   return (
     <MessageCardWrapper>
-      <Titlebar title={message.createdBy.fullName} />
-      <p style={{ fontWeight: "bold" }}>{message.title}</p>
-      <p>{message.details}</p>
+      <Titlebar title={announcement.poster_name} />
+      <p style={{ fontWeight: "bold" }}>{announcement.title}</p>
+      <p>{announcement.content}</p>
       <Space direction="horizontal">
-        <Button
-          icon={<IonIcon iconName={"heart"} />}
-          type="ghost"
-          shape={"round"}
-        >
-          4
-        </Button>
         <small>
-          {moment(message._createdAt).format("dddd, Mo MMMM yyyy hh:mm a")}
+          {moment(announcement.time_stamp).format("dddd, Mo MMMM yyyy hh:mm a")}
         </small>
       </Space>
     </MessageCardWrapper>
@@ -37,7 +30,7 @@ const MessageCardWrapper = styled.div`
   /* height: 100%; */
   min-height: 50px;
   padding: 0.5rem 1rem;
-  /* border-radius: 10px; */
+  border-radius: 10px;
   /* box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px; */
   cursor: pointer;
 

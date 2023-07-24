@@ -29,7 +29,6 @@ const Signup = () => {
     await axiosInstance
       .post(url, values)
       .then((res) => {
-        console.log(res);
         setLoading(false);
         if (res?.data.length > 0) {
           errorMessageDisplay(res?.data);

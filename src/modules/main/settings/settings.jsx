@@ -1,19 +1,19 @@
 import React, { useContext, useState } from "react";
-import AnimationLayout from "../../shared/components/AnimationLayout";
+import AnimationLayout from "../../../shared/components/AnimationLayout";
 import styled from "styled-components";
-import Titlebar from "../../shared/components/Titlebar";
+import Titlebar from "../../../shared/components/Titlebar";
 import {
   DARKTHEME,
   LIGHTTHEME,
   MEDIA_QUERIES,
-} from "../../shared/utils/constants";
-import ComponentWrapper from "../../shared/components/ComponentWrapper";
-import { GlobalContext } from "../../shared/context/context";
+} from "../../../shared/utils/constants";
+import ComponentWrapper from "../../../shared/components/ComponentWrapper";
+import { GlobalContext } from "../../../shared/context/context";
 import { Button, Checkbox, Form, Input, Radio, message } from "antd";
-import { defaultTheme } from "../../shared/theme/theme";
-import axiosInstance from "../../shared/helpers/axios/axiosInstance";
-import { changePasswordQuery } from "../../shared/helpers/axios/queries";
-import { errorMessageDisplay } from "../../shared/helpers/functions/functions";
+import { defaultTheme } from "../../../shared/theme/theme";
+import axiosInstance from "../../../shared/helpers/axios/axiosInstance";
+import { changePasswordQuery } from "../../../shared/helpers/axios/queries";
+import { errorMessageDisplay } from "../../../shared/helpers/functions/functions";
 
 const Settings = () => {
   const [loading, setLoading] = useState(false);

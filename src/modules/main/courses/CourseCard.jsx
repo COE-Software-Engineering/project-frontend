@@ -15,18 +15,16 @@ const CourseCard = ({ width = "32%", course }) => {
       <ImageWrapper>
         <img
           src={
-            course.image
-              ? urlFor(course.image).url()
-              : "https://www.redpoints.com/wp-content/uploads/2020/05/header-blog-e-learning-1.png"
+            "https://www.redpoints.com/wp-content/uploads/2020/05/header-blog-e-learning-1.png"
           }
           alt="course-img"
         />
       </ImageWrapper>
       <ContentWrapper>
         <p>
-          {course.courseCode} : {course.courseName.slice(0, 20)}...
+          {course.course_code} : {course.title.slice(0, 20)}...
         </p>
-        <p className="course-lecturer">{course.createdBy.fullName}</p>
+        <p className="course-lecturer">{course.lecturer_name}</p>
       </ContentWrapper>
     </CourseCardWrapper>
   );

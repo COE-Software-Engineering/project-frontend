@@ -3,6 +3,7 @@ import { DARKTHEME, LIGHTTHEME } from "../utils/constants";
 import { useLocalStorage } from "../helpers/hooks/useLocalStorage";
 import { client } from "../helpers/sanity/sanityClient";
 import { v4 as uuidv4 } from "uuid";
+import axiosInstance from "../helpers/axios/axiosInstance";
 
 export const GlobalContext = createContext();
 
@@ -14,75 +15,11 @@ const GlobalProvider = ({ children }) => {
   );
   const [currentUser, setCurrentUser] = useLocalStorage("currentUser", null);
 
-  //auth
-  const signupUser = useCallback(async (userType, userDetails, next) => {
-    const doc = {
-      _id: uuidv4(),
-      _type: userType,
-      ...userDetails,
-    };
-    await client
-      .createIfNotExists(doc)
+  const getAllCourses = useCallback(async (next) => {
+    await axiosInstance
+      .post("/api/get_all_courses", null)
       .then((res) => {
-        setCurrentUser(res);
-        next();
-      })
-      .catch((err) => console.error(err));
-  }, []);
-
-  //courses
-  const registerCourse = useCallback(async (courses, userId, next) => {
-    await Promise.all(
-      courses.map(async (course) => {
-        const doc = {
-          _id: uuidv4(),
-          _type: "course",
-          ...course,
-          userId: userId,
-          createdBy: {
-            _type: "createdBy",
-            _ref: userId,
-          },
-        };
-        console.log(doc);
-        await client
-          .createIfNotExists(doc)
-          .then((res) => {
-            next();
-          })
-          .catch((err) => console.error(err));
-      })
-    );
-  }, []);
-  const updateCourse = useCallback(() => {}, []);
-
-  //announcements
-  const createAnnouncement = useCallback((announcementData, next) => {
-    const doc = {
-      _type: "announcement",
-      title: announcementData?.title,
-      details: announcementData?.details,
-      userId: currentUser._id,
-      createdBy: {
-        _type: "createdBy",
-        _ref: currentUser._id,
-      },
-    };
-    client
-      .create(doc)
-      .then((res) => {
-        next();
-        console.log(res);
-      })
-      .catch((err) => console.error(err));
-  }, []);
-
-  //delete function for either file, course or announcement
-  const deleteItem = useCallback(async (itemId, next) => {
-    await client
-      .delete(itemId)
-      .then((res) => {
-        next();
+        next(res);
       })
       .catch((err) => console.error(err));
   }, []);
@@ -93,21 +30,9 @@ const GlobalProvider = ({ children }) => {
       setAppTheme,
       currentUser,
       setCurrentUser,
-      signupUser,
-      registerCourse,
-      createAnnouncement,
-      deleteItem,
+      getAllCourses,
     };
-  }, [
-    appTheme,
-    setAppTheme,
-    currentUser,
-    setCurrentUser,
-    signupUser,
-    registerCourse,
-    createAnnouncement,
-    deleteItem,
-  ]);
+  }, [appTheme, setAppTheme, currentUser, setCurrentUser, getAllCourses]);
 
   return (
     <GlobalContext.Provider value={value}>{children}</GlobalContext.Provider>

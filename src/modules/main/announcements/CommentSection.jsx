@@ -5,20 +5,27 @@ import { Button, Checkbox, Form, Input, message } from "antd";
 import { MEDIA_QUERIES } from "../../../shared/utils/constants";
 import { defaultTheme } from "../../../shared/theme/theme";
 import { GlobalContext } from "../../../shared/context/context";
+import axiosInstance from "../../../shared/helpers/axios/axiosInstance";
 
-const CommentSection = () => {
+const CommentSection = ({ getAllAnnouncements }) => {
   const [loading, setLoading] = useState(false);
-  const { createAnnouncement } = useContext(GlobalContext);
+  const { currentUser } = useContext(GlobalContext);
 
   const [form] = Form.useForm();
 
-  const onFinish = (values) => {
+  const onFinish = async (values) => {
     setLoading(true);
-    createAnnouncement(values, () => {
-      setLoading(false);
-      message.success("Announcement created successfully :)");
-      form.resetFields();
-    });
+    const annouuncementData = { ...values, staff_id: currentUser.staff_id };
+
+    await axiosInstance
+      .post("/lecturers/make_announcement", annouuncementData)
+      .then(() => {
+        setLoading(false);
+        message.success("Announcement created successfully :)");
+        form.resetFields();
+        getAllAnnouncements();
+      })
+      .catch((err) => console.error(err));
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -51,7 +58,7 @@ const CommentSection = () => {
           <Input className="input" placeholder="Title (optional)" />
         </Form.Item>
         <Form.Item
-          name="details"
+          name="content"
           rules={[
             {
               required: true,
@@ -114,6 +121,5 @@ const CommentSectionWrapper = styled.div`
     width: 100px;
   }
 `;
-
 
 export default CommentSection;
