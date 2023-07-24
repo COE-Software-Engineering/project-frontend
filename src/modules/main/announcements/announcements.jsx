@@ -17,10 +17,11 @@ import Confirm from "../../../shared/components/Confirm";
 import { defaultTheme } from "../../../shared/theme/theme";
 
 const Announcements = () => {
-  const [messages, setMessages] = useState([]);
-  const { currentUser, deleteItem } = useContext(GlobalContext);
+  const [messages, setMessages] = useLocalStorage("announcementMessages", []);
+  const { currentUser, deleteItem, getAnnouncementUpdates } =
+    useContext(GlobalContext);
 
-  const getAllChatMessages = useCallback(async () => {
+  const getAllAnnouncements = useCallback(async () => {
     await client
       .fetch(chatMessagesQuery)
       .then((result) => {
@@ -30,23 +31,19 @@ const Announcements = () => {
       .catch((err) => console.error(err));
   }, []);
 
-  const getChatUpdates = useCallback(() => {
-    client.listen(chatMessagesQuery).subscribe((update) => {
-      console.log(update);
-      getAllChatMessages();
-      // setMessages((prev) => [...prev, update.result]);
-    });
-  }, []);
-
   const deleteAnnouncement = async (id) => {
+    const updatedMessages = messages.filter((message) => message._id !== id);
+    setMessages(updatedMessages);
     await deleteItem(id, () =>
       message.success("Announcement deleted succesfully")
     );
   };
 
-  useEffect(() => getChatUpdates, []);
-
-  useEffect(() => getAllChatMessages, []);
+  useEffect(() => getAllAnnouncements, []);
+  useEffect(() => {
+    getAnnouncementUpdates((res) => setMessages([res, ...messages]));
+    console.log(messages);
+  }, [getAnnouncementUpdates]);
 
   return (
     <AnimationLayout>
@@ -58,7 +55,7 @@ const Announcements = () => {
           ) : (
             messages.map((message) => (
               <CommentWrapper
-                messageRef={message.createdBy._id}
+                messageRef={message.createdBy?._id}
                 currentUserId={currentUser._id}
                 key={message._id}
               >

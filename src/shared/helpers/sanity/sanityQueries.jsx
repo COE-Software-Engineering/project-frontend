@@ -3,6 +3,11 @@ export const userQuery = (email, password, userType) => {
   return query;
 };
 
+export const userQueryUsingId = (userId) => {
+  const query = `*[_id == '${userId}']{fullName,_id}`;
+  return query;
+};
+
 export const userFilesQuery = (userId) => {
   const query = `*[_type == 'file' && userId == '${userId}']{...}`;
   return query;

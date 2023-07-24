@@ -1,18 +1,26 @@
-import React, { createContext, useCallback, useMemo } from "react";
+import React, { createContext, useCallback, useEffect, useMemo } from "react";
 import { DARKTHEME, LIGHTTHEME } from "../utils/constants";
 import { useLocalStorage } from "../helpers/hooks/useLocalStorage";
 import { client } from "../helpers/sanity/sanityClient";
 import { v4 as uuidv4 } from "uuid";
+import {
+  chatMessagesQuery,
+  userQueryUsingId,
+} from "../helpers/sanity/sanityQueries";
 
 export const GlobalContext = createContext();
+const isDarkTheme = window.matchMedia("(prefers-color-scheme: dark)").matches;
 
 const GlobalProvider = ({ children }) => {
-  const isDarkTheme = window.matchMedia("(prefers-color-scheme: dark)").matches;
   const [appTheme, setAppTheme] = useLocalStorage(
     "appTheme",
     isDarkTheme ? DARKTHEME : LIGHTTHEME
   );
   const [currentUser, setCurrentUser] = useLocalStorage("currentUser", null);
+  const [recentAnnouncement, setRecentAnnouncement] = useLocalStorage(
+    "recentAnnouncement",
+    null
+  );
 
   //auth
   const signupUser = useCallback(async (userType, userDetails, next) => {
@@ -57,7 +65,7 @@ const GlobalProvider = ({ children }) => {
   const updateCourse = useCallback(() => {}, []);
 
   //announcements
-  const createAnnouncement = useCallback((announcementData, userId,next) => {
+  const createAnnouncement = useCallback((announcementData, userId, next) => {
     const doc = {
       _type: "announcement",
       title: announcementData?.title,
@@ -72,9 +80,21 @@ const GlobalProvider = ({ children }) => {
       .create(doc)
       .then((res) => {
         next();
-        console.log(res);
+        // console.log(res);
       })
       .catch((err) => console.error(err));
+  }, []);
+
+  const getAnnouncementUpdates = useCallback((next) => {
+    client.listen(chatMessagesQuery).subscribe(async (update) => {
+      setRecentAnnouncement(update.result);
+      const q = userQueryUsingId(update.result.createdBy._ref);
+      await client.fetch(q).then((res) => {
+        const data = { ...update.result, createdBy: res[0] };
+        console.log(data);
+        next(data);
+      });
+    });
   }, []);
 
   //delete function for either file, course or announcement
@@ -93,9 +113,12 @@ const GlobalProvider = ({ children }) => {
       setAppTheme,
       currentUser,
       setCurrentUser,
+      recentAnnouncement,
+      setRecentAnnouncement,
       signupUser,
       registerCourse,
       createAnnouncement,
+      getAnnouncementUpdates,
       deleteItem,
     };
   }, [
@@ -103,9 +126,12 @@ const GlobalProvider = ({ children }) => {
     setAppTheme,
     currentUser,
     setCurrentUser,
+    recentAnnouncement,
+    setRecentAnnouncement,
     signupUser,
     registerCourse,
     createAnnouncement,
+    getAnnouncementUpdates,
     deleteItem,
   ]);
 

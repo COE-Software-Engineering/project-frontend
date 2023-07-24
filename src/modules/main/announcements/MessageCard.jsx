@@ -7,17 +7,19 @@ import moment from "moment/moment";
 import { MEDIA_QUERIES } from "../../../shared/utils/constants";
 import { GlobalContext } from "../../../shared/context/context";
 
-const MessageCard = ({ message }) => {
+const MessageCard = ({ message, width }) => {
   const { deleteAnnouncement } = useContext(GlobalContext);
 
   return (
-    <MessageCardWrapper>
-      <Titlebar title={message.createdBy.fullName} />
+    <MessageCardWrapper width={width ? width : "70%"}>
+      {message.createdBy.fullName && (
+        <Titlebar title={message.createdBy.fullName} />
+      )}
       <p style={{ fontWeight: "bold" }}>{message.title}</p>
       <p>{message.details}</p>
       <Space direction="horizontal">
         <small>
-          {moment(message._createdAt).format("dddd, Mo MMMM yyyy hh:mm a")}
+          {moment(message._createdAt).format("dddd, Do MMMM yyyy hh:mm a")}
         </small>
       </Space>
     </MessageCardWrapper>
@@ -25,7 +27,7 @@ const MessageCard = ({ message }) => {
 };
 
 const MessageCardWrapper = styled.div`
-  width: 70%;
+  width: ${(props) => props.width};
   background-color: ${({ theme }) => theme.accentColor2};
   /* height: 100%; */
   min-height: 50px;
