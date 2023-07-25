@@ -1,131 +1,46 @@
-import React, { useState, useContext, useEffect, useCallback } from "react";
+import React from "react";
 import styled from "styled-components";
-import { defaultTheme } from "../../../shared/theme/theme";
-import { Button, Form, Input, Space, Upload, message } from "antd";
+import { Button, Form, Space, Upload, message } from "antd";
 import Titlebar from "../../../shared/components/Titlebar";
 import AnimationLayout from "../../../shared/components/AnimationLayout";
-import { client } from "../../../shared/helpers/sanity/sanityClient";
-import { GlobalContext } from "../../../shared/context/context";
-import { userFilesQuery } from "../../../shared/helpers/sanity/sanityQueries";
 import Lottie from "lottie-react";
 import uploadAnimation from "../../../shared/helpers/lotties/upload.json";
 import IonIcon from "../../../shared/components/IonIcon";
 import moment from "moment";
+import { useLocalStorage } from "../../../shared/helpers/hooks/useLocalStorage";
 
 const Files = () => {
-  const { currentUser } = useContext(GlobalContext);
-
-  const [files, setFiles] = useState([]);
-
-  const [fileAsset, setFileAsset] = useState(null);
+  const [files, setFiles] = useLocalStorage("my-vclass-psql-files", []);
 
   const uploadProps = {
     name: "files",
-    multiple: true,
-    action: "https://www.mocky.io/v2/5cc8019d300000980a055e76",
+    action: "https://upload.imagekit.io/api/v1/files/upload",
+    method: "POST",
+    multiple: false,
+    defaultFileList: files,
     onChange(info) {
       const { status } = info.file;
       if (status !== "uploading") {
-        console.log(info.file, info.fileList);
-      }
-      if (status === "done") {
-        message.success(`${info.file.name} file uploaded successfully.`);
-      } else if (status === "error") {
-        message.error(`${info.file.name} file upload failed.`);
+        setFiles(info.fileList);
       }
     },
-    onDrop(e) {
-      console.log("Dropped files", e.dataTransfer.files);
-    },
+    onDrop(e) {},
   };
 
   const normFile = (e) => {
-    console.log("Upload event:", e);
     if (Array.isArray(e)) {
       return e;
     }
     return e?.fileList;
   };
 
-  // const uploadFile = (e) => {
-  //   const { type, name } = e.target.files[0];
-  //   if (
-  //     type === "image/png" ||
-  //     type === "image/jpeg" ||
-  //     type === "image/svg" ||
-  //     type === "image/gif" ||
-  //     type === "image/tiff"
-  //   ) {
-  //     client.assets
-  //       .upload("file", e.target.files[0], {
-  //         contentType: type,
-  //         filename: name,
-  //       })
-  //       .then((document) => {
-  //         setImageAsset(document);
-  //       })
-  //       .catch((err) => console.log(err));
-  //   } else {
-  //     return;
-  //   }
-  // };
-
-  // const onFinish = (values) => {
-  //   console.log("Success:", values);
-
-  //   const doc = {
-  //     _type: "pin",
-  //     title: values.title,
-  //     about: values.about,
-  //     destination: values.destination,
-  //     image: {
-  //       _type: "image",
-  //       asset: {
-  //         _type: "reference",
-  //         _ref: imageAsset?._id,
-  //       },
-  //     },
-  //     userId: user._id,
-  //     postedBy: {
-  //       _type: "postedBy",
-  //       _ref: user._id,
-  //     },
-  //     category: values.category,
-  //   };
-
-  //   client.create(doc).then(() => {
-  //     navigate("/");
-  //   });
-  // };
-
-  // const onFinishFailed = (errorInfo) => {
-  //   console.log("Failed:", errorInfo);
-  // };
-
   const [form] = Form.useForm();
 
-  const onFinish = async (values) => {
-    console.log(values);
-  };
+  const onFinish = async (values) => {};
 
   const onFinishFailed = (errorInfo) => {
-    console.log("Failed:", errorInfo);
     message.error(`File upload failed!`);
   };
-
-  // const fetchFiles = useCallback(async () => {
-  //   const q = userFilesQuery(currentUser?._id);
-  //   await client
-  //     .fetch(q)
-  //     .then((res) => {
-  //       setFiles(res);
-  //     })
-  //     .catch((err) => console.error(err));
-  // }, [currentUser?._id]);
-
-  // useEffect(() => {
-  //   fetchFiles();
-  // }, [currentUser._id, fetchFiles]);
 
   return (
     <AnimationLayout>
@@ -218,7 +133,6 @@ const FilesWrapper = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
-  /* border: 1px solid red; */
 `;
 
 const ContentWrapper = styled.div`
@@ -248,7 +162,6 @@ const FileItemWrapper = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: center;
-    /* flex-wrap: wrap; */
     align-items: center;
   }
 `;

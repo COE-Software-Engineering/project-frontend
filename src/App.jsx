@@ -8,11 +8,11 @@ import { LIGHTTHEME } from "./shared/utils/constants";
 import Loader from "./shared/components/Loader";
 import { GlobalContext } from "./shared/context/context";
 import { AnimatePresence } from "framer-motion";
-import PageNotFound from "./modules/pageNotFound";
-import Signup from "./modules/landing/Signup";
 
 const LandingPage = lazy(() => import("./modules/landing/landingpage"));
 const MainRoutes = lazy(() => import("./modules/main/mainRoutes"));
+const Signup = lazy(() => import("./modules/landing/Signup"));
+const PageNotFound = lazy(() => import("./modules/pageNotFound"));
 
 function App() {
   const { appTheme } = useContext(GlobalContext);

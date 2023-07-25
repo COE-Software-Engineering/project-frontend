@@ -29,7 +29,6 @@ const Signin = () => {
     await axiosInstance
       .post(url, values)
       .then((res) => {
-        console.log(res);
         setLoading(false);
         if (res?.data.errorCodes.length > 0) {
           errorMessageDisplay(res?.data.errorCodes);

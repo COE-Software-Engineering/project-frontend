@@ -10,16 +10,32 @@ const UserDetails = () => {
   const userDetails = [
     {
       type: "Full Name",
-      value: currentUser?.fullName,
+      value: currentUser?.last_name + " " + currentUser.other_names,
     },
     {
-      type: "Index Number",
-      value: currentUser?.indexNumber,
+      type: "Gender",
+      value: currentUser?.gender,
+    },
+
+    {
+      type: currentUser?.staff_id ? "Staff id" : "Index number",
+      value: currentUser?.staff_id
+        ? currentUser.staff_id
+        : currentUser?.index_number,
     },
     {
       type: "Email",
       value: currentUser?.email,
     },
+    currentUser?.staff_id
+      ? {
+          type: "Office Number",
+          value: currentUser?.office_number,
+        }
+      : {
+          type: "Reference Number",
+          value: currentUser?.reference_number,
+        },
   ];
 
   return (

@@ -1,33 +1,19 @@
-import React, { useEffect, useState, useCallback } from "react";
-import Headerbar from "../../../shared/components/Headerbar";
-import BreadCrumb from "../../../shared/components/BreadCrumb";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import AnimationLayout from "../../../shared/components/AnimationLayout";
 import ComponentWrapper from "../../../shared/components/ComponentWrapper";
-import { client } from "../../../shared/helpers/sanity/sanityClient";
-import { courseQuery } from "../../../shared/helpers/sanity/sanityQueries";
+import { Spin } from "antd";
 
 const Course = () => {
-  const navigate = useNavigate();
   const { courseId } = useParams();
+  const { state } = useLocation();
   const [course, setCourse] = useState(null);
-
-  console.log(courseId);
-
-  const getCourseDetails = useCallback(async () => {
-    const q = courseQuery(courseId);
-    await client
-      .fetch(q)
-      .then((res) => {
-        setCourse(res[0]);
-        console.log(res[0]);
-      })
-      .catch((err) => console.error(err));
-  }, []);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    getCourseDetails();
+    setCourse(state);
+    setLoading(false);
   }, [courseId]);
 
   return (
@@ -41,22 +27,26 @@ const Course = () => {
           ]}
         />
       </Headerbar> */}
-        {course && (
+        {loading ? (
+          <Spin />
+        ) : !course ? (
+          <Empty />
+        ) : (
           <ContentWrapper>
             <CourseDetailsWrapper>
-              <h3>{course.courseName}</h3>
+              <h3>{course.title}</h3>
               <div className="other-details">
                 <p>
                   <span className="bold">Course Code :</span>
-                  <span>{course.courseCode}</span>
+                  <span>{course.course_code}</span>
                 </p>
                 <p>
                   <span className="bold">Credit Hours :</span>
-                  <span>{course.creditHours}</span>
+                  <span>{course.credit_hour}</span>
                 </p>
                 <p>
                   <span className="bold">Lecturer :</span>
-                  <span>392</span>
+                  <span>{course.lecturer_name}</span>
                 </p>
               </div>
             </CourseDetailsWrapper>

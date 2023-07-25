@@ -1,8 +1,7 @@
 import styled from "styled-components";
 import IonIcon from "./IonIcon";
 import { Avatar, Button, Dropdown } from "antd";
-import Searchbar from "./Searchbar";
-import { DARKTHEME, LIGHTTHEME, MEDIA_QUERIES } from "../utils/constants";
+import { DARKTHEME, LIGHTTHEME } from "../utils/constants";
 import Drawerbar from "./Drawerbar";
 import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
@@ -52,7 +51,6 @@ const Navbar = () => {
           onClick={() => navigate("/main")}
         />
       </LogoWrapper>
-      {/* <Searchbar /> */}
       <ToolsWrapper>
         <Button
           type="ghost"

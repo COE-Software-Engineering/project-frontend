@@ -6,7 +6,7 @@ import { MEDIA_QUERIES } from "../../../shared/utils/constants";
 import ComponentWrapper from "../../../shared/components/ComponentWrapper";
 import MessageCard from "./MessageCard";
 import Titlebar from "../../../shared/components/Titlebar";
-import { Avatar, BackTop } from "antd";
+import { Avatar, BackTop, Spin } from "antd";
 import { client } from "../../../shared/helpers/sanity/sanityClient";
 import { chatMessagesQuery } from "../../../shared/helpers/sanity/sanityQueries";
 import { GlobalContext } from "../../../shared/context/context";
@@ -14,15 +14,16 @@ import Empty from "../../../shared/components/Empty";
 import axiosInstance from "../../../shared/helpers/axios/axiosInstance";
 
 const Announcements = () => {
-  const [announcements, setAnnouncements] = useState([]);
   const { currentUser } = useContext(GlobalContext);
+  const [announcements, setAnnouncements] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const getAllAnnouncements = useCallback(async () => {
     await axiosInstance
       .post("/api/get_all_announcements", null)
       .then((res) => {
         setAnnouncements(res.data);
-        console.log(res);
+        setLoading(false);
       })
       .catch((err) => console.error(err));
   }, []);
@@ -36,11 +37,13 @@ const Announcements = () => {
       <AnnouncementsWrapper>
         <MainChatWrapper>
           <Titlebar title="Chatroom" />
-          {!announcements || announcements.length === 0 ? (
+          {loading ? (
+            <Spin />
+          ) : !announcements || announcements.length === 0 ? (
             <Empty subText={"No announcements avalilable!"} />
           ) : (
             announcements.map((announcement) => (
-              <CommentWrapper>
+              <CommentWrapper key={announcement.content}>
                 <Avatar size={"small"} className="avatar">
                   {announcement.poster_name.slice(0, 2)}
                 </Avatar>
@@ -74,7 +77,7 @@ const AnnouncementsWrapper = styled.div`
 
   ${MEDIA_QUERIES.MOBILE} {
     & {
-      flex-direction: 0 0 0 1rem;
+      flex-direction: column-reverse;
     }
   }
 `;

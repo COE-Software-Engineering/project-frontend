@@ -1,6 +1,5 @@
 import { Popconfirm } from "antd";
 import React from "react";
-import { defaultTheme } from "../theme/theme";
 
 const Confirm = ({ component, title, description, onCancel, onConfirm }) => {
   return (

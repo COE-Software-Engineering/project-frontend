@@ -5,11 +5,9 @@ import styled from "styled-components";
 import { MEDIA_QUERIES } from "../../../shared/utils/constants";
 import ComponentWrapper from "../../../shared/components/ComponentWrapper";
 import { GlobalContext } from "../../../shared/context/context";
-import { client } from "../../../shared/helpers/sanity/sanityClient";
-import { coursesQuery } from "../../../shared/helpers/sanity/sanityQueries";
 
 const RecentCourses = () => {
-  const { currentUser, getAllCourses } = useContext(GlobalContext);
+  const { getAllCourses } = useContext(GlobalContext);
 
   const [courses, setCourses] = useState([]);
   const fetchCourses = useCallback(async () => {

@@ -1,5 +1,5 @@
 import { Button, Checkbox, Form, Input, message } from "antd";
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { MEDIA_QUERIES } from "../../shared/utils/constants";
 import { defaultTheme } from "../../shared/theme/theme";
@@ -7,7 +7,6 @@ import IonIcon from "../../shared/components/IonIcon";
 import { useNavigate, useParams } from "react-router-dom";
 import AnimationLayout from "../../shared/components/AnimationLayout";
 import SignupComplete from "./SignupComplete";
-import { GlobalContext } from "../../shared/context/context";
 import axiosInstance from "../../shared/helpers/axios/axiosInstance";
 import { signupQuery } from "../../shared/helpers/axios/queries";
 import { errorMessageDisplay } from "../../shared/helpers/functions/functions";
@@ -21,7 +20,6 @@ const Signup = () => {
   const { userType } = useParams();
 
   const onFinish = async (values) => {
-    // console.log(values);
     const url = signupQuery(userType);
 
     setLoading(true);
@@ -40,12 +38,10 @@ const Signup = () => {
       .catch((err) => {
         setLoading(false);
         message.error("Sign up failed!");
-        console.log(err);
       });
   };
 
   const onFinishFailed = (errorInfo) => {
-    console.log("Failed:", errorInfo);
     message.error(`Authentication failed!`);
   };
 

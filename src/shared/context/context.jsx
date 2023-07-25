@@ -1,8 +1,6 @@
 import React, { createContext, useCallback, useMemo } from "react";
 import { DARKTHEME, LIGHTTHEME } from "../utils/constants";
 import { useLocalStorage } from "../helpers/hooks/useLocalStorage";
-import { client } from "../helpers/sanity/sanityClient";
-import { v4 as uuidv4 } from "uuid";
 import axiosInstance from "../helpers/axios/axiosInstance";
 
 export const GlobalContext = createContext();

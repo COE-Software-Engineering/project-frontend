@@ -4,7 +4,6 @@ import LoginActivity from "./LoginActivity";
 import styled from "styled-components";
 import IonIcon from "../../../shared/components/IonIcon";
 import { Button } from "antd";
-import { defaultTheme } from "../../../shared/theme/theme";
 import CourseDetails from "./CourseDetails";
 import { MEDIA_QUERIES } from "../../../shared/utils/constants";
 import AnimationLayout from "../../../shared/components/AnimationLayout";
@@ -25,8 +24,10 @@ const Profile = () => {
               />
             </div>
             <div className="header-details-wrapper">
-              <h3>{currentUser?.fullName}</h3>
-              <p>{currentUser?._type}</p>
+              <h3>
+                {currentUser?.last_name} {currentUser?.other_names}
+              </h3>
+              <p>{currentUser?.staff_id ? "Lecturer" : "Student"}</p>
             </div>
           </div>
           <Button type="default" icon={<IonIcon iconName={"create"} />}>
@@ -39,7 +40,6 @@ const Profile = () => {
             <CourseDetails />
           </MainAreaWrapper>
           <AsideAreaWrapper>
-            <LoginActivity />
             <LoginActivity />
           </AsideAreaWrapper>
         </BodyContentWrapper>
@@ -82,7 +82,6 @@ const HeaderContentWrapper = styled.div`
   }
 
   & .img-wrapper {
-    /* background-color: ${({ theme }) => theme.bodyBackgroundColor}; */
     width: 100px;
     height: 100px;
     border-radius: 10px;
@@ -105,7 +104,6 @@ const HeaderContentWrapper = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: center;
-    /* flex-wrap: wrap; */
     align-items: center;
   }
 
@@ -138,7 +136,6 @@ const BodyContentWrapper = styled.div`
 const MainAreaWrapper = styled.section`
   width: 68%;
   height: 100%;
-  /* border: 1px solid red; */
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -157,7 +154,6 @@ const AsideAreaWrapper = styled.aside`
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-  /* border: 1px solid blue; */
 
   ${MEDIA_QUERIES.MOBILE} {
     & {

@@ -9,7 +9,7 @@ import {
 } from "../../../shared/utils/constants";
 import ComponentWrapper from "../../../shared/components/ComponentWrapper";
 import { GlobalContext } from "../../../shared/context/context";
-import { Button, Checkbox, Form, Input, Radio, message } from "antd";
+import { Button, Form, Input, Radio, message } from "antd";
 import { defaultTheme } from "../../../shared/theme/theme";
 import axiosInstance from "../../../shared/helpers/axios/axiosInstance";
 import { changePasswordQuery } from "../../../shared/helpers/axios/queries";
@@ -22,7 +22,6 @@ const Settings = () => {
   const [form] = Form.useForm();
 
   const onFinish = async (values) => {
-    console.log(values);
     if (values.new_password !== values.new_password_confirm) {
       message.error("Passwords don't match!");
       return;
@@ -37,7 +36,6 @@ const Settings = () => {
     await axiosInstance
       .post(url, values)
       .then((res) => {
-        console.log(res);
         setLoading(false);
         if (res?.data.length > 0) {
           errorMessageDisplay(res?.data);
@@ -48,18 +46,15 @@ const Settings = () => {
       })
       .catch((err) => {
         message.error("Password update failed!");
-        console.log(err);
         setLoading(false);
       });
   };
 
   const onFinishFailed = (errorInfo) => {
-    console.log("Failed:", errorInfo);
     message.error(`Authentication failed!`);
   };
 
   const onThemeChange = (e) => {
-    console.log(`radio checked:${e.target.value}`);
     setAppTheme(e.target.value);
   };
 
@@ -181,7 +176,6 @@ const SettingsWrapper = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
-  /* border: 1px solid red; */
 `;
 
 const ContentWrapper = styled.div`
@@ -203,7 +197,6 @@ const ContentWrapper = styled.div`
     width: 35% !important;
     height: 200px !important;
     background-color: transparent;
-    /* margin: 0rem 0.5rem !important; */
     border-radius: 7px;
   }
 
@@ -248,7 +241,6 @@ const ChangePasswordWrapper = styled.div`
     background-color: transparent;
     border-radius: 7px;
     background-color: ${({ theme }) => theme.bodyBackgroundColor};
-    /* font-size: 12px; */
     border: none;
   }
 

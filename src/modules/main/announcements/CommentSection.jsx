@@ -1,8 +1,6 @@
 import React, { useContext, useState } from "react";
 import styled from "styled-components";
-import IonIcon from "../../../shared/components/IonIcon";
-import { Button, Checkbox, Form, Input, message } from "antd";
-import { MEDIA_QUERIES } from "../../../shared/utils/constants";
+import { Button, Form, Input, message } from "antd";
 import { defaultTheme } from "../../../shared/theme/theme";
 import { GlobalContext } from "../../../shared/context/context";
 import axiosInstance from "../../../shared/helpers/axios/axiosInstance";
@@ -29,7 +27,6 @@ const CommentSection = ({ getAllAnnouncements }) => {
   };
 
   const onFinishFailed = (errorInfo) => {
-    console.log("Failed:", errorInfo);
     message.error(`Authentication failed!`);
   };
 
@@ -106,7 +103,6 @@ const CommentSectionWrapper = styled.div`
     background-color: transparent;
     border-radius: 7px;
     background-color: ${({ theme }) => theme.bodyBackgroundColor};
-    /* font-size: 12px; */
     border: none;
   }
 

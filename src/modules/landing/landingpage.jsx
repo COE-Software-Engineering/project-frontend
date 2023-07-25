@@ -4,7 +4,6 @@ import { MEDIA_QUERIES } from "../../shared/utils/constants";
 import AnimationLayout from "../../shared/components/AnimationLayout";
 import Signin from "./Signin";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
 
 const Landingpage = () => {
   const navigate = useNavigate();
