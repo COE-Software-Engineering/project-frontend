@@ -1,19 +1,13 @@
 import React, { useEffect, useState, useCallback } from "react";
-import Headerbar from "../../../shared/components/Headerbar";
-import BreadCrumb from "../../../shared/components/BreadCrumb";
 import styled from "styled-components";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import AnimationLayout from "../../../shared/components/AnimationLayout";
 import ComponentWrapper from "../../../shared/components/ComponentWrapper";
 import { client } from "../../../shared/helpers/sanity/sanityClient";
-import {
-  courseQuery,
-  userQueryUsingId,
-} from "../../../shared/helpers/sanity/sanityQueries";
+import { courseQuery } from "../../../shared/helpers/sanity/sanityQueries";
 import CourseAnnouncements from "./courseAnnouncements";
 
 const Course = () => {
-  const navigate = useNavigate();
   const { courseId } = useParams();
   const [course, setCourse] = useState(null);
   const [courseAnnouncements, setCourseAnnouncements] = useState([]);
@@ -91,7 +85,6 @@ const CourseWrapper = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
-  /* border: 1px solid red; */
 `;
 
 const ContentWrapper = styled.div`

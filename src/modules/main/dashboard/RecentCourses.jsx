@@ -7,11 +7,13 @@ import ComponentWrapper from "../../../shared/components/ComponentWrapper";
 import { GlobalContext } from "../../../shared/context/context";
 import { client } from "../../../shared/helpers/sanity/sanityClient";
 import { coursesQuery } from "../../../shared/helpers/sanity/sanityQueries";
+import { Spin } from "antd";
 
 const RecentCourses = () => {
   const { currentUser } = useContext(GlobalContext);
 
   const [courses, setCourses] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const fetchCourses = useCallback(async () => {
     const q =
@@ -22,9 +24,12 @@ const RecentCourses = () => {
       .fetch(q)
       .then((res) => {
         setCourses(res);
-        console.log(res);
+        setLoading(false);
       })
-      .catch((err) => console.error(err));
+      .catch((err) => {
+        console.error(err);
+        setLoading(false);
+      });
   }, [currentUser?._id, currentUser?._type]);
 
   useEffect(() => {
@@ -32,7 +37,9 @@ const RecentCourses = () => {
   }, [currentUser._id, currentUser._type, fetchCourses]);
   return (
     <ComponentWrapper title="Recent Courses" styles={{ minHeight: "240px" }}>
-      {courses.length === 0 ? (
+      {loading ? (
+        <Spin />
+      ) : courses.length === 0 ? (
         <Empty subText={"No recent courses!"} />
       ) : (
         <ContentWrapper>

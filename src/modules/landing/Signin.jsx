@@ -45,7 +45,6 @@ const Signin = () => {
   };
 
   const onFinishFailed = (errorInfo) => {
-    console.log("Failed:", errorInfo);
     message.error(`Sign in failed!`);
   };
 

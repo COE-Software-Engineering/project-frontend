@@ -46,11 +46,7 @@ const Navbar = () => {
     <NavWrapper appTheme={appTheme}>
       <LogoWrapper>
         <Drawerbar />
-        <img
-          src="/knust-logo.png"
-          alt="logo"
-          onClick={() => navigate("/main")}
-        />
+        <img src="/logo2.png" alt="logo" onClick={() => navigate("/main")} />
       </LogoWrapper>
       {/* <Searchbar /> */}
       <ToolsWrapper>

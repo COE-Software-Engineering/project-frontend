@@ -37,7 +37,6 @@ const CourseCardWrapper = styled.div`
   min-height: 200px;
   display: flex;
   flex-direction: column;
-  /* flex: 1; */
   justify-content: center;
   align-items: center;
   margin-left: 0.3rem;
@@ -45,9 +44,6 @@ const CourseCardWrapper = styled.div`
   margin-bottom: 1rem;
   border-radius: 10px;
   box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
-  /* background: rgba(255, 255, 255, 0.02); */
-  /* backdrop-filter: blur(4px); */
-  /* -webkit-backdrop-filter: blur(4px); */
   cursor: pointer;
 
   ${MEDIA_QUERIES.MOBILE} {
@@ -72,7 +68,6 @@ const ImageWrapper = styled.div`
 
 const ContentWrapper = styled.div`
   width: 100%;
-  /* height: 50px; */
   padding-bottom: 1rem;
   padding-left: 1rem;
 

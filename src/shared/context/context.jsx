@@ -52,7 +52,6 @@ const GlobalProvider = ({ children }) => {
             _ref: userId,
           },
         };
-        console.log(doc);
         await client
           .createIfNotExists(doc)
           .then((res) => {
@@ -80,7 +79,6 @@ const GlobalProvider = ({ children }) => {
       .create(doc)
       .then((res) => {
         next();
-        // console.log(res);
       })
       .catch((err) => console.error(err));
   }, []);

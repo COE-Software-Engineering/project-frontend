@@ -36,7 +36,6 @@ const StudentSignup = () => {
   };
 
   const onFinishFailed = (errorInfo) => {
-    console.log("Failed:", errorInfo);
     message.error(`Authentication failed!`);
   };
 
@@ -196,7 +195,6 @@ const FormWrapper = styled.div`
     background-color: transparent;
     border-radius: 7px;
     background-color: ${({ theme }) => theme.bodyBackgroundColor};
-    /* font-size: 12px; */
     border: none;
   }
 
@@ -224,13 +222,11 @@ const Wrapper = styled.div`
   padding: 2rem;
   display: flex;
   flex-direction: column;
-  /* align-items: center; */
   justify-content: center;
 
   h3 {
     margin-bottom: 2rem;
     font-size: 1.5rem;
-    /* font-size: 16px; */
     font-family: "DM Serif Text", "Poppins", sans-serif;
     display: ${(props) => (props.pageIndex > 1 ? "none" : "block")};
   }

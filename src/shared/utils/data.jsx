@@ -15,7 +15,12 @@ export const sidebarLinks = [
     routeTo: "/main/announcements",
   },
   {
-    name: "Files",
+    name: "Shared Resources",
+    iconName: "layers",
+    routeTo: "/main/shared-resources",
+  },
+  {
+    name: "My Files",
     iconName: "reader",
     routeTo: "/main/files",
   },

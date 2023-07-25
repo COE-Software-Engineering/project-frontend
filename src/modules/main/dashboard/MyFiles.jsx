@@ -4,7 +4,7 @@ import Empty from "../../../shared/components/Empty";
 
 const MyFiles = () => {
   return (
-    <ComponentWrapper title="My Files">
+    <ComponentWrapper title="Recent Files">
       <Empty subText={"No files available."} />
     </ComponentWrapper>
   );

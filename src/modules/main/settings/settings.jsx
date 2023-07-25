@@ -19,22 +19,17 @@ const Settings = () => {
   const [form] = Form.useForm();
 
   const onFinish = async (values) => {
-    console.log(values);
     if (values.new_password !== values.new_password_confirm) {
       message.error("Passwords don't match!");
       return;
     }
-
-    // setLoading(true);
   };
 
   const onFinishFailed = (errorInfo) => {
-    console.log("Failed:", errorInfo);
     message.error(`Authentication failed!`);
   };
 
   const onThemeChange = (e) => {
-    console.log(`radio checked:${e.target.value}`);
     setAppTheme(e.target.value);
   };
 

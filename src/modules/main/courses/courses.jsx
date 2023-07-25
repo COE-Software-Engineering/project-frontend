@@ -1,7 +1,6 @@
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import { MEDIA_QUERIES } from "../../../shared/utils/constants";
-import { useNavigate } from "react-router-dom";
 import CourseCard from "./CourseCard";
 import Titlebar from "../../../shared/components/Titlebar";
 import AnimationLayout from "../../../shared/components/AnimationLayout";
@@ -12,8 +11,6 @@ import Empty from "../../../shared/components/Empty";
 import { Spin } from "antd";
 
 const Courses = () => {
-  const navigate = useNavigate();
-
   const { currentUser } = useContext(GlobalContext);
 
   const [courses, setCourses] = useState([]);

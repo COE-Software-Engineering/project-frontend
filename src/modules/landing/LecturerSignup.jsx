@@ -34,7 +34,6 @@ const LecturerSignup = () => {
         setLoading(false);
       });
     } else if (pageIndex === 2) {
-      console.log(values);
       setLoading(true);
       registerCourse(values.courses, currentUser._id, () => {
         setLoading(false);

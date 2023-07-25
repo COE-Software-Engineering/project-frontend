@@ -1,10 +1,8 @@
 import React, { useContext, useState } from "react";
 import styled from "styled-components";
-import IonIcon from "../../../shared/components/IonIcon";
-import { Button, Checkbox, Form, Input, message } from "antd";
-import { MEDIA_QUERIES } from "../../../shared/utils/constants";
-import { defaultTheme } from "../../../shared/theme/theme";
+import { Button, Form, Input, message } from "antd";
 import { GlobalContext } from "../../../shared/context/context";
+import { defaultTheme } from "../../../shared/theme/theme";
 
 const CommentSection = () => {
   const [loading, setLoading] = useState(false);
@@ -22,7 +20,6 @@ const CommentSection = () => {
   };
 
   const onFinishFailed = (errorInfo) => {
-    console.log("Failed:", errorInfo);
     message.error(`announcement creation failed!`);
   };
 

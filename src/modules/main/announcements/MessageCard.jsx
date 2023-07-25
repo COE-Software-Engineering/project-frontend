@@ -1,15 +1,11 @@
-import React, { useContext } from "react";
+import React from "react";
 import styled from "styled-components";
 import Titlebar from "../../../shared/components/Titlebar";
-import IonIcon from "../../../shared/components/IonIcon";
-import { Button, Space } from "antd";
+import { Space } from "antd";
 import moment from "moment/moment";
 import { MEDIA_QUERIES } from "../../../shared/utils/constants";
-import { GlobalContext } from "../../../shared/context/context";
 
 const MessageCard = ({ announcement, width }) => {
-  const { deleteAnnouncement } = useContext(GlobalContext);
-
   return (
     <MessageCardWrapper width={width ? width : "70%"}>
       {announcement?.createdBy?.fullName && (

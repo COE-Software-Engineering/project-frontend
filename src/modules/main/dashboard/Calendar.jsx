@@ -1,18 +1,9 @@
 import React from "react";
-import {
-  Calendar as AntdCalendar,
-  Col,
-  Radio,
-  Row,
-  Select,
-  Typography,
-} from "antd";
+import { Calendar as AntdCalendar, Col, Row, Select } from "antd";
 import ComponentWrapper from "../../../shared/components/ComponentWrapper";
 
 const Calendar = () => {
-  const onPanelChange = (value, mode) => {
-    console.log(value.format("YYYY-MM-DD"), mode);
-  };
+  const onPanelChange = (value, mode) => {};
 
   const CustomHeader = ({ value, type, onChange, onTypeChange }) => {
     const start = 0;
@@ -48,18 +39,7 @@ const Calendar = () => {
           padding: 8,
         }}
       >
-        {/* <Typography.Title level={4}>Custom header</Typography.Title> */}
         <Row gutter={8}>
-          {/* <Col>
-            <Radio.Group
-              size="small"
-              onChange={(e) => onTypeChange(e.target.value)}
-              value={type}
-            >
-              <Radio.Button value="month">Month</Radio.Button>
-              <Radio.Button value="year">Year</Radio.Button>
-            </Radio.Group>
-          </Col> */}
           <Col>
             <Select
               size="small"
@@ -97,7 +77,6 @@ const Calendar = () => {
     <ComponentWrapper title={"Calendar"}>
       <AntdCalendar
         fullscreen={false}
-        // headerRender={<>Hello</>}
         onPanelChange={onPanelChange}
         mode="month"
         headerRender={(props) => <CustomHeader {...props} />}

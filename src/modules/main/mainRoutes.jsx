@@ -12,6 +12,7 @@ const Courses = lazy(() => import("./courses/courses"));
 const Course = lazy(() => import("./courses/course"));
 const Files = lazy(() => import("./files/files"));
 const Announcements = lazy(() => import("./announcements/announcements"));
+const SharedResources = lazy(() => import("./resources/resources"));
 
 const MainRoutes = () => {
   const { currentUser } = useContext(GlobalContext);
@@ -33,6 +34,7 @@ const MainRoutes = () => {
                 <Route path="/courses" element={<Courses />} />
                 <Route path="/courses/:courseId" element={<Course />} />
                 <Route path="/files" element={<Files />} />
+                <Route path="/shared-resources" element={<SharedResources />} />
                 <Route path="/announcements" element={<Announcements />} />
                 <Route path="/settings" element={<Settings />} />
               </Routes>

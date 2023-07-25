@@ -6,12 +6,8 @@ import MyFiles from "./MyFiles";
 import Calendar from "./Calendar";
 import { MEDIA_QUERIES } from "../../../shared/utils/constants";
 import AnimationLayout from "../../../shared/components/AnimationLayout";
-import { GlobalContext } from "../../../shared/context/context";
 
 const Dashboard = () => {
-
-   
-
   return (
     <AnimationLayout>
       <DashboardWrapper>
@@ -46,7 +42,6 @@ const DashboardWrapper = styled.div`
 const MainAreaWrapper = styled.section`
   width: 68%;
   height: 100%;
-  /* border: 1px solid red; */
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -65,7 +60,6 @@ const AsideAreaWrapper = styled.aside`
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-  /* border: 1px solid blue; */
 
   ${MEDIA_QUERIES.MOBILE} {
     & {

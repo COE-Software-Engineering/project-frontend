@@ -35,7 +35,6 @@ const Announcements = () => {
       .listen(announcementsQuery)
       .subscribe(async (update) => {
         if (update) {
-          console.log(update.result);
           const q = userQueryUsingId(update.result.createdBy._ref);
           await client.fetch(q).then((res) => {
             const data = { ...update.result, createdBy: res[0] };
@@ -59,7 +58,6 @@ const Announcements = () => {
 
   useEffect(() => {
     getAnnouncements();
-    window.scrollTo(0, 1000);
   }, []);
 
   const deleteAnnouncement = async (id) => {
@@ -142,7 +140,6 @@ const AnnouncementsWrapper = styled.div`
 `;
 
 const MainChatWrapper = styled.section`
-  /* border: 1px solid red; */
   width: 68%;
   height: 100%;
   display: flex;
@@ -151,7 +148,6 @@ const MainChatWrapper = styled.section`
   align-items: flex-start;
   padding: 0 2rem;
   border-right: 0.5px solid ${({ theme }) => theme.sidebarBorder};
-  /* overflow-y: scroll; */
 
   ${MEDIA_QUERIES.MOBILE} {
     & {
@@ -167,7 +163,6 @@ const AsideWrapper = styled.aside`
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  /* border: 1px solid blue; */
 
   ${MEDIA_QUERIES.MOBILE} {
     & {
@@ -183,10 +178,6 @@ const CommentWrapper = styled.div`
   width: 100%;
   margin-bottom: 1rem;
   transition: all 0.2s ease-out 0s;
-
-  /* &:hover {
-    background-color: ${({ theme }) => theme.accentColor2};
-  } */
 
   &:hover .delete-announcement-btn {
     display: ${(props) =>

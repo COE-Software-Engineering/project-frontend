@@ -1,7 +1,7 @@
 import React from "react";
 import { Empty as EmptyComponent } from "antd";
 import Lottie from "lottie-react";
-import EmptyAnimation from "../helpers/lotties/empty2.json";
+import EmptyAnimation from "../helpers/lotties/empty.json";
 
 const Empty = ({ subText }) => {
   return (
