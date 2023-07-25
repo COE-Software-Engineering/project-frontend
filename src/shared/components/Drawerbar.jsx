@@ -36,7 +36,7 @@ const Drawerbar = () => {
       >
         <DrawerContent>
           <HeaderContent>
-            <img src="/knust-logo.png" alt="logo" className="logo" />
+            <img src="/logo2.png" alt="logo" className="logo" />
             <Button
               type="ghost"
               icon={<IonIcon iconName={"close"} />}

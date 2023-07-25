@@ -45,11 +45,7 @@ const Navbar = () => {
     <NavWrapper appTheme={appTheme}>
       <LogoWrapper>
         <Drawerbar />
-        <img
-          src="/knust-logo.png"
-          alt="logo"
-          onClick={() => navigate("/main")}
-        />
+        <img src="/logo2.png" alt="logo" onClick={() => navigate("/main")} />
       </LogoWrapper>
       <ToolsWrapper>
         <Button
@@ -79,7 +75,11 @@ const Navbar = () => {
             style={{
               cursor: "pointer",
               backgroundColor: `${defaultTheme.tertiaryColor2}`,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
             }}
+            icon={<IonIcon iconName={"person-circle"} />}
           >
             {currentUser?.other_names.slice(0, 2)}
           </Avatar>

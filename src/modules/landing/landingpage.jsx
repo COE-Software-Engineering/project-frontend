@@ -29,7 +29,7 @@ const Landingpage = () => {
     <AnimationLayout>
       <LandingPageWrapper>
         <HeaderWrapper>
-          <img src="/knust-logo.png" alt="logo" />
+          <img src="/logo2.png" alt="logo" />
 
           <Dropdown
             trigger={"click"}
