@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import IonIcon from "./Ionicon";
+import IonIcon from "./IonIcon";
 
 const Searchbar = ({ animationClass, styles }) => {
   return (

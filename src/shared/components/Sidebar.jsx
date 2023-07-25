@@ -1,7 +1,7 @@
 import { Button } from "antd";
 import React from "react";
 import styled from "styled-components";
-import IonIcon from "./Ionicon";
+import IonIcon from "./IonIcon";
 import { useNavigate } from "react-router-dom";
 import { MEDIA_QUERIES } from "../utils/constants";
 import { sidebarLinks } from "../utils/data";

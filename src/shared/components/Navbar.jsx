@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import IonIcon from "./Ionicon";
+import IonIcon from "./IonIcon";
 import { Avatar, Button, Dropdown } from "antd";
 import Searchbar from "./Searchbar";
 import { DARKTHEME, LIGHTTHEME, MEDIA_QUERIES } from "../utils/constants";

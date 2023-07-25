@@ -3,7 +3,7 @@ import React, { useContext, useState } from "react";
 import styled from "styled-components";
 import { MEDIA_QUERIES } from "../../shared/utils/constants";
 import { defaultTheme } from "../../shared/theme/theme";
-import IonIcon from "../../shared/components/Ionicon";
+import IonIcon from "../../shared/components/IonIcon";
 import { useNavigate } from "react-router-dom";
 import AnimationLayout from "../../shared/components/AnimationLayout";
 import SignupComplete from "./SignupComplete";
@@ -17,21 +17,21 @@ const LecturerSignup = () => {
   const [loading, setLoading] = useState(false);
 
   const onFinish = (values) => {
-      if (values.password !== values.confirmPassword) {
-        message.error("Passwords don't match!");
-        return;
-      }
-      const signupData = {
-        fullName: values.fullName,
-        email: values.email,
-        password: values.password,
-        staffId: values.staffId,
-      };
-      setLoading(true);
-      signupUser("lecturer", signupData, () => {
-        setPageIndex((prev) => prev + 1);
-        setLoading(false);
-      });
+    if (values.password !== values.confirmPassword) {
+      message.error("Passwords don't match!");
+      return;
+    }
+    const signupData = {
+      fullName: values.fullName,
+      email: values.email,
+      password: values.password,
+      staffId: values.staffId,
+    };
+    setLoading(true);
+    signupUser("lecturer", signupData, () => {
+      setPageIndex((prev) => prev + 1);
+      setLoading(false);
+    });
   };
 
   const onFinishFailed = (errorInfo) => {
