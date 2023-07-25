@@ -13,11 +13,16 @@ export const userFilesQuery = (userId) => {
   return query;
 };
 
-export const chatMessagesQuery = `*[_type == 'announcement']{
-...,createdBy -> {
+export const announcementsQuery = `*[_type == 'announcement']{
+  _id,
+  title,
+  details,
+  _createdAt,
+  userId,
+  createdBy -> {
     _id,
     fullName
-}} | order(_createdAt desc)`;
+}} | order(_createdAt)`;
 
 export const coursesQuery = (userId = null) => {
   const query = userId

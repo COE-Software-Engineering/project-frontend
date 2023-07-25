@@ -11,32 +11,33 @@ import Lottie from "lottie-react";
 import uploadAnimation from "../../../shared/helpers/lotties/upload.json";
 import IonIcon from "../../../shared/components/IonIcon";
 import moment from "moment";
+import { useLocalStorage } from "../../../shared/helpers/hooks/useLocalStorage";
 
 const Files = () => {
   const { currentUser } = useContext(GlobalContext);
 
-  const [files, setFiles] = useState([]);
+  const [files, setFiles] = useLocalStorage("my-vclass-files", []);
 
   const [fileAsset, setFileAsset] = useState(null);
 
   const uploadProps = {
     name: "files",
-    multiple: true,
-    action: "https://www.mocky.io/v2/5cc8019d300000980a055e76",
+    action: "https://upload.imagekit.io/api/v1/files/upload",
+    method: "POST",
+    multiple: false,
+    defaultFileList: files,
     onChange(info) {
       const { status } = info.file;
       if (status !== "uploading") {
         console.log(info.file, info.fileList);
-      }
-      if (status === "done") {
-        message.success(`${info.file.name} file uploaded successfully.`);
-      } else if (status === "error") {
-        message.error(`${info.file.name} file upload failed.`);
+        setFiles(info.fileList);
+        console.log(files);
       }
     },
     onDrop(e) {
       console.log("Dropped files", e.dataTransfer.files);
     },
+    onDownload(e) {},
   };
 
   const normFile = (e) => {
@@ -151,13 +152,14 @@ const Files = () => {
             >
               <Upload.Dragger
                 {...uploadProps}
+                openFileDialogOnClick={true}
                 itemRender={(ReactElement, file, fileList, actions) => {
                   return (
                     <FileItemWrapper>
                       <Space direction="horizontal" size={8}>
                         <IonIcon iconName="attach-outline" />
                         <Space direction="vertical" size={2}>
-                          <p className="file_name">
+                          <p className="file_name" onClick={actions.preview}>
                             {file.name} - {file.size / 1000}Kb
                           </p>
                           <small>
@@ -169,6 +171,7 @@ const Files = () => {
                       </Space>
                       <Space direction="horizontal" size={8}>
                         <Button
+                          // href={`${}`}
                           icon={
                             <IonIcon
                               iconName={"cloud-download-outline"}
@@ -239,6 +242,11 @@ const FileItemWrapper = styled.div`
 
   & .file_name {
     font-weight: bold;
+    cursor: pointer;
+  }
+
+  & .file_name:hover {
+    text-decoration: underline;
   }
 
   & button {

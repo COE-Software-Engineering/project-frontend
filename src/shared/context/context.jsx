@@ -1,10 +1,10 @@
-import React, { createContext, useCallback, useEffect, useMemo } from "react";
+import React, { createContext, useCallback, useMemo } from "react";
 import { DARKTHEME, LIGHTTHEME } from "../utils/constants";
 import { useLocalStorage } from "../helpers/hooks/useLocalStorage";
 import { client } from "../helpers/sanity/sanityClient";
 import { v4 as uuidv4 } from "uuid";
 import {
-  chatMessagesQuery,
+  announcementsQuery,
   userQueryUsingId,
 } from "../helpers/sanity/sanityQueries";
 
@@ -85,18 +85,6 @@ const GlobalProvider = ({ children }) => {
       .catch((err) => console.error(err));
   }, []);
 
-  const getAnnouncementUpdates = useCallback((next) => {
-    client.listen(chatMessagesQuery).subscribe(async (update) => {
-      setRecentAnnouncement(update.result);
-      const q = userQueryUsingId(update.result.createdBy._ref);
-      await client.fetch(q).then((res) => {
-        const data = { ...update.result, createdBy: res[0] };
-        console.log(data);
-        next(data);
-      });
-    });
-  }, []);
-
   //delete function for either file, course or announcement
   const deleteItem = useCallback(async (itemId, next) => {
     await client
@@ -118,7 +106,6 @@ const GlobalProvider = ({ children }) => {
       signupUser,
       registerCourse,
       createAnnouncement,
-      getAnnouncementUpdates,
       deleteItem,
     };
   }, [
@@ -131,7 +118,6 @@ const GlobalProvider = ({ children }) => {
     signupUser,
     registerCourse,
     createAnnouncement,
-    getAnnouncementUpdates,
     deleteItem,
   ]);
 

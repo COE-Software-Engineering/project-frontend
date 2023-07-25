@@ -6,22 +6,37 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import AnimationLayout from "../../../shared/components/AnimationLayout";
 import ComponentWrapper from "../../../shared/components/ComponentWrapper";
 import { client } from "../../../shared/helpers/sanity/sanityClient";
-import { courseQuery } from "../../../shared/helpers/sanity/sanityQueries";
+import {
+  courseQuery,
+  userQueryUsingId,
+} from "../../../shared/helpers/sanity/sanityQueries";
+import CourseAnnouncements from "./courseAnnouncements";
 
 const Course = () => {
   const navigate = useNavigate();
   const { courseId } = useParams();
   const [course, setCourse] = useState(null);
-
-  console.log(courseId);
+  const [courseAnnouncements, setCourseAnnouncements] = useState([]);
 
   const getCourseDetails = useCallback(async () => {
     const q = courseQuery(courseId);
     await client
       .fetch(q)
-      .then((res) => {
+      .then(async (res) => {
         setCourse(res[0]);
-        console.log(res[0]);
+        const q = `*[_type == 'announcement' && userId == '${res[0].createdBy._id}']{
+          _id,
+          title,
+          details,
+          _createdAt,
+          userId,
+          createdBy -> {
+            _id,
+            fullName
+        }} | order(_createdAt)`;
+        await client.fetch(q).then((res) => {
+          setCourseAnnouncements(res);
+        });
       })
       .catch((err) => console.error(err));
   }, []);
@@ -56,12 +71,12 @@ const Course = () => {
                 </p>
                 <p>
                   <span className="bold">Lecturer :</span>
-                  <span>392</span>
+                  <span>{course.createdBy.fullName}</span>
                 </p>
               </div>
             </CourseDetailsWrapper>
             <CourseContentWrapper>
-              <ComponentWrapper title="Announcements" />
+              <CourseAnnouncements courseAnnouncements={courseAnnouncements} />
               <ComponentWrapper title="Course materials" />
             </CourseContentWrapper>
           </ContentWrapper>

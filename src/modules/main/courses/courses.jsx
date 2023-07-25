@@ -9,6 +9,7 @@ import { coursesQuery } from "../../../shared/helpers/sanity/sanityQueries";
 import { client } from "../../../shared/helpers/sanity/sanityClient";
 import { GlobalContext } from "../../../shared/context/context";
 import Empty from "../../../shared/components/Empty";
+import { Spin } from "antd";
 
 const Courses = () => {
   const navigate = useNavigate();
@@ -16,6 +17,7 @@ const Courses = () => {
   const { currentUser } = useContext(GlobalContext);
 
   const [courses, setCourses] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const fetchCourses = useCallback(async () => {
     const q =
@@ -26,7 +28,7 @@ const Courses = () => {
       .fetch(q)
       .then((res) => {
         setCourses(res);
-        console.log(res);
+        setLoading(false);
       })
       .catch((err) => console.error(err));
   }, [currentUser?._id, currentUser?._type]);
@@ -39,7 +41,9 @@ const Courses = () => {
     <AnimationLayout>
       <CoursesWrapper>
         <Titlebar title={"My Courses"} />
-        {courses.length === 0 ? (
+        {loading ? (
+          <Spin />
+        ) : courses.length === 0 ? (
           <Empty subText={"No recent courses!"} />
         ) : (
           <ContentWrapper>

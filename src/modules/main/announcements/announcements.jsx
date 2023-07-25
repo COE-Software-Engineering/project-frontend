@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import CommentSection from "./CommentSection";
 import styled from "styled-components";
 import AnimationLayout from "../../../shared/components/AnimationLayout";
@@ -6,63 +6,92 @@ import { MEDIA_QUERIES } from "../../../shared/utils/constants";
 import ComponentWrapper from "../../../shared/components/ComponentWrapper";
 import MessageCard from "./MessageCard";
 import Titlebar from "../../../shared/components/Titlebar";
-import { Avatar, BackTop, message, Space, Button } from "antd";
+import { Avatar, message, Space, Button, Spin } from "antd";
 import { client } from "../../../shared/helpers/sanity/sanityClient";
-import { chatMessagesQuery } from "../../../shared/helpers/sanity/sanityQueries";
+import {
+  announcementsQuery,
+  userQueryUsingId,
+} from "../../../shared/helpers/sanity/sanityQueries";
 import { GlobalContext } from "../../../shared/context/context";
 import Empty from "../../../shared/components/Empty";
 import { useLocalStorage } from "../../../shared/helpers/hooks/useLocalStorage";
 import IonIcon from "../../../shared/components/IonIcon";
 import Confirm from "../../../shared/components/Confirm";
-import { defaultTheme } from "../../../shared/theme/theme";
 
 const Announcements = () => {
-  const [messages, setMessages] = useLocalStorage("announcementMessages", []);
-  const { currentUser, deleteItem, getAnnouncementUpdates } =
+  const [announcements, setAnnouncements] = useLocalStorage(
+    "announcements-array",
+    []
+  );
+  const { currentUser, deleteItem, setRecentAnnouncement } =
     useContext(GlobalContext);
+  const [loading, setLoading] = useState(true);
 
-  const getAllAnnouncements = useCallback(async () => {
-    await client
-      .fetch(chatMessagesQuery)
-      .then((result) => {
-        console.log(result);
-        setMessages(result);
-      })
-      .catch((err) => console.error(err));
+  let querySubscription = undefined;
+
+  const getAnnouncements = async () => {
+    setAnnouncements(await client.fetch(announcementsQuery).then((res) => res));
+    querySubscription = client
+      .listen(announcementsQuery)
+      .subscribe(async (update) => {
+        if (update) {
+          console.log(update.result);
+          const q = userQueryUsingId(update.result.createdBy._ref);
+          await client.fetch(q).then((res) => {
+            const data = { ...update.result, createdBy: res[0] };
+            setRecentAnnouncement(data);
+            setAnnouncements((announcements) =>
+              [
+                ...announcements.filter(
+                  (announcement) => announcement._id !== update.result._id
+                ),
+                update.result,
+              ].sort((a, b) => (a._createdAt > b._createdAt ? 1 : -1))
+            );
+          });
+        }
+      });
+    setLoading(false);
+    return () => {
+      querySubscription.unsubscribe();
+    };
+  };
+
+  useEffect(() => {
+    getAnnouncements();
+    window.scrollTo(0, 1000);
   }, []);
 
   const deleteAnnouncement = async (id) => {
-    const updatedMessages = messages.filter((message) => message._id !== id);
-    setMessages(updatedMessages);
+    const updatedMessages = announcements.filter(
+      (message) => message._id !== id
+    );
+    setAnnouncements(updatedMessages);
     await deleteItem(id, () =>
       message.success("Announcement deleted succesfully")
     );
   };
-
-  useEffect(() => getAllAnnouncements, []);
-  useEffect(() => {
-    getAnnouncementUpdates((res) => setMessages([res, ...messages]));
-    console.log(messages);
-  }, [getAnnouncementUpdates]);
 
   return (
     <AnimationLayout>
       <AnnouncementsWrapper>
         <MainChatWrapper>
           <Titlebar title="Chatroom" />
-          {!messages || messages.length === 0 ? (
+          {loading ? (
+            <Spin />
+          ) : !announcements || announcements.length === 0 ? (
             <Empty subText={"No announcements avalilable!"} />
           ) : (
-            messages.map((message) => (
+            announcements.map((announcement) => (
               <CommentWrapper
-                messageRef={message.createdBy?._id}
+                messageRef={announcement.userId}
                 currentUserId={currentUser._id}
-                key={message._id}
+                key={announcement._id}
               >
                 <Avatar size={"small"} className="avatar">
-                  {message.createdBy.fullName.slice(0, 2)}
+                  {announcement.createdBy?.fullName?.slice(0, 2)}
                 </Avatar>
-                <MessageCard message={message} />
+                <MessageCard announcement={announcement} />
                 <Space>
                   <Confirm
                     component={
@@ -76,7 +105,7 @@ const Announcements = () => {
                       "Are you sure you want to delete this announcement?"
                     }
                     title={"Delete announcement"}
-                    onConfirm={() => deleteAnnouncement(message._id)}
+                    onConfirm={() => deleteAnnouncement(announcement._id)}
                   />
                 </Space>
               </CommentWrapper>
@@ -103,6 +132,7 @@ const AnnouncementsWrapper = styled.div`
   align-items: flex-start;
   flex-direction: row;
   justify-content: space-between;
+  position: relative;
 
   ${MEDIA_QUERIES.MOBILE} {
     & {
@@ -121,7 +151,7 @@ const MainChatWrapper = styled.section`
   align-items: flex-start;
   padding: 0 2rem;
   border-right: 0.5px solid ${({ theme }) => theme.sidebarBorder};
-  overflow-y: scroll;
+  /* overflow-y: scroll; */
 
   ${MEDIA_QUERIES.MOBILE} {
     & {
@@ -133,7 +163,6 @@ const MainChatWrapper = styled.section`
 `;
 const AsideWrapper = styled.aside`
   width: 30%;
-  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;

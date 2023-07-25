@@ -12,7 +12,7 @@ const Timeline = () => {
       {!recentAnnouncement ? (
         <Empty subText={"No announcements available."} />
       ) : (
-        <MessageCard message={recentAnnouncement} width={"100%"} />
+        <MessageCard announcement={recentAnnouncement} width={"100%"} />
       )}
     </ComponentWrapper>
   );
