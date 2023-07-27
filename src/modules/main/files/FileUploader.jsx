@@ -6,17 +6,17 @@ import uploadAnimation from "../../../shared/helpers/lotties/upload.json";
 import IonIcon from "../../../shared/components/IonIcon";
 import moment from "moment";
 
-const FileUploader = (setFiles, files = []) => {
+const FileUploader = ({ setFiles, files = [] }) => {
   const uploadProps = {
     name: "files",
     action: "https://imagekit.io/api/v1/files/upload",
     method: "POST",
     multiple: true,
-    // defaultFileList: files,
+    defaultFileList: files,
     onChange(info) {
       const { status } = info.file;
       if (status !== "uploading") {
-        // setFiles(info.fileList);
+        setFiles(info.fileList);
       }
     },
     onDrop(e) {},

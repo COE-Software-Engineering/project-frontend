@@ -14,11 +14,11 @@ export const sidebarLinks = [
     iconName: "megaphone",
     routeTo: "/main/announcements",
   },
-  {
-    name: "Shared Resources",
-    iconName: "layers",
-    routeTo: "/main/shared-resources",
-  },
+  // {
+  //   name: "Shared Resources",
+  //   iconName: "layers",
+  //   routeTo: "/main/shared-resources",
+  // },
   {
     name: "My Files",
     iconName: "reader",
