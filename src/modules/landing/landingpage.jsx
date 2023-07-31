@@ -54,7 +54,7 @@ const Landingpage = () => {
         <HeroWrapper>
           <img src="/main-banner-img.svg" alt="" />
           <div>
-            <h3>COE Virtual Classroom</h3>
+            <h3>Class Assistant</h3>
             <p>
               This web app seeks to bridge the gap between students and
               lecturers in terms of communication between them.
