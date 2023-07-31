@@ -22,7 +22,7 @@ const RecentCourses = () => {
   }, []);
 
   useEffect(() => {
-    fetchCourses();
+    fetchCourses()
   }, []);
 
   return (
