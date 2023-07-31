@@ -25,7 +25,7 @@ const Courses = () => {
   }, []);
 
   useEffect(() => {
-    fetchCourses();
+    fetchCourses()
   }, []);
 
   return (
