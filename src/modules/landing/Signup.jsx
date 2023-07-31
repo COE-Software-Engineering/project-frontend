@@ -47,20 +47,7 @@ const Signup = () => {
 
   const SignupDetailsSection = () => (
     <>
-      <Form.Item
-        name="full_name"
-        rules={[
-          {
-            required: true,
-            type: "string",
-            min: 3,
-            message: "Invalid full name!",
-            whitespace: true,
-          },
-        ]}
-      >
-        <Input className="input" placeholder="Full name" />
-      </Form.Item>
+     
       <Form.Item
         name={userType === "students" ? "index_number" : "staff_id"}
         rules={[
