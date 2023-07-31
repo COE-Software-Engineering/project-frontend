@@ -69,6 +69,7 @@ const Settings = () => {
               buttonStyle="solid"
               onChange={onThemeChange}
               defaultValue={appTheme}
+              value={appTheme}
             >
               <Radio.Button value={LIGHTTHEME} className="radio-btn">
                 <img src="https://csshint.com/wp-content/uploads/2022/01/Css-Skeleton-Loader-Animation.jpg" />
