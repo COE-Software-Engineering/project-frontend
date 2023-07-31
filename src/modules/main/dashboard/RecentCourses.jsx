@@ -12,7 +12,12 @@ const RecentCourses = () => {
   const [courses, setCourses] = useState([]);
   const fetchCourses = useCallback(async () => {
     getAllCourses((res) => {
-      setCourses(res.data);
+      if(currentUser?.staff_id){
+        const user_full_name = currentUser?.last_name + " " + currentUser?.other_names;
+        const updatedCourses = res.data.filter(course => course.lecturer_name == user_full_name);
+        setCourses(updatedCourses);
+      }else setCourses(res.data);
+        });
     });
   }, []);
 
