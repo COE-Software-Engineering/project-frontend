@@ -70,7 +70,6 @@ const Navbar = () => {
           trigger={"click"}
         >
           <Avatar
-            src=""
             size={"small"}
             style={{
               cursor: "pointer",
