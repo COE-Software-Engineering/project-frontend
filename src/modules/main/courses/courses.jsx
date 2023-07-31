@@ -20,8 +20,8 @@ const Courses = () => {
         const updatedCourses = res.data.filter(course => course.lecturer_name == user_full_name);
         setCourses(updatedCourses);
       }else setCourses(res.data);
-        });
-    });
+        })
+    })
   }, []);
 
   useEffect(() => {
