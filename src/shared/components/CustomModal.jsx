@@ -40,16 +40,6 @@ const CustomModal = ({
   );
 };
 
-const ModalWrapper = styled.div`
-  & .modal-root {
-    background-color: ${({ theme }) => theme.backgroundColor};
-  }
-  & .modal {
-    background-color: ${({ theme }) => theme.backgroundColor};
-  }
-  & .modal-wrap {
-    background-color: ${({ theme }) => theme.backgroundColor};
-  }
-`;
+const ModalWrapper = styled.div``;
 
 export default CustomModal;

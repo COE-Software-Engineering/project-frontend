@@ -13,8 +13,8 @@ const SignupComplete = () => {
       <Lottie animationData={CheckmarkAnimation} width={40} height={40} />
       <p>You are all set and done!</p>
       <p>
-        An email has been sent to your email containing a temporary password for
-        you.
+        An email has been sent to your mail containing a temporary password for
+        you. You can change it later.
       </p>
       <Button type="primary" onClick={() => navigate("/")}>
         Go to sign in

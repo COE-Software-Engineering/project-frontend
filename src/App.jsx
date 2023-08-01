@@ -44,6 +44,10 @@ function App() {
               colorBgElevated: "transparent",
               colorBgContainer: "transparent",
             },
+            Modal: {
+              contentBg: appTheme === LIGHTTHEME ? "#f4f6fc" : "#181820",
+              headerBg: appTheme === LIGHTTHEME ? "#f4f6fc" : "#181820",
+            },
           },
 
           algorithm:

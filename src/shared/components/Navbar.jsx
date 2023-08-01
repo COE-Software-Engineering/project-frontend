@@ -80,7 +80,7 @@ const Navbar = () => {
             }}
             icon={<IonIcon iconName={"person-circle"} />}
           >
-            {currentUser?.other_names.slice(0, 2)}
+            {currentUser?.other_names?.slice(0, 2)}
           </Avatar>
         </Dropdown>
       </ToolsWrapper>

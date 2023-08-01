@@ -124,7 +124,7 @@ const AddCourseMaterialWrapper = styled.div`
   & .input {
     background-color: transparent;
     border-radius: 7px;
-    background-color: ${({ theme }) => theme.bodyBackgroundColor};
+    background-color: ${({ theme }) => theme.accentColor2};
     /* font-size: 12px; */
     border: none;
   }
