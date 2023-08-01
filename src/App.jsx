@@ -1,35 +1,75 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { ConfigProvider, theme } from "antd";
+import { ThemeProvider } from "styled-components";
+import { GlobalStyles } from "./shared/theme/globalStyles";
+import { darkTheme, defaultTheme, lightTheme } from "./shared/theme/theme";
+import { Suspense, lazy, useContext } from "react";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { LIGHTTHEME } from "./shared/utils/constants";
+import Loader from "./shared/components/Loader";
+import { GlobalContext } from "./shared/context/context";
+import { AnimatePresence } from "framer-motion";
+
+const LandingPage = lazy(() => import("./modules/landing/landingpage"));
+const MainRoutes = lazy(() => import("./modules/main/mainRoutes"));
+const Signup = lazy(() => import("./modules/landing/Signup"));
+const PageNotFound = lazy(() => import("./modules/pageNotFound"));
 
 function App() {
-  const [count, setCount] = useState(0)
-
+  const { appTheme } = useContext(GlobalContext);
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <ConfigProvider
+        theme={{
+          token: {
+            colorPrimary: `${defaultTheme.primaryColor}`,
+            borderRadius: 3,
+            fontFamily: "Poppins,sans-serif",
+            boxShadow: "none",
+          },
+          components: {
+            Calendar: {
+              colorBgContainer: "transparent",
+              fontSize: "10px",
+              fontSizeSM: "10px",
+              fontSizeLG: "10px",
+            },
+            Segmented: {
+              fontSize: "12px",
+            },
+            Dropdown: {
+              colorBgElevated: "transparent",
+              zIndexPopup: 99,
+            },
+            Popconfirm: {
+              colorBgElevated: "transparent",
+              colorBgContainer: "transparent",
+            },
+          },
+
+          algorithm:
+            appTheme === LIGHTTHEME
+              ? theme.defaultAlgorithm
+              : theme.darkAlgorithm,
+        }}
+      >
+        <ThemeProvider theme={appTheme === LIGHTTHEME ? lightTheme : darkTheme}>
+          <GlobalStyles />
+          <AnimatePresence mode="wait">
+            <BrowserRouter>
+              <Suspense fallback={<Loader />}>
+                <Routes>
+                  <Route path="/" element={<LandingPage />} />
+                  <Route path="/signup/:userType" element={<Signup />} />
+                  <Route path="/main/*" element={<MainRoutes />} />
+                  <Route path="/*" element={<PageNotFound />} />
+                </Routes>
+              </Suspense>
+            </BrowserRouter>
+          </AnimatePresence>
+        </ThemeProvider>
+      </ConfigProvider>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
