@@ -5,7 +5,7 @@ import { defaultTheme } from "../../../shared/theme/theme";
 import { GlobalContext } from "../../../shared/context/context";
 import axiosInstance from "../../../shared/helpers/axios/axiosInstance";
 
-const CommentSection = ({ getAllAnnouncements }) => {
+const CommentSection = ({ fetchAnnouncements }) => {
   const [loading, setLoading] = useState(false);
   const { currentUser } = useContext(GlobalContext);
 
@@ -21,7 +21,7 @@ const CommentSection = ({ getAllAnnouncements }) => {
         setLoading(false);
         message.success("Announcement created successfully :)");
         form.resetFields();
-        getAllAnnouncements();
+        fetchAnnouncements();
       })
       .catch((err) => console.error(err));
   };

@@ -8,24 +8,25 @@ import { GlobalContext } from "../../../shared/context/context";
 import Empty from "../../../shared/components/Empty";
 
 const Courses = () => {
-
-  const { getAllCourses } = useContext(GlobalContext);
+  const { getAllCourses, currentUser } = useContext(GlobalContext);
 
   const [courses, setCourses] = useState([]);
 
   const fetchCourses = useCallback(async () => {
     getAllCourses((res) => {
-      if(currentUser?.staff_id){
-        const user_full_name = currentUser?.last_name + " " + currentUser?.other_names;
-        const updatedCourses = res.data.filter(course => course.lecturer_name == user_full_name);
+      if (currentUser?.staff_id) {
+        const user_full_name =
+          currentUser?.last_name + " " + currentUser?.other_names;
+        const updatedCourses = res.data.filter(
+          (course) => course.lecturer_name == user_full_name
+        );
         setCourses(updatedCourses);
-      }else setCourses(res.data);
-        })
-    })
+      } else setCourses(res.data);
+    });
   }, []);
 
   useEffect(() => {
-    fetchCourses()
+    fetchCourses();
   }, []);
 
   return (
@@ -37,7 +38,11 @@ const Courses = () => {
         ) : (
           <ContentWrapper>
             {courses.map((course) => (
-              <CourseCard key={course.course_code} width={"24%"} course={course} />
+              <CourseCard
+                key={course.course_code}
+                width={"24%"}
+                course={course}
+              />
             ))}
           </ContentWrapper>
         )}

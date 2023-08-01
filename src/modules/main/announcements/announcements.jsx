@@ -9,25 +9,21 @@ import Titlebar from "../../../shared/components/Titlebar";
 import { Avatar, Spin } from "antd";
 import { GlobalContext } from "../../../shared/context/context";
 import Empty from "../../../shared/components/Empty";
-import axiosInstance from "../../../shared/helpers/axios/axiosInstance";
 
 const Announcements = () => {
-  const { currentUser } = useContext(GlobalContext);
+  const { currentUser, getAllAnnouncements } = useContext(GlobalContext);
   const [announcements, setAnnouncements] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const getAllAnnouncements = useCallback(async () => {
-    await axiosInstance
-      .post("/api/get_all_announcements", null)
-      .then((res) => {
-        setAnnouncements(res.data);
-        setLoading(false);
-      })
-      .catch((err) => console.error(err));
-  }, []);
+  const fetchAnnouncements = () => {
+    getAllAnnouncements((res) => {
+      setAnnouncements(res.data);
+      setLoading(false);
+    });
+  };
 
   useEffect(() => {
-    getAllAnnouncements();
+    fetchAnnouncements();
   }, []);
 
   return (
@@ -41,7 +37,13 @@ const Announcements = () => {
             <Empty subText={"No announcements avalilable!"} />
           ) : (
             announcements.map((announcement) => (
-              <CommentWrapper key={announcement.content}>
+              <CommentWrapper
+                key={announcement.content}
+                currentUserName={
+                  currentUser?.last_name + " " + currentUser?.other_names
+                }
+                announcementPosterName={announcement.poster_name}
+              >
                 <Avatar size={"small"} className="avatar">
                   {announcement.poster_name.slice(0, 2)}
                 </Avatar>
@@ -55,7 +57,7 @@ const Announcements = () => {
             <ComponentWrapper
               title="Send announcement"
               children={
-                <CommentSection getAllAnnouncements={getAllAnnouncements} />
+                <CommentSection fetchAnnouncements={fetchAnnouncements} />
               }
             />
           )}
@@ -118,13 +120,20 @@ const AsideWrapper = styled.aside`
 
 const CommentWrapper = styled.div`
   display: flex;
-  flex-direction: row;
+  flex-direction: ${(props) =>
+    props.currentUserName == props.announcementPosterName
+      ? "row-reverse"
+      : "row"};
   width: 100%;
   margin-bottom: 1rem;
 
   & .avatar {
     background-color: ${({ theme }) => theme.tertiaryColor2};
-    margin: 0 0.5rem 0 0;
+    /* margin: 0 0.5rem 0 0; */
+    margin: ${(props) =>
+      props.currentUserName == props.announcementPosterName
+        ? "0 0 0 0.5rem"
+        : "0 0.5rem 0 0"};
   }
 `;
 

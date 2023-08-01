@@ -97,7 +97,7 @@ const Settings = () => {
                   rules={[
                     {
                       required: true,
-                      message: "Invalid title!",
+                      message: "Invalid number/id!",
                       whitespace: true,
                     },
                   ]}

@@ -2,8 +2,9 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useLocation, useParams } from "react-router-dom";
 import AnimationLayout from "../../../shared/components/AnimationLayout";
-import ComponentWrapper from "../../../shared/components/ComponentWrapper";
 import { Spin } from "antd";
+import CourseAnnouncements from "./courseAnnouncements";
+import CourseMaterials from "./CourseMaterials";
 
 const Course = () => {
   const { courseId } = useParams();
@@ -51,8 +52,8 @@ const Course = () => {
               </div>
             </CourseDetailsWrapper>
             <CourseContentWrapper>
-              <ComponentWrapper title="Announcements" />
-              <ComponentWrapper title="Course materials" />
+              <CourseMaterials courseName={course.title} />
+              <CourseAnnouncements lecturerName={course.lecturer_name} />
             </CourseContentWrapper>
           </ContentWrapper>
         )}

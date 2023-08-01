@@ -22,6 +22,15 @@ const GlobalProvider = ({ children }) => {
       .catch((err) => console.error(err));
   }, []);
 
+  const getAllAnnouncements = useCallback(async (next) => {
+    await axiosInstance
+      .post("/api/get_all_announcements", null)
+      .then((res) => {
+        next(res);
+      })
+      .catch((err) => console.error(err));
+  }, []);
+
   const value = useMemo(() => {
     return {
       appTheme,
@@ -29,8 +38,16 @@ const GlobalProvider = ({ children }) => {
       currentUser,
       setCurrentUser,
       getAllCourses,
+      getAllAnnouncements,
     };
-  }, [appTheme, setAppTheme, currentUser, setCurrentUser, getAllCourses]);
+  }, [
+    appTheme,
+    setAppTheme,
+    currentUser,
+    setCurrentUser,
+    getAllCourses,
+    getAllAnnouncements,
+  ]);
 
   return (
     <GlobalContext.Provider value={value}>{children}</GlobalContext.Provider>

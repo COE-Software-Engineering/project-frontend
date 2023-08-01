@@ -6,6 +6,7 @@ import MyFiles from "./MyFiles";
 import Calendar from "./Calendar";
 import { MEDIA_QUERIES } from "../../../shared/utils/constants";
 import AnimationLayout from "../../../shared/components/AnimationLayout";
+import RecentResources from "./RecentResources";
 
 const Dashboard = () => {
   return (
@@ -13,6 +14,7 @@ const Dashboard = () => {
       <DashboardWrapper>
         <MainAreaWrapper>
           <RecentCourses />
+          <RecentResources />
         </MainAreaWrapper>
         <AsideAreaWrapper>
           <Timeline />

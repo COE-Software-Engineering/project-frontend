@@ -2,10 +2,10 @@ import React from "react";
 import styled from "styled-components";
 import Titlebar from "./Titlebar";
 
-const ComponentWrapper = ({ title, styles, children }) => {
+const ComponentWrapper = ({ title, styles, titleComponent, children }) => {
   return (
     <Wrapper style={styles}>
-      <Titlebar title={title} />
+      <Titlebar title={title} rightComponent={titleComponent}/>
       <div className=".content-wrapper">{children}</div>
     </Wrapper>
   );

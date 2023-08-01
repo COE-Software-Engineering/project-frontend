@@ -39,7 +39,7 @@ const UserDetails = () => {
   ];
 
   return (
-    <ComponentWrapper title="User Details">
+    <ComponentWrapper title="Personal Details">
       {userDetails.map((item) => (
         <ItemWrapper key={item}>
           <Space>

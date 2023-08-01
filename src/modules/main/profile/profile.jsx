@@ -30,9 +30,9 @@ const Profile = () => {
               <p>{currentUser?.staff_id ? "Lecturer" : "Student"}</p>
             </div>
           </div>
-          <Button type="default" icon={<IonIcon iconName={"create"} />}>
+          {/* <Button type="default" icon={<IonIcon iconName={"create"} />}>
             Update Profile
-          </Button>
+          </Button> */}
         </HeaderContentWrapper>
         <BodyContentWrapper>
           <MainAreaWrapper>
