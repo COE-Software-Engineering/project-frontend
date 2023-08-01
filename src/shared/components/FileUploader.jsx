@@ -8,9 +8,7 @@ import styled from "styled-components";
 const FileUploader = ({ files, setFiles }) => {
   const uploadProps = {
     name: "files",
-    action: "byu7n5l4.api.sanity.io/v2021-06-07/assets/files/production",
-
-    method: "POST",
+    action: null,
     multiple: false,
     defaultFileList: files,
     onChange(info) {
